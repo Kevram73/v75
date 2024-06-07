@@ -16,5 +16,4 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(RedirectIfAuthenticated::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->append(Handler::class);
     })->create();
