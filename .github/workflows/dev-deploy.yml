@@ -24,8 +24,9 @@ jobs:
           source: "./*"
           target: "/home/debian/Documents/v75/"
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
           recursive: true
 
   build:
@@ -38,7 +39,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
+          port: 22
           script: |
             cd /home/debian/Documents/v75/
             composer install --no-interaction --prefer-dist --optimize-autoloader
