@@ -10,28 +10,27 @@ on:
       - dev
       
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up SSH agent
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Copy project files via SCP
-        run: |
-          scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/debian/Documents/v75
 
   build:
-    needs: deploy
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: test remote ssh connection
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: whoami
+        
+  deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Execute remote SSH commands
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} "\
-          cd /home/debian/Documents/v75/ && \
+         cd /home/debian/Documents/v75/ && \
           composer install --no-interaction --prefer-dist --optimize-autoloader && \
           php artisan migrate --force && \
           fuser -k 8000/tcp && \
