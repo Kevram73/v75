@@ -1,30 +1,48 @@
-name: Deploy V75 online
+name: Deploy and Build V75 Online
 
-# Controls when the workflow will run
+# Trigger the workflow on push and pull request events on the dev branch
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches:
       - dev
   pull_request:
     branches:
       - dev
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-
+      
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Copy repository content to remote
+        uses: appleboy/scp-action@master
+        with:
+          source: "./*"
+          target: "/home/debian/Documents/v75/"
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.PORT }}
+          recursive: true
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.2
-      with:
-        server: 152.228.173.31
-        username: Kevram73
-        password: Alkashi13!!!%
+  build:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute remote SSH commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/debian/Documents/v75/
+            composer install --no-interaction --prefer-dist --optimize-autoloader
+            php artisan migrate --force
+            fuser -k 8000/tcp
+            php artisan serve --host 0.0.0.0 --port 8000 &> /dev/null &
+    
