@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Transaction;
-use App\Models\Client;  // Changed from User to Client
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Client;  // Changed from User to Client
 
 class TransactionController extends Controller
 {

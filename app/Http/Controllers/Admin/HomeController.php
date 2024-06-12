@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Account;
 use App\Models\Transaction;
-use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -21,7 +22,7 @@ class HomeController extends Controller
         $activeClientsCount = Client::where('is_active', true)->count();
 
         // Total balance of all clients (assuming clients have a 'balance' attribute)
-        $totalClientsBalance = Client::sum('balance');
+        $totalClientsBalance = Account::sum('balance');
 
         // List of active accounts
         $activeAccounts = Account::where('is_active', true)->get();
@@ -38,7 +39,7 @@ class HomeController extends Controller
             DB::raw('MONTH(created_at) as month')
         )->groupBy('month')->get();
 
-        return view('home', compact(
+        return view('admin.home', compact(
             'activeClientsCount',
             'totalClientsBalance',
             'activeAccounts',
