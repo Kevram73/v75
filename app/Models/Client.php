@@ -17,7 +17,7 @@ class Client extends Authenticatable
         'first_name',
         'last_name',
         'phone_number',
-        'user_id',
+        'email',
         'is_active'
     ];
 

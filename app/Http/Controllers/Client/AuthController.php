@@ -16,6 +16,33 @@ class AuthController extends Controller
         return view('client.login');
     }
 
+    public function register()
+    {
+        return view('client.register');
+    }
+
+    public function auth_register(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'phone_number' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        $client = new Client();
+        $client->first_name = $request->first_name;
+        $client->last_name = $request->last_name;
+        $client->phone_number = $request->phone_number;
+        $client->email = $request->email;
+        $client->password = Hash::make($request->password);
+        $client->is_active = true;
+        $client->save();
+
+        return redirect()->route('client.login');
+    }
+
     public function auth_login(Request $request)
     {
         $credentials = $request->validate([
@@ -33,35 +60,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register()
-    {
-        return view('client.register');
-    }
 
-    public function auth_register(Request $request)
-    {
-        $data = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:clients',
-            'password' => 'required|string|min:8|confirmed',
-            'is_active' => 'required|boolean',
-        ]);
-
-        $client = Client::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'phone_number' => $data['phone_number'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'is_active' => $data['is_active'],
-        ]);
-
-        Auth::guard('client')->login($client);
-
-        return redirect()->route('client.dashboard')->with('success', 'Account successfully created!');
-    }
 
     public function forgot_password()
     {

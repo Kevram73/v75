@@ -43,88 +43,28 @@
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-user"></i></span>
 											<input type="text" name="lastname" class="form-control ps-15 bg-transparent {{ $errors->has('lastname') ? ' is-invalid' : '' }}" placeholder="Nom" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
-                                            @if ($errors->has('lastname'))
-                                                <div class="box box-danger-light">
-                                                    <div class="box-header">
-                                                        <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
-                                                        <div class="box-tools pull-right">
-                                                            <ul class="box-controls">
-                                                                <li><a class="box-btn-close" href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="box-body">
-                                                        <em>{{ $errors->first('lastname') }}</em>
-                                                    </div>
-                                                </div>
-                                            @endif
 										</div>
 									</div>
                                     <div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-user"></i></span>
 											<input type="text" name="firstname" class="form-control ps-15 bg-transparent {{ $errors->has('firstname') ? ' is-invalid' : '' }}" placeholder="Prénom(s)" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
-                                            @if ($errors->has('firstname'))
-                                                <div class="box box-danger-light">
-                                                    <div class="box-header">
-                                                        <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
-                                                        <div class="box-tools pull-right">
-                                                            <ul class="box-controls">
-                                                                <li><a class="box-btn-close" href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="box-body">
-                                                        <em>{{ $errors->first('firstname') }}</em>
-                                                    </div>
-                                                </div>
-                                            @endif
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-email"></i></span>
 											<input type="email" name="email" class="form-control ps-15 bg-transparent {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="email" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
-                                            @if ($errors->has('email'))
-                                                <div class="box box-danger-light">
-                                                    <div class="box-header">
-                                                        <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
-                                                        <div class="box-tools pull-right">
-                                                            <ul class="box-controls">
-                                                                <li><a class="box-btn-close" href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="box-body">
-                                                        <em>{{ $errors->first('email') }}</em>
-                                                    </div>
-                                                </div>
-                                            @endif
+                                            
 										</div>
 									</div>
                                     <div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-mobile"></i></span>
 											<input type="text" name="phone_number" class="form-control ps-15 bg-transparent {{ $errors->has('phone_number') ? ' is-invalid' : '' }}" placeholder="Tel (exemple: 22866778899)" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
-                                            @if ($errors->has('phone_number'))
-                                                <div class="box box-danger-light">
-                                                    <div class="box-header">
-                                                        <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
-                                                        <div class="box-tools pull-right">
-                                                            <ul class="box-controls">
-                                                                <li><a class="box-btn-close" href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="box-body">
-                                                        <em>{{ $errors->first('phone_number') }}</em>
-                                                    </div>
-                                                </div>
-                                            @endif
 										</div>
 									</div>
 									<div class="form-group">
@@ -133,22 +73,6 @@
 											<input type="password" id="password" name="password" class="form-control ps-15 bg-transparent {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Mot de passe" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
                                             <span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-eye" type="button" id="icon_pwd" onclick="show_password()"></i></span>
 
-                                            @if ($errors->has('password'))
-                                                <div class="box box-danger-light">
-                                                    <div class="box-header">
-                                                        <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
-                                                        <div class="box-tools pull-right">
-                                                            <ul class="box-controls">
-                                                                <li><a class="box-btn-close" href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="box-body">
-                                                        <em>{{ $errors->first('password') }}</em>
-                                                    </div>
-                                                </div>
-                                            @endif
 										</div>
 									</div>
                                     <div class="form-group">
@@ -156,23 +80,6 @@
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-lock"></i></span>
 											<input type="password" id="confirm_password" name="confirm_password" class="form-control ps-15 bg-transparent {{ $errors->has('confirm_password') ? ' is-invalid' : '' }}" placeholder="Confirmez le mot de passe" onchange="confirm()" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
                                             <span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-eye" type="button" id="icon_pwd"  onclick="show_confirm_password()"></i></span>
-
-                                            @if ($errors->has('confirm_password'))
-                                                <div class="box box-danger-light">
-                                                    <div class="box-header">
-                                                        <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
-                                                        <div class="box-tools pull-right">
-                                                            <ul class="box-controls">
-                                                                <li><a class="box-btn-close" href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="box-body">
-                                                        <em>{{ $errors->first('confirm_password') }}</em>
-                                                    </div>
-                                                </div>
-                                            @endif
 										</div>
 									</div>
                                     <p id="message"></p>
