@@ -34,6 +34,8 @@ Route::prefix('admin/')->name('admin.')->group(function () {
 
     Route::get('accounts/activated/{id}', [AccountController::class, 'on_off'])->name('account_activated');
     Route::get('clients/activated/{id}', [ClientController::class, 'on_off'])->name('client_activated');
+    Route::get('clients/disabled', [ClientController::class, 'clients_disabled'])->name('clients_disabled');
+
 });
 
 Route::prefix('client/')->name('client.')->group(function () {
@@ -46,4 +48,7 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::get('forgot-password', [ClientAuthController::class, 'forgot_password'])->name('password.request');
     Route::post('forgot-password', [ClientAuthController::class, 'reset_password'])->name('password.email');
     Route::post('logout', [ClientAuthController::class, 'auth_logout'])->name('auth_logout');
+
+    // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
+
 });

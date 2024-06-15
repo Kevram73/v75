@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         if (Auth::guard('client')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('client.dashboard');
+            return redirect()->intended('client/dashboard');
         }
 
         return back()->withErrors([
@@ -60,7 +60,7 @@ class AuthController extends Controller
 
         Auth::guard('client')->login($client);
 
-        return redirect()->route('client.dashboard')->with('success', 'Account successfully created!');
+        return redirect()->route('client/dashboard')->with('success', 'Account successfully created!');
     }
 
     public function forgot_password()

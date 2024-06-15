@@ -34,16 +34,40 @@
                                     <img src="../../../images/OIPa.jpeg" class="" alt="" style="width: 30%; height: 40%; border-radius:10%; margin-bottom:2%; border:0px solid rgba(2, 52, 2, 0.24);"/>
                                 </a>
 								<h2 class="text-primary fw-600"><br>Créer un compte</h2>
-								<p class="mb-0 text-fade" style="margin-top: 3%;">Créez votre compte v75 pour commencer <br>à percevoir vos gains !</p>
+								<p class="mb-0 text-fade" style="margin-top: 3%;">Créez votre compte v75 pour commencer <br>à percevoir vos gains !</p><br>
 							</div>
+
+
 							<div class="p-30">
-								<form method="POST" action="{{ route('client.auth_register') }}" enctype="multipart/form-data">
+                                @if ($errors->any())
+                                    <div style="form-group">
+                                        <div class="box box-danger-light">
+                                            <div class="box-header">
+                                                <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
+                                                <div class="box-tools pull-right">
+                                                    <ul class="box-controls">
+                                                        <li><a class="box-btn-close" href="#"></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="box-body">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+								<br><form method="POST" action="{{ route('client.auth_register') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-user"></i></span>
-											<input type="text" name="lastname" class="form-control ps-15 bg-transparent {{ $errors->has('lastname') ? ' is-invalid' : '' }}" placeholder="Nom" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
-                                            @if ($errors->has('lastname'))
+											<input type="text" name="last_name" class="form-control ps-15 bg-transparent" placeholder="Nom" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
+                                            {{-- @if ($errors->has('last_name'))
                                                 <div class="box box-danger-light">
                                                     <div class="box-header">
                                                         <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
@@ -55,17 +79,17 @@
                                                     </div>
 
                                                     <div class="box-body">
-                                                        <em>{{ $errors->first('lastname') }}</em>
+                                                        <em>{{ $errors->first('last_name') }}</em>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            @endif --}}
 										</div>
 									</div>
                                     <div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-user"></i></span>
-											<input type="text" name="firstname" class="form-control ps-15 bg-transparent {{ $errors->has('firstname') ? ' is-invalid' : '' }}" placeholder="Prénom(s)" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
-                                            @if ($errors->has('firstname'))
+											<input type="text" name="first_name" class="form-control ps-15 bg-transparent" placeholder="Prénom(s)" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
+                                            {{-- @if ($errors->has('first_name'))
                                                 <div class="box box-danger-light">
                                                     <div class="box-header">
                                                         <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
@@ -77,17 +101,17 @@
                                                     </div>
 
                                                     <div class="box-body">
-                                                        <em>{{ $errors->first('firstname') }}</em>
+                                                        <em>{{ $errors->first('first_name') }}</em>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            @endif --}}
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-email"></i></span>
-											<input type="email" name="email" class="form-control ps-15 bg-transparent {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="email" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
-                                            @if ($errors->has('email'))
+											<input type="email" name="email" class="form-control ps-15 bg-transparent" placeholder="email" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
+                                            {{-- @if ($errors->has('email'))
                                                 <div class="box box-danger-light">
                                                     <div class="box-header">
                                                         <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
@@ -102,14 +126,14 @@
                                                         <em>{{ $errors->first('email') }}</em>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            @endif --}}
 										</div>
 									</div>
                                     <div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-mobile"></i></span>
-											<input type="text" name="phone_number" class="form-control ps-15 bg-transparent {{ $errors->has('phone_number') ? ' is-invalid' : '' }}" placeholder="Tel (exemple: 22866778899)" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
-                                            @if ($errors->has('phone_number'))
+											<input type="text" name="phone_number" class="form-control ps-15 bg-transparent" placeholder="Tel (exemple: 22866778899)" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" >
+                                            {{-- @if ($errors->has('phone_number'))
                                                 <div class="box box-danger-light">
                                                     <div class="box-header">
                                                         <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
@@ -124,16 +148,16 @@
                                                         <em>{{ $errors->first('phone_number') }}</em>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            @endif --}}
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-lock"></i></span>
-											<input type="password" id="password" name="password" class="form-control ps-15 bg-transparent {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Mot de passe" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
+											<input type="password" id="password" name="password" class="form-control ps-15 bg-transparent" placeholder="Mot de passe" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
                                             <span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-eye" type="button" id="icon_pwd" onclick="show_password()"></i></span>
 
-                                            @if ($errors->has('password'))
+                                            {{-- @if ($errors->has('password'))
                                                 <div class="box box-danger-light">
                                                     <div class="box-header">
                                                         <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
@@ -148,31 +172,22 @@
                                                         <em>{{ $errors->first('password') }}</em>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            @endif --}}
 										</div>
 									</div>
                                     <div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-lock"></i></span>
-											<input type="password" id="confirm_password" name="confirm_password" class="form-control ps-15 bg-transparent {{ $errors->has('confirm_password') ? ' is-invalid' : '' }}" placeholder="Confirmez le mot de passe" onchange="confirm()" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
+											<input type="password" id="password_confirmation" name="password_confirmation" class="form-control ps-15 bg-transparent" placeholder="Confirmez le mot de passe" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
                                             <span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-eye" type="button" id="icon_pwd"  onclick="show_confirm_password()"></i></span>
+										</div>
+									</div>
 
-                                            @if ($errors->has('confirm_password'))
-                                                <div class="box box-danger-light">
-                                                    <div class="box-header">
-                                                        <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
-                                                        <div class="box-tools pull-right">
-                                                            <ul class="box-controls">
-                                                                <li><a class="box-btn-close" href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="box-body">
-                                                        <em>{{ $errors->first('confirm_password') }}</em>
-                                                    </div>
-                                                </div>
-                                            @endif
+                                    <div class="form-group" style="display:none;">
+										<div class="input-group mb-3">
+											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-lock"></i></span>
+											<input type="number" id="is_active" name="is_active" value="1" class="form-control ps-15 bg-transparent" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
+                                            <span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-eye" type="button" id="icon_pwd" ></i></span>
 										</div>
 									</div>
                                     <p id="message"></p>
@@ -225,7 +240,7 @@
     <script>
         function button() {
             let pwd = document.getElementById('password').value;
-            let pwd_confirm = document.getElementById('confirm_password').value;
+            let pwd_confirm = document.getElementById('password_confirmation').value;
 
             if (document.getElementById('terms').checked && pwd != "" && pwd == pwd_confirm ) {
                 document.getElementById('register_btn').disabled = false;
@@ -249,7 +264,7 @@
 
         function show_confirm_password() {
             let icon_pwd = document.getElementById('icon_pwd');
-            let pwd = document.getElementById('confirm_password');
+            let pwd = document.getElementById('password_confirmation');
             if(pwd.type == "password"){
                 pwd.type = "text";
                 icon_pwd.className = "text-fade ti-eye"
@@ -260,32 +275,9 @@
 
         }
 
-        $('#confirm_password').keyup(function() {
-            var password = $('#password')
-            var confirm_password = $(this)
-            var message = $('#message')
-            var submit = $('#register_btn')
-            if (confirm.val() !== password.val()) {
-                console.log(confirm.val() + ' === ' + password.val())
-                message.html('La confirmation ne correspond pas au mot de passe').css("color", "red")
-            } else {
-                message.html('Confirmation correcte').css("color", "green")
-            }
-        })
 
-        function confirm() {
-            let pwd = document.getElementById('password').value;
-            let pwd_confirm = document.getElementById('confirm_password').value;
-            let message = document.getElementById('message');
-            if(pwd == pwd_confirm){
-                message.style.color = 'green';
-                message.innerHTML = "La confirmation correspond au mot de passe"
 
-            } else {
-                message.style.color = 'red';
-                message.innerHTML = "La confirmation ne correspond pas au mot de passe"
-            }
-        }
+
 
     </script>
 

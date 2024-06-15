@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth.admin');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth.admin');
+    // }
 
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::with(['account', 'transactions'])->get();
-        return view('clients.index', compact('clients'));
+        return view('admin.clients.index', compact('clients'));
     }
 
     /**
@@ -28,7 +28,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('clients.create');
+        return view('admin.clients.create');
     }
 
     /**
@@ -111,13 +111,20 @@ class ClientController extends Controller
     {
         $client = Client::find($id);
         $client->delete();
-        return redirect()->route('clients.index')->with('success', 'Client successfully deleted!');
+        return redirect()->route('admin.clients.index')->with('success', 'Client successfully deleted !');
     }
 
     public function on_off(int $id){
         $client = Client::find($id);
         $client->is_active = !$client->is_active;
         $client->save();
-        return redirect()->route('clients.index')->with('success', 'Client status changed');
+        return redirect()->route('admin.clients.index')->with('success', 'Client status changed');
+    }
+
+
+    public function clients_disabled()
+    {
+        $clients = Client::where('is_active', false)->with(['account', 'transactions'])->get();
+        return view('admin.clients.indexDisabled', compact('clients'));
     }
 }

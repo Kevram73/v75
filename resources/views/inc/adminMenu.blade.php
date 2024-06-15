@@ -24,15 +24,15 @@
 					</span>
 				  </a>
 				  <ul class="treeview-menu">
-					<li class="treeview">
+					<li>
 						<a href="{{route('admin.clients.index')}}">
 							<i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Liste des clients
 							<span class="pull-right-container">
 							</span>
 						</a>
 					</li>
-					<li class="treeview">
-						<a href="#">
+					<li>
+						<a href="{{route('admin.clients_disabled')}}">
 							<i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>liste des clients retirés
 							<span class="pull-right-container">
 							</span>

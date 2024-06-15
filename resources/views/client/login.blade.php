@@ -37,13 +37,35 @@
 								<p class="mb-0 text-fade">Connectez-vous pour continuer !</p>
 							</div>
 							<div class="p-30">
-								<form method="POST" action="{{ route('client.auth_login') }}" enctype="multipart/form-data">
+                                @if ($errors->any())
+                                    <div style="form-group">
+                                        <div class="box box-danger-light">
+                                            <div class="box-header">
+                                                <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
+                                                <div class="box-tools pull-right">
+                                                    <ul>
+                                                        <li><a class="box-btn-close" href="#"></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="box-body">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+								<br><form method="POST" action="{{ route('client.auth_login') }}" enctype="multipart/form-data">
                                     @csrf
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-user"></i></span>
-											<input type="email" name="email" class="form-control ps-15 bg-transparent {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="email" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
-                                            @if ($errors->has('email'))
+											<input type="email" name="email" class="form-control ps-15 bg-transparent" placeholder="email" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" autofocus>
+                                            {{-- @if ($errors->has('email'))
                                                 <div class="box box-danger-light">
                                                     <div class="box-header">
                                                         <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
@@ -58,14 +80,14 @@
                                                         <em>{{ $errors->first('email') }}</em>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            @endif --}}
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-lock"></i></span>
-											<input type="password" name="password" class="form-control ps-15 bg-transparent {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Mot de passe" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
-                                            @if ($errors->has('password'))
+											<input type="password" name="password" class="form-control ps-15 bg-transparent" placeholder="Mot de passe" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
+                                            {{-- @if ($errors->has('password'))
                                                 <div class="box box-danger-light">
                                                     <div class="box-header">
                                                         <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
@@ -80,7 +102,7 @@
                                                         <em>{{ $errors->first('password') }}</em>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            @endif --}}
 										</div>
 									</div>
 									  <div class="row">
