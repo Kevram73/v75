@@ -18,14 +18,14 @@
 				<li class="treeview">
 				  <a href="#">
 					<i data-feather="users"></i>
-					<span>Gestion des clients</span>
+					<span>Gestion des admins</span>
 					<span class="pull-right-container">
 					  <i class="fa fa-angle-right pull-right"></i>
 					</span>
 				  </a>
 				  <ul class="treeview-menu">
 					<li class="treeview">
-						<a href="{{route('admin.clients.index')}}">
+						<a href="{{route('admin.admins.index')}}">
 							<i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Liste des clients
 							<span class="pull-right-container">
 							</span>
@@ -59,19 +59,19 @@
 				  </a>
 				  <ul class="treeview-menu">
 					<li>
-                        <a href="#">
+                        <a href="{{ route('admin.announcements.index') }}">
                             <i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Rédiger une annonce
                         </a>
                     </li>
 					<li>
-                        <a href="#">
+                        <a href="{{ route('admin.announcements.create') }}">
                             <i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Liste des annonces
                         </a>
                     </li>
 				  </ul>
 				</li>
 				<li class="treeview">
-				  <a href="#">
+				  <a href="{{ route('admin.announcements.index') }}">
 					<i data-feather="alert-octagon"></i>
 					<span>Messages clients</span>
 					<span class="pull-right-container">
