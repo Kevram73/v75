@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Announcement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AnnouncementController extends Controller
@@ -19,8 +21,8 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        $announcements = Announcement::all();
-        return view('announcements.index', compact('announcements'));
+        $announcements = Announcement::where('deleted_at', null)->orderByDesc('updated_at')->get();
+        return view('admin.announcements.index', compact('announcements'));
     }
 
     /**
@@ -28,7 +30,7 @@ class AnnouncementController extends Controller
      */
     public function create()
     {
-        return view('announcements.create');
+        return view('admin.announcements.create');
     }
 
     /**
@@ -38,9 +40,7 @@ class AnnouncementController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'publish_date' => 'required|date',
-            'admin_id' => 'required|exists:admins,id'
+            'content' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -49,14 +49,15 @@ class AnnouncementController extends Controller
 
         $announcement = new Announcement([
             'title' => $request->title,
-            'content' => $request->content,
-            'publish_date' => $request->publish_date,
-            'admin_id' => $request->admin_id
+            'content' => $request->content
         ]);
 
+        $announcement->publish_date = Carbon::now();
+        // $announcement->admin_id = Auth::admin()->id;
+        $announcement->admin_id = 1;
         $announcement->save();
 
-        return redirect()->route('announcements.index')->with('success', 'Announcement created successfully!');
+        return redirect()->route('admin.announcements.index')->with('success', 'Announcement created successfully!');
     }
 
     /**
@@ -101,7 +102,7 @@ class AnnouncementController extends Controller
             'admin_id' => $request->admin_id
         ]);
 
-        return redirect()->route('announcements.index')->with('success', 'Announcement successfully updated!');
+        return redirect()->route('admin.announcements.index')->with('success', 'Announcement successfully updated!');
     }
 
     /**
@@ -111,6 +112,6 @@ class AnnouncementController extends Controller
     {
         $announcement = Announcement::find($id);
         $announcement->delete();
-        return redirect()->route('announcements.index')->with('success', 'Announcement successfully deleted!');
+        return redirect()->route('admin.announcements.index')->with('success', 'Announcement successfully deleted!');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
@@ -29,8 +30,12 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     Route::resource('announcements', AnnouncementController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('transactions', TransactionController::class);
+    Route::resource('messages', MessageController::class);
 
     Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('admin/profile', [HomeController::class, 'profile'])->name('profile');
+    Route::get('admin/stats', [HomeController::class, 'stats'])->name('stats');
+
 
     Route::get('accounts/activated/{id}', [AccountController::class, 'on_off'])->name('account_activated');
     Route::get('clients/activated/{id}', [ClientController::class, 'on_off'])->name('client_activated');

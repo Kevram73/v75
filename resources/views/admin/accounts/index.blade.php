@@ -32,8 +32,7 @@
           <div class="col-12">
               <div class="box">
               <div class="box-header with-border">
-                <h2 class="box-title text-info" style="font-weight: 500">Liste des clients</h2>
-                <p class="mb-0 box-subtitle">Exporter les données de la table vers : CSV, Excel, PDF, Imprimer ou Copier</p>
+                <h2 class="box-title text-info" style="font-weight: 500">Liste des administrateurs</h2>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -41,41 +40,21 @@
                     <table id="example" class="table text-fade table-bordered table-hover display nowrap margin-top-10 w-p100">
                       <thead>
                           <tr class="text-dark">
-                              <th>Nom</th>
-                              <th>Prénom(s)</th>
-                              <th>email</th>
-                              <th>Téléphone</th>
-                              <th>Etat</th>
+                              <th>Nom d'utilisateur</th>
+                              <th>Adresse email</th>
                               <th>Action</th>
                           </tr>
                       </thead>
                       <tbody>
-                        @foreach ($clients as $client)
+                        @foreach ($admins as $admin)
                             <tr>
-                                <td class="text-dark">{{$client->first_name}}</td>
-                                <td>{{$client->last_name}}</td>
-                                <td>{{$client->email}}</td>
-                                <td>{{$client->phone_number}}</td>
+                                <td class="text-dark">{{ $admin->username }}</td>
+                                <td>{{ $admin->email }}</td>
                                 <td>
-                                @if ($client->is_active == TRUE)
-                                    <button class="btn btn-primary btn-md mt-5"><i class="fa fa-check"></i> Actif</button>
-                                @else
-                                    <button class="btn btn-danger btn-md mt-5"><i class="fa fa-check"></i> Inactif</button>
-                                @endif
                                 </td>
                                 <td>
-                                    <a href="">
-                                        <button class="btn btn-info-light ms-1" id="request" title="Editer le client">Modifier</button>
-                                    </a>
-                                    <a href="">
-					                    <button class="btn btn-danger-light ms-1" id="exit" title="Supprimer le client">Supprimer</button>
-                                    </a>
-                                    {{-- <button type="button" class="btn btn-xs bg-primary btn-circle" data-bs-toggle="tooltip" title="" data-bs-original-title="Edit">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-xs bg-primary btn-circle" data-bs-toggle="tooltip" title="" data-bs-original-title="Delete">
-                                        <i class="fa fa-trash"></i>
-                                    </button> --}}
+                                    <button class="btn btn-info-light ms-1" id="request" title="Editer le client">Modifier</button>
+                                    <button class="btn btn-danger-light ms-1" id="exit" title="Supprimer le client">Supprimer</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -101,8 +80,8 @@
 @endsection
 
 @push('datatable')
-    <script src="{{asset('/assets/vendor_components/datatable/datatables.min.js')}}"></script>
-    <script src="{{asset('/src/js/pages/data-table.js')}}"></script>
+    <script src="../../../assets/vendor_components/datatable/datatables.min.js"></script>
+    <script src="../src/js/pages/data-table.js"></script>
 
 @endpush
 

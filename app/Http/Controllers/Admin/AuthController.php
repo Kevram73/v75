@@ -13,6 +13,8 @@ class AuthController extends Controller
         return view('admin.login');
     }
 
+
+
     public function auth_login(Request $request)
     {
         $credentials = $request->validate([
@@ -21,8 +23,7 @@ class AuthController extends Controller
         ]);
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('admin/home');
+            return redirect()->route('admin.home');
         }
 
         return back()->withErrors([

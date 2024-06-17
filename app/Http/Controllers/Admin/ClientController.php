@@ -19,7 +19,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::with(['account', 'transactions'])->get();
+        $clients = Client::with(['account'])->get();
         return view('admin.clients.index', compact('clients'));
     }
 

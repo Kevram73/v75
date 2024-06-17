@@ -17,7 +17,7 @@
                           <ol class="breadcrumb">
                               <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
                               <li class="breadcrumb-item" aria-current="page">Gestion des clients</li>
-                              <li class="breadcrumb-item active" aria-current="page">listes des clients retirés</li>
+                              <li class="breadcrumb-item active" aria-current="page">listes des clients</li>
                           </ol>
                       </nav>
                   </div>
@@ -32,7 +32,7 @@
           <div class="col-12">
               <div class="box">
               <div class="box-header with-border">
-                <h2 class="box-title text-info" style="font-weight: 500">Liste des clients retirés</h2>
+                <h2 class="box-title text-info" style="font-weight: 500">Liste des clients</h2>
                 <p class="mb-0 box-subtitle">Exporter les données de la table vers : CSV, Excel, PDF, Imprimer ou Copier</p>
               </div>
               <!-- /.box-header -->
@@ -101,8 +101,8 @@
 @endsection
 
 @push('datatable')
-    <script src="{{asset('/assets/vendor_components/datatable/datatables.min.js')}}"></script>
-    <script src="{{asset('/src/js/pages/data-table.js')}}"></script>
+    <script src="../../../assets/vendor_components/datatable/datatables.min.js"></script>
+    <script src="../src/js/pages/data-table.js"></script>
 
 @endpush
 

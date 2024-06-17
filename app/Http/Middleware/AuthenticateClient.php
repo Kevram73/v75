@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AuthenticateClient
 {
@@ -13,8 +14,12 @@ class AuthenticateClient
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    protected function redirectTo(Request $request): ?string
-    {
-        return $request->expectsJson() ? null : route('client.login');
-    }
+    public function handle(Request $request, Closure $next, string ...$guards): Response
+     {
+         if (Auth::guard("client")->check()) {
+             return $next($request);
+         }
+         return redirect()->route('admin.client');
+
+     }
 }

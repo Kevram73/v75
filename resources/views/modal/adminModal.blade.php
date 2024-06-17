@@ -12,7 +12,7 @@
           </div>
           <div>
               <div class="d-flex flex-row">
-                  <div class=""><img src="../../../images/ui.jpg" alt="user" class="rounded bg-primary-light w-150" width="100"></div>
+                  <div class=""><img src="{{asset('/images/ui.jpg')}}" alt="user" class="rounded bg-primary-light w-150" width="100"></div>
                   <div class="ps-20">
                       {{-- Illuminate\Support\Facades\Auth::guard('admin')->admin()->email --}}
                       {{-- {{ auth()->admin()->email }} --}}
@@ -33,7 +33,7 @@
                         <span class="icon-Library fs-24"><span class="path1"></span><span class="path2"></span></span>
                   </div>
                   <div class="d-flex flex-column fw-500">
-                      <a href="extra_profile.html" class="text-dark hover-primary mb-1 fs-16">Mon compte</a>
+                      <a href="{{route('admin.profile')}}" class="text-dark hover-primary mb-1 fs-16">Mon compte</a>
                       <span class="text-fade">Informations personnelles</span>
                   </div>
               </div>
@@ -42,8 +42,8 @@
                       <span class="icon-Group-chat fs-24"><span class="path1"></span><span class="path2"></span></span>
                   </div>
                   <div class="d-flex flex-column fw-500">
-                      <a href="mailbox.html" class="text-dark hover-primary mb-1 fs-16">Messages</a>
-                      <span class="text-fade">Message(s) envoyé(s)</span>
+                      <a href="{{ route('admin.messages.index') }}" class="text-dark hover-primary mb-1 fs-16">Messages</a>
+                      <span class="text-fade">Message(s) clients</span>
                   </div>
               </div>
               {{-- <div class="d-flex align-items-center mb-30">
