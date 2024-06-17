@@ -25,6 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('client.dashboard');
+    }
+
+    public function clientProfile(){
+        // $adminConnected = Auth::admin()->id;
+        // $admin = Admin::find($adminConnected);
+        // return view('admin.profile', compact('admin'));
+
+        return view('client.clientProfile');
     }
 }

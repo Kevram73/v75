@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
+use App\Http\Controllers\Client\HomeController as ClientHomeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -53,6 +54,9 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::get('forgot-password', [ClientAuthController::class, 'forgot_password'])->name('password.request');
     Route::post('forgot-password', [ClientAuthController::class, 'reset_password'])->name('password.email');
     Route::post('logout', [ClientAuthController::class, 'auth_logout'])->name('auth_logout');
+
+    Route::get('dashboard', [ClientHomeController::class, 'index'])->name('dashboard');
+    Route::get('client/profile', [ClientHomeController::class, 'clientProfile'])->name('clientProfile');
 
     // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
 
