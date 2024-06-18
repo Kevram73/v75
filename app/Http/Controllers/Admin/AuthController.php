@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -37,5 +38,19 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/admin/login');
+    }
+
+    public function change_password(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string',
+        ]);
+
+        $admin = Auth::guard('admin')->user();
+
+        $admin->password = Hash::make($request->password);
+        $admin->save();
+
+        return back()->with('success', 'Votre mot de passe a bien été modifié');
     }
 }

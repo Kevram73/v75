@@ -4,6 +4,7 @@
 
 @section('content')
 
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <div class="container-full">
@@ -34,7 +35,7 @@
                         <div class="card-body">
                             <img src="{{asset('/images/avatar/avatar-13.png')}}" class="bg-light w-100 h-100 rounded-circle avatar-lg img-thumbnail" alt="profile-image">
 
-                            <h4 class="mb-0 mt-2"><br>{username}</h4>
+                            <h4 class="mb-0 mt-2"><br>{{ Auth::guard('admin')->user()->username }}</h4>
                             <p class="text-muted fs-14">Utilisateur admin</p>
 
                             <button type="button" class="btn btn-primary btn-sm mb-2">Administrateur</button>
@@ -45,9 +46,9 @@
                                 <p class="text-muted  mb-3">
                                     Cet utilisteur est un administrateur de v75
                                 </p><br>
-                                <p class="text-muted mb-2 "><strong class="text-dark">Nom et prénom(s):</strong> <span class="ms-2">{username}</span></p><br>
+                                <p class="text-muted mb-2 "><strong class="text-dark">Nom d'utilisateur:</strong> <span class="ms-2">{{ Auth::guard('admin')->user()->username }}</span></p><br>
 
-                                <p class="text-muted mb-2 "><strong class="text-dark">email :</strong><span class="ms-2">{email}</span></p>
+                                <p class="text-muted mb-2 "><strong class="text-dark">email :</strong><span class="ms-2">{{ Auth::guard('admin')->user()->email }}</span></p>
 
                                 {{-- <p class="text-muted mb-1 "><strong class="text-dark">Contacts :</strong> <span class="ms-2">USA</span></p> --}}
                             </div>
@@ -76,19 +77,20 @@
                             <div class="tab-content">
 
                                 <div class="tab-pane show active" id="settings">
-                                    <form>
+                                    <form action="{{ route('admin.change_password') }}" method="POST">
+                                        @csrf
                                         <br><h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle me-1"></i> Mettre à jour les informtion du compte</h5>
                                         <br><div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="firstname" class="form-label">Nom d'utilisateur</label>
-                                                    <input type="text" class="form-control" id="username" name="username" placeholder="{currentUsernameValue}" required style="color: black;">
+                                                    <input type="text" class="form-control" id="username" name="username" value="{{ Auth::guard('admin')->user()->username }}" style="color: black;" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="lastname" class="form-label">email</label>
-                                                    <input type="email" class="form-control" id="email" name="email" placeholder="{currentEmailValue}" required style="color: black;">
+                                                    <input type="email" class="form-control" id="email" name="email" value="{{ Auth::guard('admin')->user()->email }}" style="color: black;" readonly>
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->

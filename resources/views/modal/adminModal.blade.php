@@ -16,9 +16,9 @@
                   <div class="ps-20">
                       {{-- Illuminate\Support\Facades\Auth::guard('admin')->admin()->email --}}
                       {{-- {{ auth()->admin()->email }} --}}
-                      <h5 class="mb-0">Nom et prenoms</h5>
+                      <h5 class="mb-0">{{ Auth::guard('admin')->user()->username }}</h5>
                       <p class="my-5 text-fade">Admin</p>
-                      <a href="#"><span class="icon-Mail-notification me-5 text-danger"><span class="path1"></span><span class="path2"></span></span> email</a>
+                      <a href="#"><span class="icon-Mail-notification me-5 text-danger"><span class="path1"></span><span class="path2"></span></span> {{ Auth::guard('admin')->user()->email }}</a>
                       {{-- <button class="btn btn-primary-light btn-md mt-5"><i class="ti-plus"></i> Se déconnecter</button> --}}
                       <a href="{{ route('admin.auth_logout') }}" class="btn btn-danger btn-md mt-5" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Se déconnecter <i class="fa fa-sign-out"></i></a>
                       <form id="logout-form" action="{{ route('admin.auth_logout') }}" method="POST" style="display: none;">@csrf

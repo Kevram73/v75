@@ -20,7 +20,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::with(['sender', 'receiver'])->get();
+        $transactions = Transaction::all();
         return view('transactions.index', compact('transactions'));
     }
 

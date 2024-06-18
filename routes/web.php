@@ -24,6 +24,7 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     Route::get('login', [AdminAuthController::class, 'login'])->name('login');
     Route::post('login', [AdminAuthController::class, 'auth_login'])->name('auth_login');
     Route::post('logout', [AdminAuthController::class, 'auth_logout'])->name('auth_logout');
+    Route::post('change/password', [AdminAuthController::class, 'change_password'])->name('change_password');
 
     // Accounts CRUD
     Route::resource('accounts', AccountController::class);
