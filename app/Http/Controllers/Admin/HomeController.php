@@ -59,11 +59,7 @@ class HomeController extends Controller
         ));
     }
 
-    public function profile(){
-        // $adminConnected = Auth::admin()->id;
-        // $admin = Admin::find($adminConnected);
-        // return view('admin.profile', compact('admin'));
-
+    public function profile(Request $request){
         return view('admin.profile');
     }
 
