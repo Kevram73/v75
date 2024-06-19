@@ -45,52 +45,19 @@
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(255, 255, 255, 0.11); color:rgb(255, 255, 255);"><i class="text-fade ti-user"></i></span>
 											<input type="email" name="email" class="form-control ps-15 bg-transparent {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="email" required style="border: 1px solid rgba(255, 255, 255, 0.089); color:rgb(255, 255, 255);" autofocus>
-                                            {{-- @if ($errors->has('email'))
-                                                <div class="box box-danger-light">
-                                                    <div class="box-header">
-                                                        <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
-                                                        <div class="box-tools pull-right">
-                                                            <ul class="box-controls">
-                                                                <li><a class="box-btn-close" href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="box-body">
-                                                        <em>{{ $errors->first('email') }}</em>
-                                                    </div>
-                                                </div>
-                                            @endif --}}
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(255, 255, 255, 0.11); color:rgb(255, 255, 255);"><i class="text-fade ti-lock"></i></span>
 											<input type="password" name="password" class="form-control ps-15 bg-transparent {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Mot de passe" required style="border: 1px solid rgba(255, 255, 255, 0.089); color:rgb(255, 255, 255);">
-                                            {{-- @if ($errors->has('password'))
-                                                <div class="box box-danger-light">
-                                                    <div class="box-header">
-                                                        <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
-                                                        <div class="box-tools pull-right">
-                                                            <ul class="box-controls">
-                                                                <li><a class="box-btn-close" href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="box-body">
-                                                        <em>{{ $errors->first('password') }}</em>
-                                                    </div>
-                                                </div>
-                                            @endif --}}
 										</div>
 									</div>
 									  <div class="row">
 										<div class="col-6">
-										  {{-- <div class="checkbox">
-											<input type="checkbox" id="basic_checkbox_1" >
-											<label for="basic_checkbox_1">Remember Me</label>
-										  </div> --}}
+										  
 										</div>
 										<!-- /.col -->
 										<div class="col-6">
