@@ -9,18 +9,24 @@ use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth.admin');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth.admin');
+    }
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $clients = Client::with(['account'])->get();
+        $clients = Client::where('is_active', true)->get();
         return view('admin.clients.index', compact('clients'));
+    }
+
+    public function client_disabled()
+    {
+        $clients = Client::where('is_active', false)->get();
+        return view('admin.clients.indexDisabled', compact('clients'));
     }
 
     /**
@@ -126,5 +132,23 @@ class ClientController extends Controller
     {
         $clients = Client::where('is_active', false)->with(['account', 'transactions'])->get();
         return view('admin.clients.indexDisabled', compact('clients'));
+    }
+
+    public function client_disactivate(Request $request, int $id)
+    {
+        $client_user = Client::find($id);
+        $client_user->is_active = false;
+        $client_user->save();
+
+        return back()->with('success', "Votre client a bien été désactivé");
+    }
+
+    public function client_activate(Request $request, int $id)
+    {
+        $client_user = Client::find($id);
+        $client_user->is_active = true;
+        $client_user->save();
+
+        return back()->with('success', "Votre client a bien été activé");
     }
 }

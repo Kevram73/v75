@@ -45,7 +45,6 @@
                               <th>Prénom(s)</th>
                               <th>email</th>
                               <th>Téléphone</th>
-                              <th>Etat</th>
                               <th>Action</th>
                           </tr>
                       </thead>
@@ -56,14 +55,11 @@
                                 <td>{{$client->last_name}}</td>
                                 <td>{{$client->email}}</td>
                                 <td>{{$client->phone_number}}</td>
+
                                 <td>
-                                @if ($client->is_active == TRUE)
-                                    <button class="btn btn-primary btn-md mt-5"><i class="fa fa-check"></i> Actif</button>
-                                @else
-                                    <button class="btn btn-danger btn-md mt-5"><i class="fa fa-check"></i> Inactif</button>
-                                @endif
-                                </td>
-                                <td>
+                                    <a href="{{ route('admin.client.disactivate', $client->id) }}" class="btn btn-danger-light ms-1" id="request" title="Désactiver le client">
+                                        Désactiver
+                                    </a>
                                     <a href="">
                                         <button class="btn btn-info-light ms-1" id="request" title="Editer le client">Modifier</button>
                                     </a>
