@@ -34,8 +34,10 @@
                         <div class="card-body">
                             <img src="{{asset('/images/avatar/avatar-13.png')}}" class="bg-light w-100 h-100 rounded-circle avatar-lg img-thumbnail" alt="profile-image">
 
-                            <h4 class="mb-0 mt-2"><br>{username}</h4>
+                            <h4 class="mb-0 mt-2"><br>{{ Auth::guard('client')->user()->last_name }} {{ Auth::guard('client')->user()->first_name }}</h4>
                             <p class="text-muted fs-14">Utilisateur</p>
+
+
 
                             <button type="button" class="btn btn-primary btn-sm mb-2">Client v75</button>
                             {{-- <button type="button" class="btn btn-light btn-sm mb-2">Message</button> --}}
@@ -45,11 +47,11 @@
                                 <p class="text-muted  mb-3">
                                     Vous êtes un client doté du statut actif de v75
                                 </p><br>
-                                <p class="text-muted mb-2 "><strong class="text-dark">Nom et prénom(s):</strong> <span class="ms-2">{username}</span></p><br>
+                                <p class="text-muted mb-2 "><strong class="text-dark">Nom et prénom(s):</strong> <span class="ms-2">{{ Auth::guard('client')->user()->last_name }} {{ Auth::guard('client')->user()->first_name }}</span></p><br>
 
-                                <p class="text-muted mb-2 "><strong class="text-dark">email :</strong><span class="ms-2">{email}</span></p><br>
+                                <p class="text-muted mb-2 "><strong class="text-dark">email :</strong><span class="ms-2">{{ Auth::guard('client')->user()->email }}</span></p><br>
 
-                                <p class="text-muted mb-1 "><strong class="text-dark">Contacts :</strong> <span class="ms-2">{phone_number}</span></p>
+                                <p class="text-muted mb-1 "><strong class="text-dark">Contacts :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->phone_number }}</span></p>
                             </div>
 
                         </div> <!-- end card-body -->
@@ -82,47 +84,54 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="first_name" class="form-label">Nom</label>
-                                                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="{currentUsernameValue}" required style="color: black;">
+                                                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="{{ Auth::guard('client')->user()->first_name }}" readonly style="color: black;">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="last_name" class="form-label">Prénom(s)</label>
-                                                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="{currentEmailValue}" required style="color: black;">
+                                                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="{{ Auth::guard('client')->user()->last_name }}" readonly style="color: black;">
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
 
-                                        <div class="row">
+                                        <br><div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="lastname" class="form-label">email</label>
-                                                    <input type="email" class="form-control" id="email" name="email" placeholder="{currentEmailValue}" required style="color: black;">
+                                                    <input type="email" class="form-control" id="email" name="email" placeholder="{{ Auth::guard('client')->user()->email }}" readonly style="color: black;">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label for="userpassword" class="form-label">Téléphone</label>
-                                                    <input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="Contact téléphonique" required style="color: black;">
+                                                    <label for="phone_number" class="form-label">Téléphone</label>
+                                                    <input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="{{ Auth::guard('client')->user()->phone_number }}" readonly style="color: black;">
                                                 </div>
                                             </div>
                                             <!-- end col -->
                                         </div>
 
                                         <br><div class="row">
+                                            <div class="col-md-6">
+                                                <!-- Signup modal-->
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">Changer de mot de passe</button>
+                                            </div>
+                                        </div>
+
+                                        {{-- <br><div class="row">
                                             <div class="col-md-12">
                                                 <div class="mb-3">
                                                     <label for="userpassword" class="form-label">Mot de passe</label>
                                                     <input type="password" class="form-control" id="password" name="password" placeholder="Nouveau mot de passe" required style="color: black;">
                                                     <span class="form-text text-muted">Si vous souhaiter changer de mot de passe veuillez <a href="javascript: void(0);">saisir</a> une nouvelle ici !</span>
                                                 </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
+                                            </div>
+                                        </div>
 
 
                                         <div class="text-end">
                                             <button type="submit" class="btn btn-primary mt-2"><i class="mdi mdi-content-save"></i> Modifier</button>
-                                        </div>
+                                        </div> --}}
                                     </form>
                                 </div>
                                 <!-- end settings content-->
@@ -242,6 +251,45 @@
                 </div> <!-- end col -->
             </div>
             <!-- end row-->
+
+            <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            <div class="text-center mt-2 mb-8">
+                                <a href="index.html" class="text-success">
+                                    <span><img src="{{asset('/images/V75.png')}}" alt="logo" style="border-radius:100%; border:1px solid rgba(252, 254, 252, 0.24);" alt="" height="70"></span><br>
+                                </a>
+                            </div>
+
+                            <br><form class="ps-3 pe-3" action="#">
+
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Ancien mot de passe</label>
+                                    <input class="form-control" type="email" id="username" required="" placeholder="Veuillez saisir votre ancien mot de passe">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="emailaddress" class="form-label">Nouveau mot de passe</label>
+                                    <input class="form-control" type="email" id="emailaddress" required="" placeholder="Nouveau mot de passe">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Confirmation</label>
+                                    <input class="form-control" type="password" required="" id="password" placeholder="Confirmez mot de passe">
+                                </div>
+
+                                <div class="mb-3 text-center">
+                                    <button class="btn btn-primary" type="submit">Modifier</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
 
         </section>
         <!-- /.content -->

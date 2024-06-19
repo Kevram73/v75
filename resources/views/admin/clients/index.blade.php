@@ -64,12 +64,14 @@
                                 @endif
                                 </td>
                                 <td>
-                                    <a href="">
-                                        <button class="btn btn-info-light ms-1" id="request" title="Editer le client">Modifier</button>
+                                    <a href="#">
+                                        <button class="btn btn-info-light ms-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-alert-modal">Retirer</button>
                                     </a>
-                                    <a href="">
-					                    <button class="btn btn-danger-light ms-1" id="exit" title="Supprimer le client">Supprimer</button>
+                                    <a href="#">
+					                    <button class="btn btn-danger-light ms-1" id="exit" title="Supprimer le client" data-bs-toggle="modal" data-bs-target="#danger-alert-modal">Supprimer</button>
                                     </a>
+
+
                                     {{-- <button type="button" class="btn btn-xs bg-primary btn-circle" data-bs-toggle="tooltip" title="" data-bs-original-title="Edit">
                                         <i class="fa fa-pencil"></i>
                                     </button>
@@ -91,6 +93,40 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
+
+        <form action="">
+            <div id="danger-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content modal-filled bg-danger">
+                        <div class="modal-body p-4">
+                            <div class="text-center" style="color: white; font-size:15px;">
+                                <i class="dripicons-wrong h1"></i>
+                                <h4 class="mt-2">Suppression !</h4>
+                                <p class="mt-3" style="text-align: center;">Etes vous sûr de vouloir supprimer ce client ? l'action sera irreversible.</p>
+                                <button type="submit" class="btn btn-light my-2" data-bs-dismiss="modal">Supprimer</button>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        </form>
+
+        <form action="">
+            <div id="info-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content modal-filled bg-info">
+                        <div class="modal-body p-4">
+                            <div class="text-center" style="color: white; font-size:15px;">
+                                <i class="dripicons-wrong h1"></i>
+                                <h4 class="mt-2">Modification du client !</h4>
+                                <p class="mt-3" style="text-align: center;">Souhaitez vous désactiver le compte de ce client, le retirer de la plateforme ?<br>Son statut sera inactif !</p>
+                                <button type="submit" class="btn btn-light my-2" data-bs-dismiss="modal">Retirer</button>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        </form>
       </section>
       <!-- /.content -->
 

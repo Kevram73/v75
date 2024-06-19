@@ -54,7 +54,7 @@ class AnnouncementController extends Controller
 
         $announcement->publish_date = Carbon::now();
         // $announcement->admin_id = Auth::admin()->id;
-        $announcement->admin_id = 1;
+        $announcement->admin_id = Auth::guard('admin')->user()->id;
         $announcement->save();
 
         return redirect()->route('admin.announcements.index')->with('success', 'Announcement created successfully!');
@@ -86,8 +86,6 @@ class AnnouncementController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'publish_date' => 'required|date',
-            'admin_id' => 'required|exists:admins,id'
         ]);
 
         if ($validator->fails()) {
@@ -98,8 +96,8 @@ class AnnouncementController extends Controller
         $announcement->update([
             'title' => $request->title,
             'content' => $request->content,
-            'publish_date' => $request->publish_date,
-            'admin_id' => $request->admin_id
+            'publish_date' => Carbon::now(),
+            'admin_id' => Auth::guard('admin')->user()->id
         ]);
 
         return redirect()->route('admin.announcements.index')->with('success', 'Announcement successfully updated!');

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
@@ -39,8 +41,8 @@ class MessageController extends Controller
         $validator = Validator::make($request->all(), [
             'object' => 'required|string|max:255',
             'content' => 'required|string',
-            'date_sent' => 'required|date',
-            'sender_id' => 'required|integer'
+            // 'date_sent' => 'required|date',
+            // 'sender_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -50,8 +52,8 @@ class MessageController extends Controller
         $message = new Message([
             'object' => $request->object,
             'content' => $request->content,
-            'date_sent' => $request->date_sent,
-            'sender_id' => $request->sender_id
+            'date_sent' => Carbon::now(),
+            'sender_id' => Auth::guard('admin')->user()->id
         ]);
 
         $message->save();
@@ -85,8 +87,8 @@ class MessageController extends Controller
         $validator = Validator::make($request->all(), [
             'object' => 'required|string|max:255',
             'content' => 'required|string',
-            'date_sent' => 'required|date',
-            'sender_id' => 'required|integer'
+            // 'date_sent' => 'required|date',
+            // 'sender_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -97,8 +99,8 @@ class MessageController extends Controller
         $message->update([
             'object' => $request->object,
             'content' => $request->content,
-            'date_sent' => $request->date_sent,
-            'sender_id' => $request->sender_id
+            'date_sent' => Carbon::now(),
+            'sender_id' => Auth::guard('admin')->user()->id
         ]);
 
         return redirect()->route('messages.index')->with('success', 'Message successfully updated!');
