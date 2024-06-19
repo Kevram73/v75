@@ -40,9 +40,8 @@ Route::prefix('admin/')->name('admin.')->group(function () {
 
 
     Route::get('accounts/activated/{id}', [AccountController::class, 'on_off'])->name('account_activated');
-    Route::get('clients/activated/{id}', [ClientController::class, 'on_off'])->name('client_activated');
+
     Route::get('clients/disabled', [ClientController::class, 'clients_disabled'])->name('clients_disabled');
-    Route::get('clients/activate', [ClientController::class, 'client_disactivate'])->name('client.disactivate');
     Route::get('clients/disactivate/{id}', [ClientController::class, 'client_disactivate'])->name('client.disactivate');
     Route::get('clients/activate/{id}', [ClientController::class, 'client_activate'])->name('client.activate');
 });
