@@ -32,7 +32,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="{{route('admin.clients_disabled')}}">
+						<a href="{{route('admin.client_liste_disabled')}}">
 							<i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>liste des clients retirés
 							<span class="pull-right-container">
 							</span>

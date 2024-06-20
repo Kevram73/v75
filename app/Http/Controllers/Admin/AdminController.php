@@ -37,24 +37,31 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255|unique:admins',
-            'email' => 'required|string|email|max:255|unique:admins',
-            'user_id' => 'required|exists:users,id'
+            'username' => 'required',
+            'email' => 'required',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        $existant_username = Admin::where('username', $request->username)->get();
+        $existant_email = Admin::where('email', $request->email)->get();
+
+
+        if (count($existant_email) > 0) {
+            return redirect()->back()->with('error', "Cet nom d'utilisateur est déjà pris");
+        }
+
+        if (count($existant_email) > 0) {
+            return redirect()->back()->with('error', "Un compte avec cet email existe déjà");
         }
 
         $admin = new Admin([
             'username' => $request->username,
             'email' => $request->email,
-            'user_id' => $request->user_id
+            'password' => Hash::make($request->password)
         ]);
 
         $admin->save();
 
-        return redirect()->route('admins.index')->with('success', 'Admin created successfully!');
+        return redirect()->route('admins.index')->with('success', 'Compte admin créé avec succès');
     }
 
     /**
