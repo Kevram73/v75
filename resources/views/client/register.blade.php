@@ -133,22 +133,7 @@
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-mobile"></i></span>
 											<input type="text" name="phone_number" class="form-control ps-15 bg-transparent" placeholder="Tel (exemple: 22866778899)" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;" >
-                                            {{-- @if ($errors->has('phone_number'))
-                                                <div class="box box-danger-light">
-                                                    <div class="box-header">
-                                                        <h4 class="box-title text-danger"><strong>Erreur</strong></h4>
-                                                        <div class="box-tools pull-right">
-                                                            <ul class="box-controls">
-                                                                <li><a class="box-btn-close" href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="box-body">
-                                                        <em>{{ $errors->first('phone_number') }}</em>
-                                                    </div>
-                                                </div>
-                                            @endif --}}
 										</div>
 									</div>
 
