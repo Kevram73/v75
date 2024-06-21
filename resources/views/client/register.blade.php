@@ -151,6 +151,13 @@
                                             @endif --}}
 										</div>
 									</div>
+
+                                    <div class="form-group">
+										<div class="input-group mb-3">
+											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-user"></i></span>
+											<input type="text" id="fellow" name="fellow" class="form-control ps-15 bg-transparent" placeholder="Code de parrainage" value="" style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
+										</div>
+									</div>
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-lock"></i></span>
@@ -190,6 +197,7 @@
                                             <span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-eye" type="button" id="icon_pwd" ></i></span>
 										</div>
 									</div>
+
                                     <p id="message"></p>
 									  <div class="row">
 										<div class="col-11">

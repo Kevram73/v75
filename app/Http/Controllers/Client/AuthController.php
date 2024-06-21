@@ -19,10 +19,11 @@ class AuthController extends Controller
         return view('client.login');
     }
 
-    public function register()
+    public function register($fellow = "")
     {
-        return view('client.register');
+        return view('client.register', compact('fellow'));
     }
+
 
     public function auth_register(Request $request)
     {
@@ -40,6 +41,8 @@ class AuthController extends Controller
         $client->phone_number = $request->phone_number;
         $client->email = $request->email;
         $client->password = Hash::make($request->password);
+        $client->fellow_code = Uuid::uuid4();
+        $client->father_fellow = $request->fellow != ""? $request->fellow : null;
         $client->is_active = true;
         $client->save();
 

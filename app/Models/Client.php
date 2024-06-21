@@ -20,6 +20,8 @@ class Client extends Authenticatable
         'email',
         'user_id',
         'is_active',
+        'fellow_code',
+        'father_fellow',
         'password'
     ];
 

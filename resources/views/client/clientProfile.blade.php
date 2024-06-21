@@ -37,7 +37,7 @@
                             <h4 class="mb-0 mt-2"><br>{{ Auth::guard('client')->user()->nom }}</h4>
                             <p class="text-muted fs-14">Utilisateur</p>
 
-                            <button type="button" class="btn btn-primary btn-sm mb-2">Client v75</button>
+                            <button type="button" onclick="copyToClipboard('{{ route('client.register.fellow', Auth::guard('client')->user()->fellow_code) }}')" class="btn btn-primary btn-sm mb-2">Lien de parrainage</button>
                             {{-- <button type="button" class="btn btn-light btn-sm mb-2">Message</button> --}}
 
                             <div class="text-start mt-3">
@@ -50,7 +50,8 @@
                                 <p class="text-muted mb-2 "><strong class="text-dark">email :</strong><span class="ms-2">{{ Auth::guard('client')->user()->email }}</span></p><br>
 
                                 <p class="text-muted mb-1 "><strong class="text-dark">Contacts :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->phone_number }}</span></p> <br>
-                                <p class="text-muted mb-1 "><strong class="text-dark">Numero de compte :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->account()->account_num }}</span></p>
+                                <p class="text-muted mb-1 "><strong class="text-dark">Numero de compte :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->account()->account_num }}</span></p> <br>
+                                <p class="text-muted mb-1 "><strong class="text-dark">Code de parrainage :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->fellow_code }}</span></p>
                             </div>
 
                         </div> <!-- end card-body -->
@@ -247,4 +248,12 @@
 
 @push('profile')
     <script src="../src/js/pages/timeline.js"></script>
+    <script>
+        function copyToClipboard(value) {
+             // Create a temporary input element
+             navigator.clipboard.writeText(value);
+            // Alert the copied text
+            alert("Lien de parrainage copié: " + value);
+        }
+    </script>
 @endpush

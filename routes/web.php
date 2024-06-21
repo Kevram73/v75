@@ -51,7 +51,8 @@ Route::prefix('client/')->name('client.')->group(function () {
     // Auth
     Route::get('login', [ClientAuthController::class, 'login'])->name('login');
     Route::post('login', [ClientAuthController::class, 'auth_login'])->name('auth_login');
-    Route::get('register', [ClientAuthController::class, 'register'])->name('register');
+    Route::get('register/', [ClientAuthController::class, 'register'])->name('register');
+    Route::get('register/{fellow}', [ClientAuthController::class, 'register'])->name('register.fellow');
     Route::post('register', [ClientAuthController::class, 'auth_register'])->name('auth_register');
     Route::get('forgot-password', [ClientAuthController::class, 'forgot_password'])->name('password.request');
     Route::post('forgot-password', [ClientAuthController::class, 'reset_password'])->name('password.email');
