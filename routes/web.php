@@ -16,6 +16,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('policy', function () {
+    return view('policy');
+});
+
 
 
 Route::prefix('admin/')->name('admin.')->group(function () {
