@@ -58,7 +58,12 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::post('logout', [ClientAuthController::class, 'auth_logout'])->name('auth_logout');
 
     Route::get('dashboard', [ClientHomeController::class, 'index'])->name('dashboard');
-    Route::get('client/profile', [ClientHomeController::class, 'clientProfile'])->name('clientProfile');
+    Route::get('profile', [ClientHomeController::class, 'clientProfile'])->name('clientProfile');
+    Route::get('deposits', [ClientHomeController::class, 'deposits'])->name('deposits');
+    Route::get('withdrawals', [ClientHomeController::class, 'withdrawals'])->name('withdrawals');
+    Route::get('actualites', [ClientHomeController::class, 'actualites'])->name('actualites');
+    Route::get('service/client', [ClientHomeController::class, 'service_client'])->name('service_client');
+    Route::get('account', [ClientHomeController::class, 'account'])->name('account');
 
     // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
 
