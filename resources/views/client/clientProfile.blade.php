@@ -34,7 +34,7 @@
                         <div class="card-body">
                             <img src="{{asset('/images/avatar/avatar-13.png')}}" class="bg-light w-100 h-100 rounded-circle avatar-lg img-thumbnail" alt="profile-image">
 
-                            <h4 class="mb-0 mt-2"><br>{username}</h4>
+                            <h4 class="mb-0 mt-2"><br>{{ Auth::guard('client')->user()->nom }}</h4>
                             <p class="text-muted fs-14">Utilisateur</p>
 
                             <button type="button" class="btn btn-primary btn-sm mb-2">Client v75</button>
@@ -45,11 +45,12 @@
                                 <p class="text-muted  mb-3">
                                     Vous êtes un client doté du statut actif de v75
                                 </p><br>
-                                <p class="text-muted mb-2 "><strong class="text-dark">Nom et prénom(s):</strong> <span class="ms-2">{username}</span></p><br>
+                                <p class="text-muted mb-2 "><strong class="text-dark">Nom et prénom(s):</strong> <span class="ms-2">{{ Auth::guard('client')->user()->last_name }} {{ Auth::guard('client')->user()->first_name }}</span></p><br>
 
-                                <p class="text-muted mb-2 "><strong class="text-dark">email :</strong><span class="ms-2">{email}</span></p><br>
+                                <p class="text-muted mb-2 "><strong class="text-dark">email :</strong><span class="ms-2">{{ Auth::guard('client')->user()->email }}</span></p><br>
 
-                                <p class="text-muted mb-1 "><strong class="text-dark">Contacts :</strong> <span class="ms-2">{phone_number}</span></p>
+                                <p class="text-muted mb-1 "><strong class="text-dark">Contacts :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->phone_number }}</span></p> <br>
+                                <p class="text-muted mb-1 "><strong class="text-dark">Numero de compte :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->account()->account_num }}</span></p>
                             </div>
 
                         </div> <!-- end card-body -->
@@ -76,19 +77,20 @@
                             <div class="tab-content">
 
                                 <div class="tab-pane show active" id="settings">
-                                    <form>
+                                    <form method="POST" action="{{ route('client.change_account_details')}}" >
+                                        @csrf
                                         <br><h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle me-1"></i> Mettre à jour les informtion du compte</h5>
                                         <br><div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="first_name" class="form-label">Nom</label>
-                                                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="{currentUsernameValue}" required style="color: black;">
+                                                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ Auth::guard('client')->user()->last_name }}" required style="color: black;">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="last_name" class="form-label">Prénom(s)</label>
-                                                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="{currentEmailValue}" required style="color: black;">
+                                                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{ Auth::guard('client')->user()->first_name }}" required style="color: black;">
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
@@ -97,27 +99,19 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="lastname" class="form-label">email</label>
-                                                    <input type="email" class="form-control" id="email" name="email" placeholder="{currentEmailValue}" required style="color: black;">
+                                                    <input type="email" class="form-control" id="email" name="email" value="{{ Auth::guard('client')->user()->email }}" required style="color: black;" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="userpassword" class="form-label">Téléphone</label>
-                                                    <input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="Contact téléphonique" required style="color: black;">
+                                                    <input type="number" class="form-control" id="phone_number" name="phone_number" value="{{ Auth::guard('client')->user()->phone_number }}" required style="color: black;">
                                                 </div>
                                             </div>
                                             <!-- end col -->
                                         </div>
 
-                                        <br><div class="row">
-                                            <div class="col-md-12">
-                                                <div class="mb-3">
-                                                    <label for="userpassword" class="form-label">Mot de passe</label>
-                                                    <input type="password" class="form-control" id="password" name="password" placeholder="Nouveau mot de passe" required style="color: black;">
-                                                    <span class="form-text text-muted">Si vous souhaiter changer de mot de passe veuillez <a href="javascript: void(0);">saisir</a> une nouvelle ici !</span>
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
+                                        <br>
 
 
                                         <div class="text-end">

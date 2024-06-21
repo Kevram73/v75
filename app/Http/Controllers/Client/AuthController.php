@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 use App\Models\Client;
+use App\Models\Account;
 
 class AuthController extends Controller
 {
@@ -27,7 +30,7 @@ class AuthController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'phone_number' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:clients',
             'password' => 'required|string',
         ]);
 
@@ -39,6 +42,13 @@ class AuthController extends Controller
         $client->password = Hash::make($request->password);
         $client->is_active = true;
         $client->save();
+
+        $account = new Account();
+        $account->client_id = $client->id;
+        $account->account_num = Uuid::uuid4();
+        $account->balance = 0;
+        $account->is_active = true;
+        $account->save();
 
         return redirect()->route('client.login');
     }

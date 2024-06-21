@@ -26,7 +26,7 @@ class Client extends Authenticatable
 
     public function account()
     {
-        return $this->hasMany(Account::class);
+        return Account::where('client_id', $this->id)->get()->first();
     }
 
 

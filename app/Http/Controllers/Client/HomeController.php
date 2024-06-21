@@ -31,7 +31,13 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::guard('client')->user();
-        return view('client.dashboard', compact('user'));
+        $account = Account::where('client_id', $user->id)->get()->first();
+
+        $deposit_total = Transaction::where('sender_id', $account->account_num)->get()->sum();
+        $withdrawal_total = Transaction::where('sender_id', $account->account_num)->get()->sum();
+
+
+        return view('client.dashboard', compact('user', 'deposit_total', 'withdrawal_total', 'account'));
     }
 
     public function clientProfile(){
@@ -77,5 +83,17 @@ class HomeController extends Controller
         $withdrawals = Transaction::where('receiver_id', $account->account_num)->get();
 
         return view('client.account', compact('account', 'deposits', 'withdrawals'));
+    }
+
+    public function change_account_details(Request $request){
+        $user = Auth::guard('client')->user();
+        $user->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone_number' => $request->phone_number,
+        ]);
+
+
+        return redirect()->route("client.clientProfile")->with('success', 'Compte mis à jour avec succès');
     }
 }
