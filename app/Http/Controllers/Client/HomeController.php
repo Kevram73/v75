@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Client;
+use App\Models\Transaction;
+use App\Models\Account;
 
 class HomeController extends Controller
 {
@@ -16,6 +20,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth.client');
+
     }
 
     /**
@@ -25,14 +30,70 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('client.dashboard');
+        $user = Auth::guard('client')->user();
+        $account = Account::where('client_id', $user->id)->get()->first();
+
+        $deposit_total = Transaction::where('sender_id', $account->account_num)->get()->sum();
+        $withdrawal_total = Transaction::where('sender_id', $account->account_num)->get()->sum();
+
+
+        return view('client.dashboard', compact('user', 'deposit_total', 'withdrawal_total', 'account'));
     }
 
     public function clientProfile(){
         // $adminConnected = Auth::admin()->id;
         // $admin = Admin::find($adminConnected);
         // return view('admin.profile', compact('admin'));
+        $user = Auth::guard('client')->user();
 
-        return view('client.clientProfile');
+        return view('client.clientProfile', compact('user'));
+    }
+
+    public function deposits(Request $request){
+        $user = Auth::guard('client')->user();
+        $account = Account::where('client_id', $user->id)->get()->first();
+
+        $deposits = Transaction::where('sender_id', $account->account_num)->get();
+
+        return view('client.deposits', compact('deposits'));
+    }
+
+    public function withdrawals(Request $request){
+        $user = Auth::guard('client')->user();
+        $account = Account::where('client_id', $user->id)->get()->first();
+
+        $withdrawals = Transaction::where('receiver_id', $account->account_num)->get();
+
+        return view('client.withdrawals', compact('withdrawals'));
+    }
+
+    public function actualites(Request $request){
+        $announcements = Announcement::all();
+        return view('client.announces', compact('announcements'));
+    }
+
+    public function service_client(Request $request){
+        $messages = Message::where('client_id', Auth::guard('client')->user()->id)->get();
+        return view('client.service_client', compact('messages'));
+    }
+
+    public function account(Request $request){
+        $account = Account::where('client_id', $user->id)->get()->first();
+        $deposits = Transaction::where('sender_id', $account->account_num)->get();
+        $withdrawals = Transaction::where('receiver_id', $account->account_num)->get();
+
+        return view('client.account', compact('account', 'deposits', 'withdrawals'));
+    }
+
+    public function change_account_details(Request $request){
+        $user = Auth::guard('client')->user();
+        $user->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone_number' => $request->phone_number,
+        ]);
+
+
+        return redirect()->route("client.clientProfile")->with('success', 'Compte mis à jour avec succès');
     }
 }

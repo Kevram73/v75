@@ -3,6 +3,12 @@
 @section('title', '| V75 Admin Dashboard')
 
 @section('content')
+<style>
+    .hidden {
+            visibility: hidden;
+        }
+
+</style>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -52,16 +58,23 @@
                     <div class="box">
                         <div class="box-header with-border">
                           <h4 class="box-title" style="color: rgb(184, 184, 184);">Nouvel administrateur</h4>
+                        @if (Session::has('error'))
+                            <span style="color: red;">{{ Session::get('error') }}</span>
+                        @endif
+                        @if (Session::has('success'))
+                            <span style="color: green;">{{ Session::get('success') }}</span>
+                        @endif
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal form-element">
+                        <form class="form-horizontal form-element" action="{{ route('admin.admins.store') }}" method="POST">
+                            @csrf
                           <div class="box-body">
                             <div class="form-group row">
                                 <label for="username" class="col-sm-2 form-label">Nom d'utilisateur : </label>
 
                                 <div class="col-sm-10">
-                                  <input type="text" placeholder="Username" class="form-control" id="username" name="username" required style="color: black;">
+                                  <input type="text" placeholder="Jeandoe" class="form-control" id="username" name="username" required style="color: black;" value="{{ old('username') }}">
 
                                 </div>
                               </div>
@@ -69,25 +82,28 @@
                               <label for="email" class="col-sm-2 form-label">Email : </label>
 
                               <div class="col-sm-10">
-                                <input type="email" placeholder="Adresse email" class="form-control" id="email" name="email" required style="color: black;">
+                                <input type="email" placeholder="jeandoe@gmail.com" class="form-control" id="email" name="email" required style="color: black;" value="{{ old('email') }}">
 
                               </div>
                             </div>
                             <div class="form-group row">
-                              <label for="password" class="col-sm-2 form-label">Mot de passe : </label>
-
-                              <div class="col-sm-10">
-                                <input type="password" placeholder="********" class="form-control" id="password" name="password" required style="color: black;">
-                                
-                              </div>
+                                <label for="password" class="col-sm-2 form-label">Mot de passe :</label>
+                                <div class="col-sm-10">
+                                    <input type="password" placeholder="********" class="form-control" id="password" name="password" required style="color: black;" value="{{ old('password') }}">
+                                </div>
                             </div>
-
-                          </div>
-                          <!-- /.box-body -->
-                          <div class="box-footer">
-                            <button type="reset" class="btn btn-danger-light ms-1">Cancel</button>
-                            <button type="submit" class="btn btn-info-light ms-1">Sign in</button>
-                          </div>
+                            <div class="form-group row">
+                                <label for="password_confirm" class="col-sm-2 form-label">Confirmation de mot de passe :</label>
+                                <div class="col-sm-10">
+                                    <input type="password" placeholder="********" class="form-control" id="password_confirm" name="password_confirm" required style="color: black;" value="{{ old('password_confirm') }}">
+                                    <span id="error_msg" style="color: red;" class="hidden">Pas de correspondance entre les mots de passe</span><br>
+                                    <span id="success_msg" style="color: green;" class="hidden">Les mots de passe correspondent</span>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <button type="reset" class="btn btn-danger-light ms-1">Annuler</button>
+                                <button type="submit" class="btn btn-info-light ms-1" id="submit_button" disabled=true>Enregistrer</button>
+                            </div>
                           <!-- /.box-footer -->
                         </form>
                       </div>
@@ -115,6 +131,24 @@
     <script src="{{asset('/assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js')}}"></script>
 
     <script src="{{asset('/src/js/pages/editor.js')}}"></script>
+    <script>
+         $(document).ready(function() {
+            $('#password, #password_confirm').on('keyup', function() {
+                let password = $('#password').val();
+                let confirmPassword = $('#password_confirm').val();
 
+                if (password === confirmPassword) {
+                    $('#error_msg').addClass('hidden');
+                    $('#success_msg').removeClass('hidden');
+                    $('#submit_button').disabled = false;
+
+                } else {
+                    $('#error_msg').removeClass('hidden');
+                    $('#success_msg').addClass('hidden');
+                    $('#submit_button').disabled = true;
+                }
+            });
+        });
+    </script>
 @endpush
 

@@ -16,7 +16,7 @@
                   <div class="ps-20">
                       {{-- Illuminate\Support\Facades\Auth::guard('admin')->admin()->email --}}
                       {{-- {{ auth()->admin()->email }} --}}
-                      <h5 class="mb-0">{{ Auth::guard('client')->user()->last_name }} {{ Auth::guard('client')->user()->first_name }}</h5>
+                      <h5 class="mb-0">{{ Auth::guard('client')->user()->first_name }} {{ Auth::guard('client')->user()->last_name }}</h5>
                       <p class="my-5 text-fade">Client</p>
                       <a href="#"><span class="icon-Mail-notification me-5 text-danger"><span class="path1"></span><span class="path2"></span></span> {{ Auth::guard('client')->user()->email }}</a>
                       {{-- <button class="btn btn-primary-light btn-md mt-5"><i class="ti-plus"></i> Se déconnecter</button> --}}

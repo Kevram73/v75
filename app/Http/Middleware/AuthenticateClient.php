@@ -19,7 +19,7 @@ class AuthenticateClient
          if (Auth::guard("client")->check()) {
              return $next($request);
          }
-         return redirect()->route('admin.client');
+         return redirect()->route('client.login');
 
      }
 }

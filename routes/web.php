@@ -45,7 +45,7 @@ Route::prefix('admin/')->name('admin.')->group(function () {
 
     Route::get('accounts/activated/{id}', [AccountController::class, 'on_off'])->name('account_activated');
 
-    Route::get('clients/disabled', [ClientController::class, 'clients_disabled'])->name('clients_disabled');
+    Route::get('client/liste/disabled', [ClientController::class, 'clients_disabled'])->name('client_liste_disabled');
     Route::get('clients/disactivate/{id}', [ClientController::class, 'client_disactivate'])->name('client.disactivate');
     Route::get('clients/activate/{id}', [ClientController::class, 'client_activate'])->name('client.activate');
 });
@@ -55,14 +55,21 @@ Route::prefix('client/')->name('client.')->group(function () {
     // Auth
     Route::get('login', [ClientAuthController::class, 'login'])->name('login');
     Route::post('login', [ClientAuthController::class, 'auth_login'])->name('auth_login');
-    Route::get('register', [ClientAuthController::class, 'register'])->name('register');
+    Route::get('register/', [ClientAuthController::class, 'register'])->name('register');
+    Route::get('register/{fellow}', [ClientAuthController::class, 'register'])->name('register.fellow');
     Route::post('register', [ClientAuthController::class, 'auth_register'])->name('auth_register');
     Route::get('forgot-password', [ClientAuthController::class, 'forgot_password'])->name('password.request');
     Route::post('forgot-password', [ClientAuthController::class, 'reset_password'])->name('password.email');
     Route::post('logout', [ClientAuthController::class, 'auth_logout'])->name('auth_logout');
 
     Route::get('dashboard', [ClientHomeController::class, 'index'])->name('dashboard');
-    Route::get('client/profile', [ClientHomeController::class, 'clientProfile'])->name('clientProfile');
+    Route::get('profile', [ClientHomeController::class, 'clientProfile'])->name('clientProfile');
+    Route::get('deposits', [ClientHomeController::class, 'deposits'])->name('deposits');
+    Route::get('withdrawals', [ClientHomeController::class, 'withdrawals'])->name('withdrawals');
+    Route::get('actualites', [ClientHomeController::class, 'actualites'])->name('actualites');
+    Route::get('service/client', [ClientHomeController::class, 'service_client'])->name('service_client');
+    Route::get('account', [ClientHomeController::class, 'account'])->name('account');
+    Route::post('account/details', [ClientHomeController::class, 'change_account_details'])->name('change_account_details');
 
     // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
 
