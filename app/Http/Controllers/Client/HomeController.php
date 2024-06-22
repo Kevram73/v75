@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Client;
 
+use Carbon\Carbon;
+use App\Models\Client;
+use App\Models\Account;
+use App\Models\Message;
+use App\Models\Transaction;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Client;
-use App\Models\Transaction;
-use App\Models\Account;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -53,36 +57,67 @@ class HomeController extends Controller
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
 
-        $deposits = Transaction::where('sender_id', $account->account_num)->get();
+        $deposits = Transaction::where('sender_id', $account->account_num)->orderByDesc('created_at')->get();
 
-        return view('client.deposits', compact('deposits'));
+        return view('client.deposits', compact('deposits', 'account'));
     }
 
     public function withdrawals(Request $request){
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
 
-        $withdrawals = Transaction::where('receiver_id', $account->account_num)->get();
+        $withdrawals = Transaction::where('receiver_id', $account->account_num)->orderByDesc('created_at')->get();
 
-        return view('client.withdrawals', compact('withdrawals'));
+        return view('client.withdrawals', compact('withdrawals', 'account'));
     }
 
     public function actualites(Request $request){
-        $announcements = Announcement::all();
+        $announcements = Announcement::orderByDesc('updated_at')->get();;
         return view('client.announces', compact('announcements'));
     }
 
+    public function messageCreate()
+    {
+        return view('client.message_create');
+    }
+
+    public function messageStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'object' => 'required|string|max:255',
+            'content' => 'required|string',
+            // 'date_sent' => 'required|date',
+            // 'sender_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $message = new Message([
+            'object' => $request->object,
+            'content' => $request->content,
+            'date_sent' => Carbon::now(),
+            'sender_id' => Auth::guard('client')->user()->id
+        ]);
+
+        $message->save();
+
+        return redirect()->route('client.service_client')->with('success', 'Message sended successfully!');
+    }
+
     public function service_client(Request $request){
-        $messages = Message::where('client_id', Auth::guard('client')->user()->id)->get();
+        $messages = Message::where('sender_id', Auth::guard('client')->user()->id)->get();
         return view('client.service_client', compact('messages'));
     }
 
     public function account(Request $request){
+        $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
-        $deposits = Transaction::where('sender_id', $account->account_num)->get();
-        $withdrawals = Transaction::where('receiver_id', $account->account_num)->get();
+        $totalDeposits = Transaction::where('sender_id', $account->account_num)->sum('amount');
+        $totalWithdrawals = Transaction::where('receiver_id', $account->account_num)->sum('amount');
 
-        return view('client.account', compact('account', 'deposits', 'withdrawals'));
+        return view('client.account', compact('account', 'totalDeposits', 'totalWithdrawals'));
     }
 
     public function change_account_details(Request $request){

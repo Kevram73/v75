@@ -66,6 +66,9 @@
 
                             <p class="card-text text-gray-600">
                                 <?php
+                                    echo '<style>';
+                                        echo 'body { text-align: justify; line-height:26px; font-size:15px; color: #707070; }';
+                                    echo '</style>';
                                     echo $ctnt;
                                 ?>
                             </p>

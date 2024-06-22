@@ -16,7 +16,7 @@
 				</li>
 
                 <li>
-                    <a href="">
+                    <a href="{{route('client.account')}}">
                       <i data-feather="user-check"></i>
                       <span>Mon compte</span>
                       <span class="pull-right-container">
@@ -34,14 +34,14 @@
 				  </a>
 				  <ul class="treeview-menu">
 					<li>
-						<a href="">
+						<a href="{{route('client.deposits')}}">
 							<i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Mes invests
 							<span class="pull-right-container">
 							</span>
 						</a>
 					</li>
 					<li>
-						<a href="">
+						<a href="{{route('client.withdrawals')}}">
 							<i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Mes retraits
 							<span class="pull-right-container">
 							</span>
@@ -52,7 +52,7 @@
 				</li>
 
                 <li>
-                    <a href="">
+                    <a href="{{route('client.actualites')}}">
                       <i data-feather="message-circle"></i>
                       <span>Actualités</span>
                       <span class="pull-right-container">
@@ -60,16 +60,34 @@
                     </a>
                 </li>
 
+                <li class="treeview">
+                    <a href="#">
+                      <i data-feather="alert-octagon"></i>
+                      <span>Service client</span>
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                        <a href="{{route('client.message')}}">
+                            <i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Ecrire à v75
+							<span class="pull-right-container">
+							</span>
+                        </a>
+                        </li>
+                        <li>
+                            <a href="{{route('client.service_client')}}">
+                                <i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Mes messages
+                                <span class="pull-right-container">
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
 				<li>
-				  <a href="">
-					<i data-feather="alert-octagon"></i>
-					<span>Service client</span>
-					<span class="pull-right-container">
-					</span>
-				  </a>
-				</li>
-				<li>
-				  <a href="#">
+				  <a href="/">
 					<i data-feather="home"></i>
 					<span>Retour à l'accueil</span>
 					<span class="pull-right-container">

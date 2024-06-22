@@ -1,6 +1,6 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 Admin Dashboard')
+@section('title', '| V75 Dashboard')
 
 @section('content')
 
@@ -34,7 +34,7 @@
                         <div class="card-body">
                             <img src="{{asset('/images/avatar/avatar-13.png')}}" class="bg-light w-100 h-100 rounded-circle avatar-lg img-thumbnail" alt="profile-image">
 
-                            <h4 class="mb-0 mt-2"><br>{{ Auth::guard('client')->user()->nom }}</h4>
+                            <h4 class="mb-0 mt-2"><br>{{ Auth::guard('client')->user()->last_name }}</h4>
                             <p class="text-muted fs-14">Utilisateur</p>
 
                             <button type="button" onclick="copyToClipboard('{{ route('client.register.fellow', Auth::guard('client')->user()->fellow_code) }}')" class="btn btn-primary btn-sm mb-2">Lien de parrainage</button>
@@ -85,13 +85,13 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="first_name" class="form-label">Nom</label>
-                                                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ Auth::guard('client')->user()->last_name }}" required style="color: black;">
+                                                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ Auth::guard('client')->user()->first_name }}" required style="color: black;">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="last_name" class="form-label">Prénom(s)</label>
-                                                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{ Auth::guard('client')->user()->first_name }}" required style="color: black;">
+                                                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{ Auth::guard('client')->user()->last_name }}" required style="color: black;">
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->

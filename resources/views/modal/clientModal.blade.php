@@ -26,7 +26,7 @@
                   </div>
               </div>
           </div>
-          
+
             <div class="dropdown-divider my-30"></div>
             <div>
               <div class="d-flex align-items-center mb-30">
@@ -43,7 +43,7 @@
                       <span class="icon-Group-chat fs-24"><span class="path1"></span><span class="path2"></span></span>
                   </div>
                   <div class="d-flex flex-column fw-500">
-                      <a href="" class="text-dark hover-primary mb-1 fs-16">Messages</a>
+                      <a href="{{route('client.service_client')}}" class="text-dark hover-primary mb-1 fs-16">Messages</a>
                       <span class="text-fade">Mes messages</span>
                   </div>
               </div>
@@ -52,7 +52,7 @@
                       <span class="icon-Write fs-24"><span class="path1"></span><span class="path2"></span></span>
                   </div>
                   <div class="d-flex flex-column fw-500">
-                      <a href="l" class="text-dark hover-primary mb-1 fs-16">Mes transactions</a>
+                      <a href="{{route('client.deposits')}}" class="text-dark hover-primary mb-1 fs-16">Mes transactions</a>
                       <span class="text-fade">historique des transactions</span>
                   </div>
               </div>

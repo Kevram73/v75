@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../images/favicon.ico">
+    <link rel="icon" href="{{asset('/images/V75.png')}}" style="border-radius: 100%;">
 
     <title>v75 - Log in</title>
 

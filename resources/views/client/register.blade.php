@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../images/favicon.ico">
+    <link rel="icon" href="{{asset('/images/V75.png')}}" style="border-radius: 100%;">
 
     <title>v75 - Log in</title>
 
@@ -155,7 +155,7 @@
                                     <div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-user"></i></span>
-											<input type="text" id="fellow" name="fellow" class="form-control ps-15 bg-transparent" placeholder="Code de parrainage" value="" style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
+											<input type="text" id="fellow" name="fellow" class="form-control ps-15 bg-transparent" placeholder="Code de parrainage (optionnel)" value="" style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
 										</div>
 									</div>
 									<div class="form-group">
@@ -203,7 +203,7 @@
 										<div class="col-11">
 										  <div class="checkbox">
 											<input type="checkbox" id="terms" onClick="button();" required>
-											<label for="terms" title="J'accepte les conditions générales d'utilisation de la plateforme"><a href="#" style="color: rgb(191, 55, 191);">J'accepte les conditions d'utilisation</a></label>
+											<label for="terms" title="J'accepte les conditions générales d'utilisation de la plateforme"><a href="policy" style="color: rgb(191, 55, 191);">J'accepte les conditions d'utilisation</a></label>
 										  </div>
 										</div>
 										<!-- /.col -->

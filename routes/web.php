@@ -67,9 +67,12 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::get('deposits', [ClientHomeController::class, 'deposits'])->name('deposits');
     Route::get('withdrawals', [ClientHomeController::class, 'withdrawals'])->name('withdrawals');
     Route::get('actualites', [ClientHomeController::class, 'actualites'])->name('actualites');
+    Route::get('message', [ClientHomeController::class, 'messageCreate'])->name('message');
     Route::get('service/client', [ClientHomeController::class, 'service_client'])->name('service_client');
     Route::get('account', [ClientHomeController::class, 'account'])->name('account');
     Route::post('account/details', [ClientHomeController::class, 'change_account_details'])->name('change_account_details');
+    Route::post('message/send', [ClientHomeController::class, 'messageStore'])->name('message_send');
+
 
     // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
 

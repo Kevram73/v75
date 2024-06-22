@@ -80,8 +80,8 @@
 @endsection
 
 @push('datatable')
-    <script src="../../../assets/vendor_components/datatable/datatables.min.js"></script>
-    <script src="../src/js/pages/data-table.js"></script>
+    <script src="{{asset('/assets/vendor_components/datatable/datatables.min.js')}}"></script>
+    <script src="{{asset('/src/js/pages/data-table.js')}}"></script>
 
 @endpush
 

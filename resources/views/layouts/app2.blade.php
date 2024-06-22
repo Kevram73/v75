@@ -17,8 +17,10 @@
 	<link rel="stylesheet" href="{{asset('/src/css/style.css')}}">
 	<link rel="stylesheet" href="{{asset('/src/css/skin_color.css')}}">
 
-	  <link rel="stylesheet" href="{{asset('/src/css/custom.css')}}">
- <link rel="stylesheet" href="{{asset('/src/css/responsive.css')}}">
+	<link rel="stylesheet" href="{{asset('/src/css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('/src/css/responsive.css')}}">
+    <link rel="stylesheet" href="{{asset('/src/css/dashboard5.css')}}">
+
 
   </head>
 
@@ -165,5 +167,6 @@
     @stack('editor')
     @stack('profile')
     @stack('home')
+    @stack('account')
 </body>
 </html>

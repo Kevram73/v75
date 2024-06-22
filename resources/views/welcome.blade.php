@@ -81,7 +81,7 @@
 
                 <li><a href="#blog-section" class="nav-link">Actualités</a></li>
                 <li><a href="#contact-section" class="nav-link">Contacts</a></li>
-                <li class="social"><a href="#"> Se connecter  <i class="fa fa-spinner fa-spin" style="font-size:16px"></i></a></li>
+                <li class="social"><a href="{{route('client.login')}}"> Se connecter  <i class="fa fa-spinner fa-spin" style="font-size:16px"></i></a></li>
                 </ul>
             </nav>
             </div>

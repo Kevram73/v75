@@ -238,5 +238,5 @@
 @endsection
 
 @push('profile')
-    <script src="../src/js/pages/timeline.js"></script>
+    <script src="{{asset('/src/js/pages/timeline.js')}}"></script>
 @endpush

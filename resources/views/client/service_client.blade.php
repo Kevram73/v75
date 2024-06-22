@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
-@section('title', '| V75 Admin Dashboard')
+@section('title', '| V75 Dashboard')
 
 @section('content')
 
@@ -16,8 +16,8 @@
                       <nav>
                           <ol class="breadcrumb">
                               <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                              <li class="breadcrumb-item" aria-current="page">Gestion des messages</li>
-                              <li class="breadcrumb-item active" aria-current="page">listes des messages</li>
+                              <li class="breadcrumb-item" aria-current="page">Service client</li>
+                              <li class="breadcrumb-item active" aria-current="page">Mes messages</li>
                           </ol>
                       </nav>
                   </div>
@@ -31,9 +31,9 @@
             <div class="col-xl-12 col-12">
                 <div class="box">
                   <div class="box-header">
-                    <h3 class="box-title text-info" style="font-weight: 500;">Messages clients</h3>
+                    <h3 class="box-title text-info" style="font-weight: 500;">{{ Auth::guard('client')->user()->first_name }} {{ Auth::guard('client')->user()->last_name }}</h3>
                     <div class="box-controls pull-right">
-                      <button class="btn btn-xs btn-primary">Liste</button>
+                      <button class="btn btn-xs btn-info">Messages envoyés</button>
                     </div>
                   </div>
 
@@ -47,31 +47,25 @@
                 <div class="col-md-12 col-lg-6">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
-                            @php
-                                $client = app\Models\Client::find($message->sender_id);
-                            @endphp
-                            <span><i class="fa fa-user me-2"></i> <a href="#">De : {{$client->first_name}} {{$client->last_name}}</a></span>
-                            <span class="text-muted">{{$message->date_sent}}</span>
+
+                            <span><i class="fa fa-user me-2"></i> <a href="#">Par vous</a></span>
+                            <span class="text-muted">{{$message->created_at->format('d/m/Y à H:i')}}</span>
                         </div>
-                    {{-- <img class="card-img-top bter-0 btsr-0" src="{{asset('/images/gallery/landscape9.jpg" alt="Card image cap')}}"> --}}
                     <div class="card-body">
                         <h4 class="card-title fw-600">{{$message->object}}</h4>
-                        <p class="card-text text-gray-600">{{$message->content}}</p>
+                        <p class="card-text text-gray-600" style="text-align: justify; line-height:24px;">{{$message->content}}</p>
                     </div>
                     <div class="card-footer justify-content-between d-flex">
                         <ul class="list-inline mb-0 me-2">
-                            {{-- <li class="list-inline-item">
-                                <a href="#"><i class="fa fa-heart-o"></i></a>
+                            <li class="list-inline-item">
+                                <i class="fa fa-comment-o"></i>
                             </li>
                             <li class="list-inline-item">
-                                <a href="#"><i class="fa fa-comment-o"></i></a>
-                            </li> --}}
+                                <button class="btn btn-xs btn-primary">envoyé</button>
+                            </li>
                         </ul>
 
-                        <ul class="list-inline mb-0">
-                            <li class="btn btn-danger-light ms-1"><a href="#"><i class="fa fa-trash-o"></i> Supprimer</a></li>
-                            <li class="btn btn-info-light ms-1"><a href="mailto:{{$client->email}}"><i class="fa fa-email"></i> Répondre</a></li>
-                        </ul>
+
                     </div>
                     </div>
                 </div>
