@@ -174,12 +174,13 @@
                                         <a class="box box-link-pop text-center" href="javascript:void(0)">
                                             <div class="box-body py-25 bg-primary-light btsr-0 bter-0">
                                                 <p class="fw-600">
-                                                    <span class="icon-users me-5 text-primary"><span class="path1"></span><span class="path2"></span></span> Filleuls de niveau 2
+                                                    <span class="icon-users me-5 text-primary"><span class="path1"></span><span class="path2"></span></span> Filleuls de niveau 1
                                                 </p>
                                             </div>
                                             <div class="box-body">
                                                 <p class="fs-20 text-black">
                                                     <strong>{nbF1}</strong>
+                                                    {{-- {nbF1} --}}
                                                 </p>
                                             </div>
                                         </a>
@@ -188,12 +189,12 @@
                                         <a class="box box-link-pop text-center" href="javascript:void(0)">
                                             <div class="box-body py-25 bg-info-light btsr-0 bter-0">
                                                 <p class="fw-600">
-                                                    <span class="icon-users me-5 text-info"><span class="path1"></span><span class="path2"></span></span> Filleuls de niveau 1
+                                                    <span class="icon-users me-5 text-info"><span class="path1"></span><span class="path2"></span></span> Filleuls de niveau 2
                                                 </p>
                                             </div>
                                             <div class="box-body">
                                                 <p class="fs-20 text-black">
-                                                    <strong>{nbF2}</strong>
+                                                    <strong>{nbF1}</strong>
                                                 </p>
                                             </div>
                                         </a>
@@ -208,7 +209,7 @@
                                             </div>
                                             <div class="box-body">
                                                 <p class="fs-20 text-black">
-                                                    <strong>{nbF3}</strong>
+                                                    <strong>{nbF1}</strong>
                                                 </p>
                                             </div>
                                         </a>

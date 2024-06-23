@@ -39,13 +39,22 @@
                       </div>
 
                       <div class="box-body">
-                        <p class="text-gray-600"><marquee behavior="" direction="left">Avec v75, c'est votre argent qui travaille pour vous ! Investissez, aucune condition préalable requise et percevez jusqu'à 3,3% sur votre capital initial</marquee></p>
+                        <p class="text-gray-600"><marquee behavior="" direction="left">Gagnez 3,33% par jour, 100% par mois avec notre bot de trading des indices. Minimum à investir 10$ ; transactions via <span class="text-success">Dollar Perfect money</span> et <span class="text-success">USDT TRC20</span>. Dépôt et retrait instantané. Avec v75, c'est votre argent qui travaille pour vous !</marquee></p>
+                        {{-- Investissez, aucune condition préalable requise et percevez jusqu'à 3,3% sur votre capital initial --}}
                       </div>
                     </div>
                 </div>
             </div>
 
             <div class="row bg-transparent">
+
+
+
+
+
+
+
+
                 <div class="col-xl-12 col-12">
                     <div class="row">
 
@@ -97,6 +106,36 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                <div class="col-xl-12 col-12">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <div class="box">
+                                <img class="card-img-to" src="{{asset('/images/tx.png')}}" alt="Taux de parrainage" style="border-radius: 0% 0% 0% 0%;">
+                            </div>
+                        </div>
+                        <div class="col-xl-8">
+                            <div class="box bg-img" style="background-image: url({{asset('/images/abstract-2.svg')}});background-position: right top; background-size: 30% auto;">
+                              <div class="box-body">
+                                  <a href="#" class="box-title fw-600 hover-primary fs-14">Taux de commission v75</a>
+                                  <div class="fw-bold text-primary mt-20 mb-10">8% (niveau 1), 5% (niveau 2) et 3% (niveau 3)</div>
+                                  <p class="text-fade" style="font-size: 15px; line-height:25px;">
+                                      Vous pouvez gagnez 8% du bénéfice quitidien total de votre membre de niveau 1<br>
+                                      <span><u>Exemple</u></span>  Si le profit quotidien total des membres de niveau 1 est de 1000 vous recevrez 80 $
+                                  </p>
+                                  <p class="text-fade" style="font-size: 15px; line-height:25px;">
+                                    Vous pouvez gagnez 5% du bénéfice quitidien total de votre membre de niveau 2<br>
+                                    <span><u>Exemple</u></span>  Si le profit quotidien total des membres de niveau 2 est de 1000 vous recevrez 50 $
+                                  </p>
+                                  <p class="text-fade" style="font-size: 15px; line-height:25px;">
+                                    Vous pouvez gagnez 3% du bénéfice quitidien total de votre membre de niveau 3<br>
+                                    <span><u>Exemple</u></span>  Si le profit quotidien total des membres de niveau 4 est de 1000 vous recevrez 30 $
+                                  </p>
+                              </div>
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
