@@ -72,7 +72,7 @@ class HomeController extends Controller
     }
 
     public function actualites(Request $request){
-        $announcements = Announcement::orderByDesc('updated_at')->get();;
+        $announcements = Announcement::orderByDesc('updated_at')->get();
         return view('client.announces', compact('announcements'));
     }
 

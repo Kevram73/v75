@@ -105,28 +105,51 @@
             <div class="single-text owl-carousel">
                 <div class="slide">
                 <br><br><h1 class="text-uppercase" data-aos="fade-up">v75 Official investment Plateform</h2>
-                <br><p class="mb-5 desc"  data-aos="fade-up" data-aos-delay="100">Investir intelligemment, v75 vous guide ! <br>Faites vos placements de fonds et de capital de manière stratégique et <br>devenez un investisseur averti grâce à v75</p>
+                <br><p class="mb-5 desc"  data-aos="fade-up" data-aos-delay="100">Investir intelligemment, v75 vous guide ! <br>Faites vos placements de fonds et de capital de manière stratégique. <br>Trading automatisé de l'indice V75</p>
                 <div data-aos="fade-up" data-aos-delay="100">
                     <a href="{{route('client.login')}}" target="_blank" class="btn  btn-success mr-2 mb-2" style="color: white;">Commencer maintenant</a>
                 </div>
+                </div>
+
+                <div class="slide">
+                    <br><br><h1 class="text-uppercase" data-aos="fade-up">Une solution à vos soucis de placement</h1>
+                    <br><p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">Multipliez vos gains avec v75 : La solution d’investissement !<br>
+                        Investissez dès maintenant et gagnez jusqu'à 3,33% de bénéfice journalier <br>(100% en un mois) sur votre capital initial.</p>
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <a href="{{route('client.login')}}" target="_blank" class="btn  btn-success mr-2 mb-2" style="color: white;">Commencer maintenant</a>
+                    </div>
                 </div>
 
                 <div class="slide">
                 <br><br><h1 class="text-uppercase" data-aos="fade-up">Un investissement Stratégique</h1>
-                <br><p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">v75 encourage à investir de manière stratégique pour devenir un investisseur averti, en vous proposant des plans d'investissement financiers dès 10$</p>
+                <br><p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">v75 encourage à investir de manière stratégique pour devenir un investisseur averti avec notre bot de trading des indices en vous proposant des plans d'investissement financiers ; <br>Minimum à investir 10$</p>
                 <div data-aos="fade-up" data-aos-delay="100">
                     <a href="{{route('client.login')}}" target="_blank" class="btn  btn-success mr-2 mb-2" style="color: white;">Commencer maintenant</a>
                 </div>
                 </div>
 
                 <div class="slide">
-                <br><br><h1 class="text-uppercase" data-aos="fade-up">Une solution à vos soucis de placement</h1>
-                <br><p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">Multipliez vos gains avec v75 : La solution d’investissement !<br>
-                    Investissez dès maintenant et gagnez jusqu'à 3,33% de bénéfice journalier <br>sur votre capital initial.</p>
-                <div data-aos="fade-up" data-aos-delay="100">
-                    <a href="{{route('client.login')}}" target="_blank" class="btn  btn-success mr-2 mb-2" style="color: white;">Commencer maintenant</a>
+                    <br><br><h1 class="text-uppercase" data-aos="fade-up">Dépôt et retrait instantané</h1>
+                    <br><p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">Investissez dès maintenant et commencer à percevoir vos gains 24H après votre inscription et la création de votre compte d'investissement !<br>
+                        Dépôts et retrait instantané. <br>Un seul moyen de paiement <span class="text-success">USDT TRC20</span></p>
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <a href="{{route('client.login')}}" target="_blank" class="btn  btn-success mr-2 mb-2" style="color: white;">Commencer maintenant</a>
+                    </div>
                 </div>
+
+                <div class="slide">
+                    {{-- <br><br><h1 class="text-uppercase" data-aos="fade-up">Des commissions sur vos parrainages</h1> --}}
+                    <p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">
+                        <center>
+                            <div><img src="vitrine/images/tsbg.png" alt="" class="img-fluid" style="width: 60%; height: 50%;"></div>
+                        </center>
+                        <br><p style="color: white; margin-left:5%; margin-right:5%; line-height:32px; font-size:16px;">Des commissions sur vos parrainages ; Vous pouvez gagnez 8% du bénéfice quotidien total de votre membre de niveau 1, 5% sur celui du niveau 2 et 3% sur celui de niveau 3</p>
+                    </p><br>
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <a href="{{route('client.login')}}" target="_blank" class="btn  btn-success mr-2 mb-2" style="color: white;">Commencer maintenant</a>
+                    </div>
                 </div>
+
 
             </div>
             </div>
@@ -162,7 +185,7 @@
 
             <p style="text-align: justify; line-height: 34px;">V75 est la plateforme spécialisée dans le trading des indices synthétiques et particulièrement l'indice V75 index. Elle est  basée à Dubaï, opérant essentiellement dans le Trading, les investissements en ligne, et fait partie d'une holding de 13 sociétés qui exerce également dans le transport terrestre, le e-commerce, les BTP et bien d'autres.</p>
 
-            <p style="text-align: justify; line-height: 34px;">V75 est en place depuis 3 ans et a déjà enregistrée plus de 25.000 clients et gère un total actifs de 8,5 millions $</p>
+            <p style="text-align: justify; line-height: 34px;">En seulement quelques mois après le lancement, notre plate-forme enregistre à ce jour plus d'un miller d'utilisateurs et 600K $ d'actifs sous gestion.</p>
 
             </div>
         </div>
@@ -256,7 +279,7 @@
                 </div>
                 <div>
                 <h2 class="section-title mb-3 text-success" style="font-size: 36px;">02. Investir</h2>
-                <p style="text-align: justify; line-height: 34px;">Une fois votre comptre créé, vous pouvez commencer à investir ; le placement minimum est de 10$. <br>Nos moyens de transactions sont <span class="text-black"> Dollar perfect money, USDT TRC20.</span></p>
+                <p style="text-align: justify; line-height: 34px;">Une fois votre comptre créé, vous pouvez commencer à investir ; le placement minimum est de 10$. <br>Le moyen de transaction supporté par la plateforme est <span class="text-black"> USDT TRC20.</span></p>
                 <p><a href="{{route('client.login')}}" class="btn btn-success mr-2 mb-2" style="color: white;">Commencer</a></p>
                 </div>
                 <div>
@@ -343,7 +366,7 @@
             <div class="testimonial">
 
                 <blockquote class="mb-5">
-                <p>&ldquo; J’utilise V75 depuis plusieurs mois déjà et je suis impressionné par sa stabilité et sa précision sur le reversement des RSI. Je perçois mes 3,3% quotidiennement et j'ai toujours mon capital à disposition. Merci v75 ! &rdquo;</p>
+                <p style="line-height: 30px;">&ldquo; J’utilise V75 depuis plusieurs mois déjà et je suis impressionné par sa stabilité et sa précision sur le reversement des RSI. Je perçois mes 3,3% quotidiennement et j'ai toujours mon capital à disposition. Merci v75 ! &rdquo;</p>
                 </blockquote>
 
                 <figure class="mb-4 d-flex align-items-center justify-content-center">
@@ -356,7 +379,7 @@
             <div class="testimonial">
 
                 <blockquote class="mb-5">
-                <p>&ldquo; L'indice V75 en elle-même est un excellent outil pour le scalping. Sa volatilité constante de 75 % en fait un choix fiable pour les traders actifs ; et là c'est encore mieux quand la plateforme se charge des placements et de trader pour nous. &rdquo;</p>
+                <p style="line-height: 30px;">&ldquo; L'indice V75 en elle-même est un excellent outil pour le scalping. Sa volatilité constante de 75 % en fait un choix fiable pour les traders actifs ; et là c'est encore mieux quand la plateforme se charge des placements et de trader pour nous. &rdquo;</p>
                 <!-- <br>Aussi, les mouvements du marché sont fidèlement reflétés, ce qui me permet de prendre des décisions éclairées quand il s'agit de trader moi-même quelques fois à côté de mes invests -->
                 </blockquote>
                 <figure class="mb-4 d-flex align-items-center justify-content-center">
@@ -371,7 +394,7 @@
             <div class="testimonial">
 
                 <blockquote class="mb-5">
-                <p>&ldquo; V75 is an exceptional investment opportunity. The consistent yields and ease of use make it my favorite choice. it considerably rounds off my end of the month ! &rdquo;</p>
+                <p style="line-height: 30px;">&ldquo; V75 is an exceptional investment opportunity. The consistent yields and ease of use make it my favorite choice. it considerably rounds off my end of the month ! &rdquo;</p>
                 </blockquote>
                 <figure class="mb-4 d-flex align-items-center justify-content-center">
                 <div><img src="vitrine/images/person_2.jpg" alt="Image" class="w-50 img-fluid mb-3"></div>
@@ -386,7 +409,7 @@
             <div class="testimonial">
 
                 <blockquote class="mb-5">
-                <p>&ldquo; На V75 я инвестирую уже некоторое время, и ежедневные прибыли в 3,3% меня впечатляют. Платформа удобна в использовании, и я чувствую себя уверенно в своих инвестициях. &rdquo;</p>
+                <p style="line-height: 30px;">&ldquo; На V75 я инвестирую уже некоторое время, и ежедневные прибыли в 3,3% меня впечатляют. Платформа удобна в использовании, и я чувствую себя уверенно в своих инвестициях. &rdquo;</p>
                 </blockquote>
                 <figure class="mb-4 d-flex align-items-center justify-content-center">
                 <div><img src="vitrine/images/person_1.jpg" alt="Image" class="w-50 img-fluid mb-3"></div>
@@ -419,7 +442,7 @@
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
                 <h3 class="text-success h4 mb-4">Puis-je investir via Paypal ?</h3>
                 <p style="line-height: 32px; text-align: justify;">Par soucis d'accessibilité universelle pour tous nos client, il est impossible d'investir via Paypal ; certaines zones géographiques ne sont pas prises en compte et n'y ont pas accès.
-                Le but premier de la plateforme v75 est de permettre à toute personne d'investir indépendemment de sa situation géographique ; pour ce faire les seuls moyens de transactions acceptés par notre plateforme sont : <a href="" class="text-black">Dollar perfect money</a> et <a href="" class="text-black"> USDT TRC20</a></p>
+                Le but premier de la plateforme v75 est de permettre à toute personne d'investir indépendemment de sa situation géographique ; pour ce faire le seul moyen de transactions accepté par notre plateforme est : le <a href="" class="text-black"> USDT TRC20</a></p>
             </div>
             </div>
             <div class="col-lg-6">
@@ -461,7 +484,7 @@
                     <div class="unit-4-icon mr-4 mb-3"><span class="lead flaticon-head"></span></div>
                     <div>
                     <h3 class="text-black">Fidélité</h3>
-                    <p style="line-height: 30px; text-align: justify;">v75 toujours fidèle à sa clientèle ; plus de 3 ans déjà, plus de 25 000 clients et en charge d'un total actifs de 8,5 millions $</p>
+                    <p style="line-height: 30px; text-align: justify;">v75 toujours fidèle à sa clientèle ; En seulement quelques mois après le lancement, notre plate-forme enregistre à ce jour plus d'un miller d'utilisateurs et 600K $ d'actifs sous gestion.</p>
                     <p class="mb-0"><a href="#" class="text-success">Nous rejoindre</a></p>
                     </div>
                 </div>
@@ -499,18 +522,34 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="">
-            <div class="h-entry">
-                <a href="single.html">
-                <img src="vitrine/images/bg.jpg" alt="Image" class="img-fluid">
-                </a>
-                <h2 class="font-size-regular"><a href="#">{Title de l'annonce}</a></h2>
-                <div class="meta mb-4">v75 <span class="mx-2">&bullet;</span> {updated_at}<span class="mx-2">&bullet;</span> <a href="#">info</a></div>
-                <p>{content de l'annonce avec un nombre de caractères limités}</p>
-                <p><a href="#">Lire plus...</a></p>
-            </div>
 
+
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="">
+                    @foreach ($announcements as $announcement)
+                    <div class="h-entry">
+                        <a href="single.html">
+                        <img src="vitrine/images/bg.jpg" alt="Image" class="img-fluid">
+                        </a>
+                        @php
+                            $content = $announcement->content;
+                            $ctnt = Str::limit($content, 100, '...')
+                        @endphp
+                        <h2 class="font-size-regular"><a href="#">{{$announcement->title}}</a></h2>
+                        <div class="meta mb-4">v75 <span class="mx-2">&bullet;</span> {{$announcement->updated_at->format('d/m/Y')}}<span class="mx-2">&bullet;</span> <a href="#">info</a></div>
+                        <p>
+                            <?php
+                                echo '<style>';
+                                    echo 'body { text-align: justify; line-height:26px; font-size:15px; color: #707070; }';
+                                echo '</style>';
+                                echo $ctnt;
+                            ?>
+                            {{-- A voir: Le content deborde --}}
+                        </p>
+                        <p><a href="#">Lire plus...</a></p>
+                    </div>
+            @endforeach
         </div>
+
         </div>
     </section>
 
