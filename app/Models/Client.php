@@ -25,6 +25,10 @@ class Client extends Authenticatable
         'password'
     ];
 
+    public function found(){
+        return Found::where('client_id', $this->client_id)->get()->first();
+    }
+
 
     public function account()
     {

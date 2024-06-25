@@ -291,6 +291,37 @@
 										<td class="text-fade">{{ Auth::guard('client')->user()->fellow_code }}</td>
 									</tr>
                                     <tr>
+										<th>Nº Compte USDT</th>
+										<td class="text-fade">{{ Auth::guard('client')->user()->usdt_account }}</td>
+                                        <td>
+                                            <button class="btn btn-info-light ms-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-alert-modal">
+                                                Réintégrer
+                                            </button>
+                                        </td>
+                                        <div id="info-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-sm modal-dialog-centered">
+                                                <div class="modal-content modal-filled">
+                                                    <div class="modal-body p-4">
+                                                        <div class="text-center" style="color: white; font-size:15px;">
+                                                            <i class="dripicons-wrong h1"></i>
+                                                            <h4 class="mt-2" style="color: black">Compte USDT !</h4>
+                                                            <form action="{{ route('account_usdt') }}" method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{ Auth::guard('client')->user()->id }}">
+                                                                <div class="input-group mb-3">
+                                                                    <input id="code" type="text" id="fellow" name="fellow" class="form-control ps-15 bg-transparent" placeholder="Compte USDT" value="{{Auth::guard('client')->user()->usdt_account}}" readonly style="border: 1px solid rgba(0, 91, 0, 0.089); color:rgb(41, 69, 41);">
+                                                                    <span class="btn btn-info bg-transparent" onclick="copierCode(event)" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-files"></i></span>
+                                                                </div>
+                                                            </form>
+                                                            <button type="submit" class="btn btn-light my-2" data-bs-dismiss="modal">Modifier</button>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div>
+
+									</tr>
+                                    <tr>
 										<th>Capital initial</th>
 										<td class="text-danger">{{ $account->balance }} $</td>
 									</tr>

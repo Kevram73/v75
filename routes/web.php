@@ -75,6 +75,7 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::get('account', [ClientHomeController::class, 'account'])->name('account');
     Route::post('account/details', [ClientHomeController::class, 'change_account_details'])->name('change_account_details');
     Route::post('message/send', [ClientHomeController::class, 'messageStore'])->name('message_send');
+    Route::post('usdt/account', [ClientHomeController::class, 'account_usdt'])->name('account_usdt');
 
 
     // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
