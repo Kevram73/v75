@@ -143,7 +143,7 @@
                         <center>
                             <div><img src="vitrine/images/tsbg.png" alt="" class="img-fluid" style="width: 60%; height: 50%;"></div>
                         </center>
-                        <br><p style="color: white; margin-left:5%; margin-right:5%; line-height:32px; font-size:16px;">Des commissions sur vos parrainages ; Vous pouvez gagnez 8% du bénéfice quotidien total de votre membre de niveau 1, 5% sur celui du niveau 2 et 3% sur celui de niveau 3</p>
+                        <br><p style="color: white; margin-left:5%; margin-right:5%; line-height:32px; font-size:18px;">Des commissions sur vos parrainages ; Vous pouvez gagnez 8% du bénéfice quotidien total de votre membre de niveau 1, 5% sur celui du niveau 2 et 3% sur celui de niveau 3</p>
                     </p><br>
                     <div data-aos="fade-up" data-aos-delay="100">
                         <a href="{{route('client.login')}}" target="_blank" class="btn  btn-success mr-2 mb-2" style="color: white;">Commencer maintenant</a>

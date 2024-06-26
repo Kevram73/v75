@@ -16,7 +16,7 @@
                     <div class="box-body">
                         <div class="d-md-flex d-block align-items-center justify-content-between">
                             <h4 class="box-title mb-md-0 mb-20 text-info">Transactions</h4>
-                            <a href="#" class="btn btn-info"><i class="fa fa-upload me-10"></i>Faire un dépôt</a>
+                            <a href="{{route('client.invest_deposit')}}" class="btn btn-info"><i class="fa fa-upload me-10"></i>Faire un dépôt</a>
                         </div>
                     </div>
                 </div>

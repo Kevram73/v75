@@ -131,4 +131,16 @@ class HomeController extends Controller
 
         return redirect()->route("client.clientProfile")->with('success', 'Compte mis à jour avec succès');
     }
+
+    public function send(){
+
+        $user = Auth::guard('client')->user();
+        return view('client.send', compact('user'));
+    }
+
+    public function receive(){
+
+        $user = Auth::guard('client')->user();
+        return view('client.receive', compact('user'));
+    }
 }

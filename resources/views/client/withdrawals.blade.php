@@ -16,7 +16,7 @@
                     <div class="box-body">
                         <div class="d-md-flex d-block align-items-center justify-content-between">
                             <h4 class="box-title mb-md-0 mb-20 text-info">Transactions</h4>
-                            <a href="#" class="btn btn-info"><i class="fa fa-download me-10"></i>Faire un retrait</a>
+                            <a href="{{route('client.invest_withdrawal')}}" class="btn btn-info"><i class="fa fa-download me-10"></i>Faire un retrait</a>
                         </div>
                     </div>
                 </div>
