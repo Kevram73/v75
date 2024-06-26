@@ -137,6 +137,6 @@ class HomeController extends Controller
         $account = Account::where('client_id', $client_id)->get()->first();
         $account->usdt_account = $request->code;
         $account->save();
-        return redirect()->route("client.clientProfile")->with('success', 'Compte USDT mis à jour');
+        return redirect()->back()->with('success', 'Compte USDT mis à jour');
     }
 }

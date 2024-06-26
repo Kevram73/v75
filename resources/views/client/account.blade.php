@@ -179,7 +179,7 @@
                                             </div>
                                             <div class="box-body">
                                                 <p class="fs-20 text-black">
-                                                    <strong>{nbF1}</strong>
+                                                    <strong>{{ Auth::guard('client')->user()->found() ? count(Auth::guard('client')->user()->found()->capital) : 0 }} $</strong>
                                                     {{-- {nbF1} --}}
                                                 </p>
                                             </div>
@@ -220,7 +220,7 @@
                                     <div class="box box-body">
                                       <div class="flexbox">
                                         <span class="icon-Dollar text-primary fs-50"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                                        <span class="fs-40 fw-200">{totalCommission}</span>
+                                        <span class="fs-40 fw-200">{{ Auth::guard('client')->user()->found() ? Auth::guard('client')->user()->found()->capital : 0 }} $</span>
                                       </div>
                                       <div class="text-end text-fade">Montant total des commissions</div>
                                     </div>
@@ -292,28 +292,29 @@
 									</tr>
                                     <tr>
 										<th>Nº Compte USDT</th>
-										<td class="text-fade">{{ Auth::guard('client')->user()->usdt_account }}</td>
+										<td class="text-fade">{{Auth::guard('client')->user()->account()->usdt_account}}</td>
                                         <td>
                                             <button class="btn btn-info-light ms-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-alert-modal">
-                                                Réintégrer
+                                                Modifier
                                             </button>
                                         </td>
                                         <div id="info-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                                            <div class="modal-dialog modal-sm modal-dialog-centered">
+                                            <div class="modal-dialog modal-lg modal-dialog-centered">
                                                 <div class="modal-content modal-filled">
                                                     <div class="modal-body p-4">
                                                         <div class="text-center" style="color: white; font-size:15px;">
                                                             <i class="dripicons-wrong h1"></i>
                                                             <h4 class="mt-2" style="color: black">Compte USDT !</h4>
-                                                            <form action="{{ route('account_usdt') }}" method="POST">
+                                                            <form action="{{ route('client.account_usdt') }}" method="POST">
                                                                 @csrf
-                                                                <input type="hidden" name="id" value="{{ Auth::guard('client')->user()->id }}">
                                                                 <div class="input-group mb-3">
-                                                                    <input id="code" type="text" id="fellow" name="fellow" class="form-control ps-15 bg-transparent" placeholder="Compte USDT" value="{{Auth::guard('client')->user()->usdt_account}}" readonly style="border: 1px solid rgba(0, 91, 0, 0.089); color:rgb(41, 69, 41);">
+                                                                    <input id="code" type="text" id="fellow" name="code" class="form-control ps-15 bg-transparent" placeholder="Compte USDT" value="{{Auth::guard('client')->user()->account()->usdt_account}}" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:rgb(41, 69, 41);">
                                                                     <span class="btn btn-info bg-transparent" onclick="copierCode(event)" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-files"></i></span>
                                                                 </div>
+                                                                <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">Annuler</button>
+                                                                <button type="submit" class="btn btn-light my-2">Modifier</button>
                                                             </form>
-                                                            <button type="submit" class="btn btn-light my-2" data-bs-dismiss="modal">Modifier</button>
+
                                                         </div>
                                                     </div>
                                                 </div><!-- /.modal-content -->

@@ -75,9 +75,10 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::get('account', [ClientHomeController::class, 'account'])->name('account');
     Route::post('account/details', [ClientHomeController::class, 'change_account_details'])->name('change_account_details');
     Route::post('message/send', [ClientHomeController::class, 'messageStore'])->name('message_send');
-    Route::post('usdt/account', [ClientHomeController::class, 'account_usdt'])->name('account_usdt');
+    Route::post('usdt/account', [ClientHomeController::class, 'change_usdt_account'])->name('account_usdt');
 
-
+    Route::post('/create-payment', 'PaymentController@create')->name('payment.create');
+    Route::post('/payment-callback', 'PaymentController@callback')->name('payment.callback');
     // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
 
 });
