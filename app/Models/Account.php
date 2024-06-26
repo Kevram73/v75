@@ -11,7 +11,7 @@ class Account extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['client_id', 'account_num', 'balance', 'is_active'];
+    protected $fillable = ['client_id', 'account_num', "usdt_account", 'balance', 'is_active'];
 
     public function client(): HasOne
     {

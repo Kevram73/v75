@@ -1,43 +1,25 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Carbon\Carbon; // Assurez-vous d'avoir Carbon inclus pour la gestion des dates
 
-class Client extends Authenticatable
+class Found extends Model
 {
-    use HasFactory, SoftDeletes;
-
-    protected $guard = 'client';
+    use HasFactory;
 
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'phone_number',
-        'email',
-        'user_id',
-        'is_active',
-        'fellow_code',
-        'father_fellow',
-        'password'
+        "client_id",
+        "capital",
+        "deposited_date",
+        "withdrawal_date",
+        "is_open"
     ];
 
-
-  
-
-
-    public function account()
+    public function client()
     {
-        return Account::where('client_id', $this->id)->get()->first();
-    }
-
-
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class);
+        return $this->belongsTo(Client::class, 'client_id');
     }
 
     public function filleuls_level_one(){
@@ -98,14 +80,9 @@ class Client extends Authenticatable
     }
 
     public function rsi() {
-        if($deposited_at != null){
-            $now = Carbon::now();
-            $created = $this->created_at;
-            $days = $created->diffInDays($now);
-            return $this->capital * 0.033 * $days;
-        }
-    
+        $now = Carbon::now();
+        $created = $this->deposited_date;
+        $days = $created->diffInDays($now);
+        return $this->capital * 0.033 * $days;
     }
-
-
 }

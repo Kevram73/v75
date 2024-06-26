@@ -143,4 +143,12 @@ class HomeController extends Controller
         $user = Auth::guard('client')->user();
         return view('client.receive', compact('user'));
     }
+    
+    public function change_usdt_account(Request $request){
+        $client_id = Auth::guard('client')->user()->id;
+        $account = Account::where('client_id', $client_id)->get()->first();
+        $account->usdt_account = $request->code;
+        $account->save();
+        return redirect()->back()->with('success', 'Compte USDT mis à jour');
+    }
 }
