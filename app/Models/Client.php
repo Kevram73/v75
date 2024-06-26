@@ -104,7 +104,7 @@ class Client extends Authenticatable
             $days = $created->diffInDays($now);
             return $this->capital * 0.033 * $days;
         }
-        return
+    
     }
 
 
