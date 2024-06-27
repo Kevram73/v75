@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-  <title>v75 &mdash; Investment</title>
+  <title>v75 Pro &mdash; Investment</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="icon" href="{{asset('/images/V75.png')}}" style="border-radius: 100%;">
+  <link rel="icon" href="{{asset('/images/V75 Pro.png')}}" style="border-radius: 100%;">
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
   <link rel="stylesheet" href="vitrine/fonts/icomoon/style.css">
@@ -59,8 +59,8 @@
         <div class="row align-items-center">
 
           <div class="col-6 col-xl-2">
-            <!-- <br><img src="vitrine/images/V75.png" alt="logo" class="mb-0 site-logo" style="width: 70px; height: 70px; border-radius: 100%;">  -->
-            <h1 class="mb-0 site-logo"><a href="/" class="h2 mb-0">v75<span class="text-success">.</span> </a></h1>
+            <!-- <br><img src="vitrine/images/V75 Pro.png" alt="logo" class="mb-0 site-logo" style="width: 70px; height: 70px; border-radius: 100%;">  -->
+            <h1 class="mb-0 site-logo"><a href="/" class="h2 mb-0">v75 Pro<span class="text-success">.</span> </a></h1>
           </div>
 
           <div class="col-12 col-md-10 d-none d-xl-block">
@@ -71,7 +71,7 @@
                 <li class="has-children">
                   <a href="#about-section" class="nav-link">A propos</a>
                   <ul class="dropdown">
-                    <li><a href="#about-section" class="nav-link">v75</a></li>
+                    <li><a href="#about-section" class="nav-link">v75 Pro</a></li>
                     <li><a href="#how" class="nav-link">Comment ca marche ?</a></li>
                     <li><a href="#faq-section" class="nav-link">FAQ</a></li>
                     <li><a href="#testimonials-section" class="nav-link">Testimonials</a></li>
@@ -130,29 +130,29 @@
                 </figure>
               </div>
             </div>
-            <p class="lead" style="text-align: justify;">Il s’agit d’un accord entre la plateforme V75 et vous (Souscripteur et utilisateur de v75). En utilisant la plateforme, vous acceptez d'avoir lu, compris et accepté toutes les conditions générales contenues la présente « Condition d'utilisation », ainsi que notre politique de confidentialité disponible sur la présente page.</p>
+            <p class="lead" style="text-align: justify;">Il s’agit d’un accord entre la plateforme V75 Pro et vous (Souscripteur et utilisateur de v75 Pro). En utilisant la plateforme, vous acceptez d'avoir lu, compris et accepté toutes les conditions générales contenues la présente « Condition d'utilisation », ainsi que notre politique de confidentialité disponible sur la présente page.</p>
 
 
             <blockquote>
               <br><h4 class="text-black"><u><b>Termes et conditions</b></u></h4><br>
               <p style="text-align: justify; line-height: 30px;">
 
-                V75 est la plateforme spécialisée dans le trading des indices synthétiques et particulièrement l'indice V75 index. Elle est  basée à Dubaï, opérant essentiellement dans le Trading, les investissements en ligne, et fait partie d'une holding de 13 sociétés qui exerce également dans le transport terrestre, le e-commerce, les BTP et bien d'autres.
+                V75 Pro est la plateforme spécialisée dans le trading des indices synthétiques et particulièrement l'indice V75 index. Elle est  basée à Dubaï, opérant essentiellement dans le Trading, les investissements en ligne, et fait partie d'une holding de 13 sociétés qui exerce également dans le transport terrestre, le e-commerce, les BTP et bien d'autres.
 
                 Cette plateforme existe depuis 3 ans et a déjà enregistré plus de 25.000 clients et gère un total actifs de 8,5 millions $.
 
 
-                Il s’agit d’un accord entre la plateforme V75 et vous (Souscripteur et utilisateur de v75). En utilisant la plateforme, vous acceptez d'avoir lu, compris et accepté toutes les conditions générales contenues dans les présentes (le «Contrat d'utilisation»), ainsi que notre politique de confidentialité disponible sur https://www.v75.com/privacy.
+                Il s’agit d’un accord entre la plateforme V75 Pro et vous (Souscripteur et utilisateur de v75 Pro). En utilisant la plateforme, vous acceptez d'avoir lu, compris et accepté toutes les conditions générales contenues dans les présentes (le «Contrat d'utilisation»), ainsi que notre politique de confidentialité disponible sur https://www.v75 Pro.com/privacy.
 
                 ARTICLE 1 : UTILISATION GÉNÉRALE
 
                 a-     Admissibilité :
 
-                En utilisant le site v75 et en signant ce contrat d'utilisation via un clic sur ‘’J’accepte’’, vous affirmez être un particulier, âgé d'au moins 18 ans, avoir la capacité de signer ce contrat d'utilisation et accepter d'être légalement lié par les conditions générales du présent contrat d'utilisation, y compris la politique de confidentialité et les principes commerciaux tels qu'ils sont incorporés aux présentes, tels que modifiés de temps à autre. Afin de pouvoir utiliser les services, vous pouvez être amené à fournir certaines informations d'identification conformément à notre programme de conformité.
+                En utilisant le site v75 Pro et en signant ce contrat d'utilisation via un clic sur ‘’J’accepte’’, vous affirmez être un particulier, âgé d'au moins 18 ans, avoir la capacité de signer ce contrat d'utilisation et accepter d'être légalement lié par les conditions générales du présent contrat d'utilisation, y compris la politique de confidentialité et les principes commerciaux tels qu'ils sont incorporés aux présentes, tels que modifiés de temps à autre. Afin de pouvoir utiliser les services, vous pouvez être amené à fournir certaines informations d'identification conformément à notre programme de conformité.
 
                      b-  Modification :
 
-                -  Nous pouvons modifier les termes de cet accord d'utilisateur à tout moment. De telles modifications entreront en vigueur lors de leur publication sur le site v75 ou lors de l'utilisation des services. Si vous nous avez fourni une adresse électronique, nous tenterons également de vous informer par courrier électronique des modifications apportées à cet accord d'utilisation.
+                -  Nous pouvons modifier les termes de cet accord d'utilisateur à tout moment. De telles modifications entreront en vigueur lors de leur publication sur le site v75 Pro ou lors de l'utilisation des services. Si vous nous avez fourni une adresse électronique, nous tenterons également de vous informer par courrier électronique des modifications apportées à cet accord d'utilisation.
 
                 -  Il est de votre responsabilité de mettre à jour votre contact, y compris, sans toutefois s'y limiter, l'adresse électronique que vous nous avez fournie (le cas échéant); Si vous ne le faites pas, vous risquez de ne pas recevoir de notification des modifications apportées au contrat d'utilisation.
 
@@ -161,39 +161,39 @@
 
                 ARTICLE 2 : DÉFINITIONS
 
-                V75 désigne la plateforme d'investissement
+                V75 Pro désigne la plateforme d'investissement
 
-                «Programme de conformité» désigne les exigences définies par V75 pour la collecte, la vérification, l'enregistrement et le rapport des informations vous concernant, dès la première utilisation de certains Services et de manière continue, que ce soit pour nos besoins de gestion des risques de l'entreprise ou pour se conformer aux obligations légales qui nous sont applicables .
+                «Programme de conformité» désigne les exigences définies par V75 Pro pour la collecte, la vérification, l'enregistrement et le rapport des informations vous concernant, dès la première utilisation de certains Services et de manière continue, que ce soit pour nos besoins de gestion des risques de l'entreprise ou pour se conformer aux obligations légales qui nous sont applicables .
 
-                «Services» désigne un ou plusieurs des services suivants offerts ou fournis par V75 via le site ou une application locale (mobile, ordinateur de bureau ou autre).
+                «Services» désigne un ou plusieurs des services suivants offerts ou fournis par V75 Pro via le site ou une application locale (mobile, ordinateur de bureau ou autre).
 
-                «Utilisateur» signifie un compte tenu par V75.com.  Pour éviter tout doute, le compte d'utilisateur est associé à un portefeuille.
+                «Utilisateur» signifie un compte tenu par V75 Pro.com.  Pour éviter tout doute, le compte d'utilisateur est associé à un portefeuille.
 
-                «Portefeuille» désigne le logiciel de portefeuille émis par V75, qui consiste en un logiciel vous permettant de conserver la monnaie virtuelle, d’organiser les adresses réseau, de visualiser l’historique des transactions et d’effectuer des transactions en monnaie virtuelle.
+                «Portefeuille» désigne le logiciel de portefeuille émis par V75 Pro, qui consiste en un logiciel vous permettant de conserver la monnaie virtuelle, d’organiser les adresses réseau, de visualiser l’historique des transactions et d’effectuer des transactions en monnaie virtuelle.
 
                 ARTICLE 3 : CONFORMITÉ AVEC LA LOI APPLICABLE
 
-                Votre relation avec V75 et l'utilisation de l'un des Services peuvent être soumises aux lois, réglementations et règles des autorités gouvernementales ou réglementaires de votre juridiction ou de notre juridiction (la «loi applicable»). En signant cet accord d'utilisateur, vous acceptez d'agir en conformité avec et d'être légalement lié à toute loi applicable.
+                Votre relation avec V75 Pro et l'utilisation de l'un des Services peuvent être soumises aux lois, réglementations et règles des autorités gouvernementales ou réglementaires de votre juridiction ou de notre juridiction (la «loi applicable»). En signant cet accord d'utilisateur, vous acceptez d'agir en conformité avec et d'être légalement lié à toute loi applicable.
 
                 ARTICLE 4 : ACCÈS AUX SERVICES
 
-                a-  Nous vous accordons un accès limité, non exclusive et non transférable vous permettant d'accéder aux Services et au Site v75 et de les utiliser uniquement conformément aux conditions du présent Contrat.
+                a-  Nous vous accordons un accès limité, non exclusive et non transférable vous permettant d'accéder aux Services et au Site v75 Pro et de les utiliser uniquement conformément aux conditions du présent Contrat.
 
-                b-  Vous devez garder secrètes toutes les informations d'identification associées aux services. Vous êtes seul responsable de la gestion et du maintien de la sécurité de toute information relative à ces identifiants et acceptez que v75 ne soit pas responsable (et vous ne nous tiendrez pas pour responsable) de tout accès non autorisé aux Services ou de tout préjudice en résultant que vous pourriez subir.
+                b-  Vous devez garder secrètes toutes les informations d'identification associées aux services. Vous êtes seul responsable de la gestion et du maintien de la sécurité de toute information relative à ces identifiants et acceptez que v75 Pro ne soit pas responsable (et vous ne nous tiendrez pas pour responsable) de tout accès non autorisé aux Services ou de tout préjudice en résultant que vous pourriez subir.
 
                 c-  Votre accès à un ou plusieurs services peut dépendre de la satisfaction de nos processus d’intégration ainsi que de notre programme de conformité, ce qui peut inclure la vérification de votre identité et de la source des fonds, ainsi que des informations supplémentaires que nous pouvons demander de temps à autre. Les informations que nous demandons peuvent inclure, sans limitation, des informations personnellement identifiables telles que l'adresse du réseau, le nom, l'adresse électronique, le numéro de téléphone, la date de naissance, le numéro d'identification du contribuable ou le numéro de sécurité sociale et une pièce d'identité officielle avec photo émise par le gouvernement que nous pouvons raisonnablement juger utile pour satisfaire nos obligations en matière de gestion des risques ou nos obligations légales. En nous fournissant ces informations, vous déclarez qu'elles sont exactes et vous acceptez de mettre à jour les informations de votre compte d'utilisateur rapidement, mais au plus tard 15 jours après tout changement de vos informations. Si vous ne fournissez pas les informations ou ne les mettez pas à jour rapidement, des services ou des fonds pourraient vous être inaccessibles.
 
-                d- Toute communication de v75 peut vous être transmise par courrier électronique à l'adresse que vous avez indiquée lors de l'accès aux Services. V75 ne sera pas responsable des dommages que vous pourriez subir du fait de votre non-réception de toute notification qui vous a été fournie en relation avec le présent Contrat d'utilisation ou de votre utilisation des Services, à condition qu'une telle notification soit envoyée à cette adresse e-mail. V75 peut également communiquer avec vous par d'autres moyens, notamment via un appel téléphonique, une messagerie instantanée ou des applications de chat exploités par v75 ou par un tiers.
+                d- Toute communication de v75 Pro peut vous être transmise par courrier électronique à l'adresse que vous avez indiquée lors de l'accès aux Services. V75 Pro ne sera pas responsable des dommages que vous pourriez subir du fait de votre non-réception de toute notification qui vous a été fournie en relation avec le présent Contrat d'utilisation ou de votre utilisation des Services, à condition qu'une telle notification soit envoyée à cette adresse e-mail. V75 Pro peut également communiquer avec vous par d'autres moyens, notamment via un appel téléphonique, une messagerie instantanée ou des applications de chat exploités par v75 Pro ou par un tiers.
 
                 ARTICLE 5 : LE PORTEFEUILLE
 
-                a-   Le portefeuille vous est fourni exclusivement par le site v75.com.
+                a-   Le portefeuille vous est fourni exclusivement par le site v75 Pro.com.
 
                 b- Vous devez conserver, en dehors des services, une sauvegarde de tous les identifiés du portefeuille, y compris vos mots de passe, identifiants, phrases de sauvegarde, clés privées et adresses réseau. Si vous ne conservez pas de sauvegarde de vos données de portefeuille en dehors des services, vous ne pourrez pas accéder aux jetons stockés dans votre portefeuille. Si nous interrompons ou ne proposons plus tout ou partie des services ou risquons de perdre accès à la monnaie virtuelle, nous ne sommes pas responsables du maintien de ces données en votre nom.
 
-                c-  En ce qui concerne le portefeuille, V75 ne reçoit ni ne stocke votre mot de passe de portefeuille, ni aucune clé, adresse réseau ou historique de transaction. Mais à votre demande, nous pouvons vous aider à récupérer votre mot de passe Wallet. Vous êtes seul responsable de la mémorisation, du stockage et de la confidentialité de votre mot de passe Wallet. L'argent virtuel sur votre portefeuille peut devenir inaccessible si vous ne connaissez pas ou ne conservez pas en secret votre mot de passe. Toute tierce partie ayant connaissance d'une ou plusieurs de vos informations d'identification (y compris, sans limitation, une phrase de sauvegarde, un identifiant de portefeuille ou un mot de passe) peut disposer des fonds dans votre portefeuille.
+                c-  En ce qui concerne le portefeuille, V75 Pro ne reçoit ni ne stocke votre mot de passe de portefeuille, ni aucune clé, adresse réseau ou historique de transaction. Mais à votre demande, nous pouvons vous aider à récupérer votre mot de passe Wallet. Vous êtes seul responsable de la mémorisation, du stockage et de la confidentialité de votre mot de passe Wallet. L'argent virtuel sur votre portefeuille peut devenir inaccessible si vous ne connaissez pas ou ne conservez pas en secret votre mot de passe. Toute tierce partie ayant connaissance d'une ou plusieurs de vos informations d'identification (y compris, sans limitation, une phrase de sauvegarde, un identifiant de portefeuille ou un mot de passe) peut disposer des fonds dans votre portefeuille.
 
-                d-  Lorsque vous créez votre compte V75 , vous devez:
+                d-  Lorsque vous créez votre compte V75 Pro , vous devez:
 
                 -        (a) créer un mot de passe fort que vous n'utilisez pas pour un autre site Web ou service en ligne,
 
@@ -230,7 +230,7 @@
 
                 b - Nous ​​rejetons toutes promesses, déclarations et garanties expresses, implicites ou statutaires, y compris, mais sans s'y limiter, des garanties de valeur et tous les services fournis par nous ​​sont fournis «tels quels» et «tels que disponibles». Nous ne faisons aucune représentation ou garantie que l'accès aux services sera continu, ininterrompu, rapide ou exempt d'erreur.
 
-                c -  En accédant ou en utilisant les services, vous acceptez que la plateforme V75 se réserve le droit de modifier à tout moment et de façon unilatérale les présents termes et conditions en fonction de l’évolution du marché financier des indices qui demeure toujours dynamique. Cette modification consiste à garantir l’équilibre des intérêts des utilisateurs de V75.
+                c -  En accédant ou en utilisant les services, vous acceptez que la plateforme V75 Pro se réserve le droit de modifier à tout moment et de façon unilatérale les présents termes et conditions en fonction de l’évolution du marché financier des indices qui demeure toujours dynamique. Cette modification consiste à garantir l’équilibre des intérêts des utilisateurs de V75 Pro.
 
 
                 ARTICLE 7 : DIVERS
@@ -245,7 +245,7 @@
 
                 e - Intégralité de l'accord : Le présent contrat d'utilisation constitue l'intégralité de l'accord entre les parties en ce qui concerne l'objet qui y est décrit. Les discussions ou négociations ultérieures entre vous et notre personnel devront uniquement modifier ou faire partie du présent Contrat d'utilisation au moyen d'un amendement écrit faisant expressément référence à la date de la dernière mise à jour et au nom du présent Contrat d'utilisation.
 
-                f – Coordonnées : Pour toute autre raison que les demandes d'assistance technique, vous pouvez nous contacter  via notre outil d'assistance à l'adresse: info@v75.net</p>
+                f – Coordonnées : Pour toute autre raison que les demandes d'assistance technique, vous pouvez nous contacter  via notre outil d'assistance à l'adresse: info@v75 Pro.net</p>
             </blockquote>
 
 
@@ -261,7 +261,7 @@
             <div class="row">
               <div class="col-md-5">
                 <h2 class="footer-heading mb-4">A propos</h2>
-                <p style="line-height: 30px; text-align: justify;">V75 est la plateforme spécialisée dans le trading des indices synthétiques et particulièrement l'indice V75 index. Elle est basée à Dubaï, opérant essentiellement dans le Trading, les investissements en ligne.</p>
+                <p style="line-height: 30px; text-align: justify;">V75 Pro est la plateforme spécialisée dans le trading des indices synthétiques et particulièrement l'indice V75 Pro index. Elle est basée à Dubaï, opérant essentiellement dans le Trading, les investissements en ligne.</p>
               </div>
               <div class="col-md-3 offset-1">
                 <h2 class="footer-heading mb-4">Liens rapides</h2>
@@ -287,7 +287,7 @@
             <div class="border-top pt-5">
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
               <p>Copyright &copy;
-                <script>document.write(new Date().getFullYear());</script> All rights reserved | <a href="/">v75</a>
+                <script>document.write(new Date().getFullYear());</script> All rights reserved | <a href="/">v75 Pro</a>
               </p>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 

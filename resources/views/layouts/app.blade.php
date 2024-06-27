@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{{asset('/images/V75.png')}}" style="border-radius: 100%;">
 
-    <title>{{config('app.name', 'V75')}} | Dashboard </title>
+    <title>{{config('app.name', 'V75 pro')}} | Dashboard </title>
 
 	<!-- Vendors Style-->
 	<link rel="stylesheet" href="{{asset('/src/css/vendors_css.css')}}">
@@ -128,7 +128,7 @@
 		  </li>
 		</ul>
     </div>
-	  &copy; <script>document.write(new Date().getFullYear())</script> <a href="#">v75</a>. All Rights Reserved.
+	  &copy; <script>document.write(new Date().getFullYear())</script> <a href="#">v75 pro</a>. All Rights Reserved.
   </footer>
   <!-- Side panel -->
 

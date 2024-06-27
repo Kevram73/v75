@@ -1,6 +1,6 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 Dashboard')
+@section('title', '| V75 pro Dashboard')
 
 @section('content')
 
@@ -43,7 +43,7 @@
                             <div class="text-start mt-3">
                                 <p class="header-title mb-2"><strong>Informations personnelles :</strong></p>
                                 <p class="text-muted  mb-3">
-                                    Vous êtes un client doté du statut actif de v75
+                                    Vous êtes un client doté du statut actif de v75 pro
                                 </p><br>
                                 <p class="text-muted mb-2 "><strong class="text-dark">Nom et prénom(s):</strong> <span class="ms-2">{{ Auth::guard('client')->user()->last_name }} {{ Auth::guard('client')->user()->first_name }}</span></p><br>
 

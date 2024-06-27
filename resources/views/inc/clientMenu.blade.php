@@ -71,7 +71,7 @@
                     <ul class="treeview-menu">
                         <li>
                         <a href="{{route('client.message')}}">
-                            <i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Ecrire à v75
+                            <i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Ecrire à v75 Pro
 							<span class="pull-right-container">
 							</span>
                         </a>

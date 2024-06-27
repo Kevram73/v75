@@ -1,6 +1,6 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 Dashboard')
+@section('title', '| V75 pro Dashboard')
 
 @section('content')
 
@@ -33,7 +33,7 @@
                     <div class="card-body">
                         <h4 class="header-title">Informations de compte</h4>
                         <p class="text-muted fs-14 mb-3">
-                            Ici s'affiche toutes les informations de votre compte d'investissent v75
+                            Ici s'affiche toutes les informations de votre compte d'investissent v75 pro
                         </p><br>
 
                         <ul class="nav nav-pills bg-nav-pills mb-3 nav-justified" >
@@ -78,7 +78,7 @@
 
                                 <div class="col-xxl-12 col-lg-12">
                                     <div class="box-header no-border">
-                                    <h3 class="box-title mb-0 fw-500">Votre carte v75</h3>
+                                    <h3 class="box-title mb-0 fw-500">Votre carte v75 pro</h3>
                                     <span class="box-controls pull-right text-fade fs-20"><i class="fa fa-credit-card"></i></span>
                                     </div>
                                     <!-- /.box-body -->
@@ -264,7 +264,7 @@
 								</div>
 								<div class="col-sm-9 col-xl-12 col-xxl-9">
 									<br><strong>Informations personnelles</strong>
-									<p class="text-fade" style="text-align: justify; line-height:25px;"><br>Vous disposez du statut <span class="text-info">client actif</span> de la plateforme v75. Vous êtes donc élligible pour les investissements et les opérations (dépôts, retraits de fond).</p>
+									<p class="text-fade" style="text-align: justify; line-height:25px;"><br>Vous disposez du statut <span class="text-info">client actif</span> de la plateforme v75 pro. Vous êtes donc élligible pour les investissements et les opérations (dépôts, retraits de fond).</p>
 								</div>
 							</div>
 

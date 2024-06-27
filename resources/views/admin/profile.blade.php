@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '| V75 Admin Dashboard')
+@section('title', '| V75 pro Admin Dashboard')
 
 @section('content')
 
@@ -44,7 +44,7 @@
                             <div class="text-start mt-3">
                                 <p class="header-title mb-2"><strong>Informations personnelles :</strong></p>
                                 <p class="text-muted  mb-3">
-                                    Cet utilisteur est un administrateur de v75
+                                    Cet utilisteur est un administrateur de v75 pro
                                 </p><br>
                                 <p class="text-muted mb-2 "><strong class="text-dark">Nom d'utilisateur:</strong> <span class="ms-2">{{ Auth::guard('admin')->user()->username }}</span></p><br>
 

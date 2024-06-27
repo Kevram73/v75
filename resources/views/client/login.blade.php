@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{{asset('/images/V75.png')}}" style="border-radius: 100%;">
 
-    <title>v75 - Log in</title>
+    <title>v75 pro - Log in</title>
 
 	<!-- Vendors Style-->
 	<link rel="stylesheet" href="../src/css/vendors_css.css">
@@ -30,7 +30,7 @@
 						<div class="bg-white rounded10 shadow-lg">
 
                             <div class="content-top-agile p-20 pb-0">
-                                <br><br><a href="#" title="v75">
+                                <br><br><a href="#" title="v75 pro">
                                     <img src="../../../images/V75.png" class="" alt="" style="width: 20%; height: 30%; border-radius:100%; margin-bottom:2%; border:1px solid rgba(0, 59, 0, 0.24);"/>
                                 </a>
 								<h2 class="text-primary fw-600"><br>Connexion</h2>

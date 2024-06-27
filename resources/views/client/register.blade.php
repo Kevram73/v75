@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{{asset('/images/V75.png')}}" style="border-radius: 100%;">
 
-    <title>v75 - Log in</title>
+    <title>v75 pro - Log in</title>
 
 	<!-- Vendors Style-->
 	<link rel="stylesheet" href="../src/css/vendors_css.css">
@@ -30,11 +30,11 @@
 						<div class="bg-white rounded10 shadow-lg">
 
                             <div class="content-top-agile p-20 pb-0">
-                                <br><br><a href="#" title="v75">
+                                <br><br><a href="#" title="v75 pro">
                                     <img src="../../../images/OIPa.jpeg" class="" alt="" style="width: 30%; height: 40%; border-radius:10%; margin-bottom:2%; border:0px solid rgba(2, 52, 2, 0.24);"/>
                                 </a>
 								<h2 class="text-primary fw-600"><br>Créer un compte</h2>
-								<p class="mb-0 text-fade" style="margin-top: 3%;">Créez votre compte v75 pour commencer <br>à percevoir vos gains !</p><br>
+								<p class="mb-0 text-fade" style="margin-top: 3%;">Créez votre compte v75 Pro pour commencer <br>à percevoir vos gains !</p><br>
 							</div>
 
 

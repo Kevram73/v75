@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '| V75 Admin Dashboard')
+@section('title', '| V75 pro Admin Dashboard')
 
 @section('content')
 
@@ -56,7 +56,7 @@
                                 <td>{{$client->email}}</td>
                                 <td>{{$client->phone_number}}</td>
 
-                                
+
                                 <td>
                                     {{-- <a href="#">
                                         <button class="btn btn-info-light ms-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-alert-modal">Retirer</button> --}}

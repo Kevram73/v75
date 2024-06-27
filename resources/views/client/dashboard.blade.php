@@ -1,6 +1,6 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 Dashboard')
+@section('title', '| V75 pro Dashboard')
 
 @section('content')
 
@@ -39,7 +39,7 @@
                       </div>
 
                       <div class="box-body">
-                        <p class="text-gray-600"><marquee behavior="" direction="left">Gagnez 3,33% par jour, 100% par mois avec notre bot de trading des indices. Minimum à investir 10$ ; transactions via <span class="text-success">Dollar Perfect money</span> et <span class="text-success">USDT TRC20</span>. Dépôt et retrait instantané. Avec v75, c'est votre argent qui travaille pour vous !</marquee></p>
+                        <p class="text-gray-600"><marquee behavior="" direction="left">Gagnez 3,33% par jour, 100% par mois avec notre bot de trading des indices. Minimum à investir 10$ ; transactions via <span class="text-success">Dollar Perfect money</span> et <span class="text-success">USDT TRC20</span>. Dépôt et retrait instantané. Avec v75 pro, c'est votre argent qui travaille pour vous !</marquee></p>
                         {{-- Investissez, aucune condition préalable requise et percevez jusqu'à 3,3% sur votre capital initial --}}
                       </div>
                     </div>
@@ -95,7 +95,7 @@
                                     <div class="flex-grow-1 bg-danger px-30 pt-50 pb-100 flex-grow-1 bg-img min-h-350" style="background-position: calc(100% + 0.5rem) bottom; background-size: 68% auto; background-image: url({{asset('/images/svg-icon/color-svg/custom-2.svg')}})">
 
                                         <p class="py-15 pb-5 fs-20">
-                                            Avec v75 gagnez jusqu'à<br>
+                                            Avec v75 pro gagnez jusqu'à<br>
                                             3,3% par jour sur votre<br>
                                             capital initial
                                         </p>
@@ -119,7 +119,7 @@
                         <div class="col-xl-8">
                             <div class="box bg-img" style="background-image: url({{asset('/images/abstract-2.svg')}});background-position: right top; background-size: 30% auto;">
                               <div class="box-body">
-                                  <a href="#" class="box-title fw-600 hover-primary fs-14">Taux de commission v75</a>
+                                  <a href="#" class="box-title fw-600 hover-primary fs-14">Taux de commission v75 pro</a>
                                   <div class="fw-bold text-primary mt-20 mb-10">8% (niveau 1), 5% (niveau 2) et 3% (niveau 3)</div>
                                   <p class="text-fade" style="font-size: 15px; line-height:25px;">
                                       Vous pouvez gagnez 8% du bénéfice quitidien total de votre membre de niveau 1<br>

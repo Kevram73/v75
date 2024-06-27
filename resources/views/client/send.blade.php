@@ -1,6 +1,6 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 Dashboard')
+@section('title', '| V75 pro Dashboard')
 
 @section('content')
 <style>
