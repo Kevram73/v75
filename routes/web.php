@@ -12,18 +12,24 @@ use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\HomeController as ClientHomeController;
+use App\Http\Controllers\Client\BinancePayController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
 Route::get('/', [WelcomeController::class, 'welcome']);
+Route::get('/binance-pay/form', function () {
+    return view('binance');
+});
+
 
 Route::get('policy', function () {
     return view('policy');
 });
 
-
+Route::post('/binance-pay/create-order', [BinancePayController::class, 'createOrder']);
 
 Route::prefix('admin/')->name('admin.')->group(function () {
 
@@ -79,6 +85,7 @@ Route::prefix('client/')->name('client.')->group(function () {
 
     Route::get('invest/deposit', [ClientHomeController::class, 'send'])->name('invest_deposit');
     Route::get('invest/withdrawal', [ClientHomeController::class, 'receive'])->name('invest_withdrawal');
+    Route::post('/binance/deposit', [ClientHomeController::class, 'createOrder'])->name("create_order_deposit");
 
 
 
@@ -87,3 +94,6 @@ Route::prefix('client/')->name('client.')->group(function () {
     // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
 
 });
+
+Route::get('/binancepay/returnURL', [BinancePayController::class, 'returnCallback'])->name("returnCallback");
+Route::get('/binancepay/cancelURL', [BinancePayController::class, 'cancelCallback'])->name("cancelCallback");

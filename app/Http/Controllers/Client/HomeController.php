@@ -12,20 +12,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Services\BinancePayService;
+use Ramsey\Uuid\Uuid;
 
 class HomeController extends Controller
 {
+    protected $binancePayService;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(BinancePayService $binancePayService)
     {
+        $this->binancePayService = $binancePayService;
         $this->middleware('auth.client');
-
     }
+
 
     /**
      * Show the application dashboard.
@@ -150,5 +149,38 @@ class HomeController extends Controller
         $account->usdt_account = $request->code;
         $account->save();
         return redirect()->back()->with('success', 'Compte USDT mis à jour');
+    }
+
+    public function createOrder(Request $request)
+    {
+        $amount = $request->input('amount');
+        $currency = $request->input('currency', 'USDT');
+
+        $goods = [
+            "goodsType" => "01",
+            "goodsCategory" => "Tron-V75",
+            "referenceGoodsId" => Uuid::uuid4()->toString(),
+            "goodsName" => "Hot Things",
+            "goodsDetail" => "For my website"
+        ];
+
+        $transaction = new Transaction();
+        $transaction->amount = $amount;
+        $transaction->date_sent = Carbon::now();
+        $transaction->sender_id = Auth::guard('client')->user()->id;
+        $transaction->receiver_id = 0;
+        $transaction->type = 'deposit';
+        $transaction->save();
+
+
+        $response = $this->binancePayService->createOrder($amount, $currency, $goods);
+        
+        if ($response['status'] === 'SUCCESS') {
+            // Redirection avec données pour affichage de QR code
+            return view('client.qr', ['qrLink' => $response['data']['qrcodeLink']]);
+        }
+    
+        // Gérer les échecs ici
+        return back()->with('error', 'Payment failed');
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bec27bd3c04c5162d0ee67db13f02d3c",
+    "content-hash": "5b51aba67ead0399889f54c0a07a4515",
     "packages": [
         {
             "name": "brick/math",
@@ -134,6 +134,65 @@
                 }
             ],
             "time": "2023-12-11T17:09:12+00:00"
+        },
+        {
+            "name": "crypto-pay/binancepay",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hansajith18/binance-pay.git",
+                "reference": "ec90e29c2f246f2266d90894c1751028b22337fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hansajith18/binance-pay/zipball/ec90e29c2f246f2266d90894c1751028b22337fe",
+                "reference": "ec90e29c2f246f2266d90894c1751028b22337fe",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": "^7.4|^8.0|^8.1|^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CryptoPay\\Binancepay\\BinancepayServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CryptoPay\\Binancepay\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Navod Hansajith",
+                    "email": "hansajith18@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Binance Pay API for Laravel",
+            "keywords": [
+                "api",
+                "binance",
+                "binance-pay",
+                "crypto",
+                "hansajith18",
+                "laravel",
+                "payments",
+                "web3"
+            ],
+            "support": {
+                "issues": "https://github.com/hansajith18/binance-pay/issues",
+                "source": "https://github.com/hansajith18/binance-pay/tree/1.0.1"
+            },
+            "time": "2023-04-09T11:16:13+00:00"
         },
         {
             "name": "cryptomus/api-php-sdk",
@@ -8159,5 +8218,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

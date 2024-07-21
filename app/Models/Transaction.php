@@ -10,7 +10,7 @@ class Transaction extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['amount', 'date_sent', 'sender_id', 'receiver_id', 'type'];
+    protected $fillable = ['amount', 'date_sent', 'sender_id', 'receiver_id', 'type', 'merchant_trade_no', 'trx_id'];
 
     public function sender()
     {

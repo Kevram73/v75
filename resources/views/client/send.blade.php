@@ -53,8 +53,7 @@
 
             <div class="col-12">
 
-				<form class="form-horizontal form-element" method="POST" action="" enctype="multipart/form-data">
-                    @csrf
+
                     <div class="box">
                         <div class="box-header with-border">
                           <h4 class="box-title text-info">Faire un dépôt</h4>
@@ -67,19 +66,15 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal form-element" action="" method="POST">
+                        <form class="form-horizontal form-element" action="{{ route("client.create_order_deposit") }}" method="POST">
                             @csrf
                             <div class="box-body">
 
-                              <input type="text" class="hidden" id="from_account" name="from_account" required style="color: black;" value="">
-                              <input type="text" class="hidden" id="type" name="type" required style="color: black;" value="dépôt">
-                              <input type="text" class="hidden" id="gateway" name="gateway" required style="color: black;" value="USDT TRC20">
-
                             <div class="form-group row">
-                                <label for="to_account" class="col-sm-2 form-label">Adresse de compte : </label>
+                                <label for="to_account" class="col-sm-2 form-label">Devise  : </label>
 
                                 <div class="col-sm-10">
-                                  <input type="text" placeholder="Adresse de votre portefeuille USDT" class="form-control" id="to_account" name="to_account" required style="color: black;">
+                                  <input type="text" class="form-control" id="currency" name="currency" value="USDT" required style="color: black;">
 
                                 </div>
                               </div>
@@ -99,7 +94,7 @@
                           <!-- /.box-footer -->
                         </form>
                       </div>
-                </form>
+
                 <!-- /.box -->
 
 

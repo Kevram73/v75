@@ -179,7 +179,7 @@
                                             </div>
                                             <div class="box-body">
                                                 <p class="fs-20 text-black">
-                                                    <strong>{{ Auth::guard('client')->user()->found() ? count(Auth::guard('client')->user()->found()->capital) : 0 }} $</strong>
+                                                    <strong>{{ $account->balance }}$</strong>
                                                     {{-- {nbF1} --}}
                                                 </p>
                                             </div>
@@ -220,7 +220,7 @@
                                     <div class="box box-body">
                                       <div class="flexbox">
                                         <span class="icon-Dollar text-primary fs-50"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                                        <span class="fs-40 fw-200">{{ Auth::guard('client')->user()->found() ? Auth::guard('client')->user()->found()->capital : 0 }} $</span>
+                                        <span class="fs-40 fw-200">{{ $account->balance }} $</span>
                                       </div>
                                       <div class="text-end text-fade">Montant total des commissions</div>
                                     </div>
