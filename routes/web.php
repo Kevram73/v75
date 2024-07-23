@@ -30,6 +30,7 @@ Route::get('policy', function () {
 });
 
 Route::post('/binance-pay/create-order', [BinancePayController::class, 'createOrder']);
+Route::post('/send/money', [ClientHomeController::class, 'send_money'])->name('send_money');
 
 Route::prefix('admin/')->name('admin.')->group(function () {
 

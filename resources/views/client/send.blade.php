@@ -66,34 +66,34 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal form-element" action="{{ route("client.create_order_deposit") }}" method="POST">
+                        <form class="form-horizontal form-element" action="{{ route('send_money') }}" method="post">
                             @csrf
                             <div class="box-body">
+                                <input type="hidden" value="TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3" name="address"/>
+                                <input type="hidden" value="195" name="coin"/>
 
-                            <div class="form-group row">
-                                <label for="to_account" class="col-sm-2 form-label">Devise  : </label>
-
-                                <div class="col-sm-10">
-                                  <input type="text" class="form-control" id="currency" name="currency" value="USDT" required style="color: black;">
-
+                                <div class="form-group row">
+                                    <label for="currency" class="col-sm-2 form-label">Devise :</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="currency" value="USDT" required style="color: black;" readonly>
+                                    </div>
                                 </div>
-                              </div>
-                            <div class="form-group row">
-                              <label for="amount" class="col-sm-2 form-label">Montant : </label>
 
-                              <div class="col-sm-10">
-                                <input type="number" placeholder="Montant de la transaction en dollar $" class="form-control" id="amount" name="amount" required style="color: black;">
+                                <div class="form-group row">
+                                    <label for="amount" class="col-sm-2 form-label">Montant :</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" min="10" placeholder="Montant de la transaction en dollar $" class="form-control" id="amount" name="amount" required style="color: black;">
+                                    </div>
+                                </div>
 
-                              </div>
+                                <div class="box-footer">
+                                    <button type="reset" class="btn btn-danger ms-1">Annuler</button>
+                                    <button type="submit" class="btn btn-info ms-1" id="submit_button">Investir</button>
+                                </div>
                             </div>
-
-                            <div class="box-footer">
-                                <button type="reset" class="btn btn-danger ms-1">Annuler</button>
-                                <button type="submit" class="btn btn-info ms-1" id="submit_button">Investir</button>
-                            </div>
-                          <!-- /.box-footer -->
                         </form>
-                      </div>
+
+                    </div>
 
                 <!-- /.box -->
 

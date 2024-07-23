@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Services\BinancePayService;
+use Illuminate\Support\Facades\Redirect;
 use Ramsey\Uuid\Uuid;
 
 class HomeController extends Controller
@@ -95,7 +96,6 @@ class HomeController extends Controller
 
         $message = new Message([
             'object' => $request->object,
-            'content' => $request->content,
             'date_sent' => Carbon::now(),
             'sender_id' => Auth::guard('client')->user()->id
         ]);
@@ -174,13 +174,23 @@ class HomeController extends Controller
 
 
         $response = $this->binancePayService->createOrder($amount, $currency, $goods);
-        
+
         if ($response['status'] === 'SUCCESS') {
             // Redirection avec données pour affichage de QR code
             return view('client.qr', ['qrLink' => $response['data']['qrcodeLink']]);
         }
-    
-        // Gérer les échecs ici
+
         return back()->with('error', 'Payment failed');
+    }
+
+    public function send_money(Request $request){
+        $coin = 195;
+        $address = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3";
+        $amount = $request->amount;
+        $currency = "USDT";
+
+        $link = "trust://send?address=" . urlencode($address) . "&coin=" . urlencode($coin) . "&amount=" . urlencode($amount);
+
+        return redirect($link);
     }
 }
