@@ -75,7 +75,10 @@
                                 <div class="form-group row">
                                     <label for="currency" class="col-sm-2 form-label">Devise :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="currency" value="USDT" required style="color: black;" readonly>
+                                        <select name="currency" id="currency" class="form-control">
+                                            <option value="USDT">USDT</option>
+                                            <option value="BTC">BTC</option>
+                                        </select>
                                     </div>
                                 </div>
 

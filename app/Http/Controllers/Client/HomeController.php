@@ -183,14 +183,28 @@ class HomeController extends Controller
         return back()->with('error', 'Payment failed');
     }
 
-    public function send_money(Request $request){
-        $coin = 195;
-        $address = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3";
+    public function send_money(Request $request) {
+
         $amount = $request->amount;
-        $currency = "USDT";
+
+        switch ($request->currency) {
+            case 'USDT':
+                $coin = 195;
+                $currency = $request->currency;
+                $address = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3";
+                break;
+            case 'BTC':
+                $coin = 0;
+                $currency = $request->currency;
+                $address = "bc1qamgfs4cknh7rqtsndr7hhwzeguns2v6vqht0cw";
+                break;
+            default:
+                return response()->json(['error' => 'Unsupported cryptocurrency type'], 400);
+        }
 
         $link = "trust://send?address=" . urlencode($address) . "&coin=" . urlencode($coin) . "&amount=" . urlencode($amount);
 
         return redirect($link);
     }
+
 }
