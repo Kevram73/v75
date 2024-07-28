@@ -57,6 +57,7 @@
                     <div class="box">
                         <div class="box-header with-border">
                           <h4 class="box-title text-info">Faire un dépôt</h4>
+                            <a href="{{ route('client.account') }}" class="btn btn-xs btn-info"><i class="fa fa-edit"></i> Mon compte</a>
                         @if (Session::has('error'))
                             <span style="color: red;">{{ Session::get('error') }}</span>
                         @endif

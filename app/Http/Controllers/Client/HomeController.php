@@ -56,7 +56,7 @@ class HomeController extends Controller
     public function deposits(Request $request){
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
-
+        $this->get_done_transactions();
         $deposits = Transaction::where('sender_id', $account->account_num)->orderByDesc('created_at')->get();
 
         return view('client.deposits', compact('deposits', 'account'));
@@ -64,6 +64,7 @@ class HomeController extends Controller
 
     public function withdrawals(Request $request){
         $user = Auth::guard('client')->user();
+        $this->get_done_transactions();
         $account = Account::where('client_id', $user->id)->get()->first();
 
         $withdrawals = Transaction::where('receiver_id', $account->account_num)->orderByDesc('created_at')->get();
@@ -111,6 +112,7 @@ class HomeController extends Controller
     }
 
     public function account(Request $request){
+        $this->get_done_transactions();
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
         $totalDeposits = Transaction::where('sender_id', $account->account_num)->sum('amount');
@@ -192,27 +194,107 @@ class HomeController extends Controller
     }
 
     public function send_money(Request $request) {
-
         $amount = $request->amount;
+        $client_id = Auth::guard('client')->user()->id;
+        $account = Account::where('client_id', $client_id)->first();
+
+        if ($request->currency == 'USDT' && empty($account->usdt_account)) {
+            return back()->with('error', "Veuillez renseigner votre compte USDT");
+        }
+
+        if ($request->currency == 'BTC' && empty($account->btc_account)) {
+            return back()->with('error', "Veuillez renseigner votre compte BTC");
+        }
 
         switch ($request->currency) {
             case 'USDT':
                 $coin = 195;
-                $currency = $request->currency;
                 $address = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3";
                 break;
             case 'BTC':
                 $coin = 0;
-                $currency = $request->currency;
                 $address = "bc1qamgfs4cknh7rqtsndr7hhwzeguns2v6vqht0cw";
                 break;
             default:
                 return response()->json(['error' => 'Unsupported cryptocurrency type'], 400);
         }
 
-        $link = "trust://send?address=" . urlencode($address) . "&coin=" . urlencode($coin) . "&amount=" . urlencode($amount);
+        $uid = Uuid::uuid4()->toString();
+
+        $transaction = new Transaction();
+        $transaction->sender_id = $client_id;
+        $transaction->receiver_id = 0;
+        $transaction->amount = $amount;
+        $transaction->date_sent = now();
+        $transaction->type = $request->currency;
+        $transaction->merchant_trade_no = $uid;
+        $transaction->trx_id = 1; // 1: En attente, 2: Success, 0: Annulée
+        $transaction->save();
+
+        $link = "trust://send?address=" . urlencode($address) . "&coin=" . urlencode($coin) . "&amount=" . urlencode($amount) . "&txid=" . urlencode($uid);
 
         return redirect($link);
     }
+
+    public function get_done_transactions() {
+        $client_id = Auth::guard('client')->user()->id;
+        $transactions = Transaction::where('sender_id', $client_id)
+                                    ->where('trx_id', 1)
+                                    ->get();
+
+        foreach ($transactions as $transaction) {
+            if ($transaction->type == "USDT") {
+                $this->check_usdt_transaction($transaction);
+            } else if ($transaction->type == "BTC") {
+                $this->check_btc_transaction($transaction);
+            }
+        }
+    }
+
+    private function check_usdt_transaction($transaction) {
+        $wallet_address = $transaction->wallet_address;
+        $url = "https://apilist.tronscan.org/api/token_trc20/transfers?relatedAddress={$wallet_address}&limit=20&start=0";
+
+        $response = Http::get($url);
+
+        if ($response->successful()) {
+            $transactions = $response->json();
+            foreach ($transactions['token_transfers'] as $tx) {
+                if ($tx['transaction_id'] == $transaction->merchant_trade_no && $tx['finalResult'] == "SUCCESS") {
+                    $this->mark_transaction_as_valid($transaction);
+                }
+            }
+        } else {
+            $this->handle_api_error($response);
+        }
+    }
+
+    private function check_btc_transaction($transaction) {
+        $wallet_address = $transaction->wallet_address;
+        $url = "https://blockchain.info/rawaddr/{$wallet_address}";
+
+        $response = Http::get($url);
+
+        if ($response->successful()) {
+            $transactions = $response->json();
+            foreach ($transactions['txs'] as $tx) {
+                if ($tx['hash'] == $transaction->merchant_trade_no) {
+                    $this->mark_transaction_as_valid($transaction);
+                }
+            }
+        } else {
+            $this->handle_api_error($response);
+        }
+    }
+
+    private function mark_transaction_as_valid($transaction) {
+        $transaction->trx_id = 2; // Mark as success
+        $transaction->save();
+    }
+
+    private function handle_api_error($response) {
+        \Log::error("API request failed: " . $response->body());
+    }
+
 
 }
