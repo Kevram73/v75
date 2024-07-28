@@ -151,6 +151,14 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Compte USDT mis à jour');
     }
 
+    public function change_btc_account(Request $request){
+        $client_id = Auth::guard('client')->user()->id;
+        $account = Account::where('client_id', $client_id)->get()->first();
+        $account->btc_account = $request->code;
+        $account->save();
+        return redirect()->back()->with('success', 'Compte BTC mis à jour');
+    }
+
     public function createOrder(Request $request)
     {
         $amount = $request->input('amount');

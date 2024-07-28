@@ -83,6 +83,7 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::post('account/details', [ClientHomeController::class, 'change_account_details'])->name('change_account_details');
     Route::post('message/send', [ClientHomeController::class, 'messageStore'])->name('message_send');
     Route::post('usdt/account', [ClientHomeController::class, 'change_usdt_account'])->name('account_usdt');
+    Route::post('btc/account', [ClientHomeController::class, 'change_btc_account'])->name('account_btc');
 
     Route::get('invest/deposit', [ClientHomeController::class, 'send'])->name('invest_deposit');
     Route::get('invest/withdrawal', [ClientHomeController::class, 'receive'])->name('invest_withdrawal');
