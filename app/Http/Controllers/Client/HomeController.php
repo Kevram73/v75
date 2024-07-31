@@ -290,6 +290,9 @@ class HomeController extends Controller
     private function mark_transaction_as_valid($transaction) {
         $transaction->trx_id = 2; // Mark as success
         $transaction->save();
+        $account = Account::where('client_id', Auth::guard('client')->user()->id)->get()->first();
+        $account->balance += $transaction->amount;
+        $account->save();
     }
 
     private function handle_api_error($response) {
