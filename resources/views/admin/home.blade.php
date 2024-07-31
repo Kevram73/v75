@@ -32,7 +32,7 @@
 									<div class="col-12">
 										<h4 class="hover-success"><i class="fa fa-fw fa-gg-circle text-primary"></i> Total reversé</h4>
 										<div class="d-flex">
-											<p class="fs-35 fw-600 mb-0">$ à mettre ! </p>
+											<p class="fs-35 fw-600 mb-0">$ 0 </p>
 									  		<div class="text-end mt-20 fs-13"></div>
 										</div>
 									</div>
@@ -64,7 +64,7 @@
 
                 <div class="col-xl-8 col-lg-12">
 					<div class="row">
-						<div class="col-xl-12">
+						{{-- <div class="col-xl-12">
 							<div class="card chart_card">
 								<div class="card-body">
 									<div class="box-header px-0">
@@ -96,9 +96,9 @@
 											</div>
 										</div>
 									</div>
-								</div> <!-- end card body-->
-							</div> <!-- end card -->
-						</div><!-- end col-->
+								</div>
+							</div>
+						</div> --}}
 
                         <div class="col-12">
                             <div class="box">

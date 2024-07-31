@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Services\BinancePayService;
 use Illuminate\Support\Facades\Redirect;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -37,9 +38,16 @@ class HomeController extends Controller
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
 
-        $deposit_total = Transaction::where('sender_id', $account->account_num)->get()->sum();
-        $withdrawal_total = Transaction::where('sender_id', $account->account_num)->get()->sum();
-
+        $deposits = Transaction::where('sender_id', $user->id)->get();
+        $withdrawals = Transaction::where('sender_id', $user->id)->get();
+        $deposit_total = 0;
+        $withdrawal_total = 0;
+        foreach($deposits as $dep){
+            $deposit_total += $dep->amount;
+        }
+        foreach($withdrawals as $wit){
+            $withdrawal_total += $dep->amount;
+        }
 
         return view('client.dashboard', compact('user', 'deposit_total', 'withdrawal_total', 'account'));
     }
@@ -57,7 +65,7 @@ class HomeController extends Controller
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
         $this->get_done_transactions();
-        $deposits = Transaction::where('sender_id', $account->account_num)->orderByDesc('created_at')->get();
+        $deposits = Transaction::where('sender_id', $user->id)->orderByDesc('created_at')->get();
 
         return view('client.deposits', compact('deposits', 'account'));
     }
@@ -67,7 +75,7 @@ class HomeController extends Controller
         $this->get_done_transactions();
         $account = Account::where('client_id', $user->id)->get()->first();
 
-        $withdrawals = Transaction::where('receiver_id', $account->account_num)->orderByDesc('created_at')->get();
+        $withdrawals = Transaction::where('receiver_id', $user->id)->orderByDesc('created_at')->get();
 
         return view('client.withdrawals', compact('withdrawals', 'account'));
     }
@@ -115,8 +123,8 @@ class HomeController extends Controller
         $this->get_done_transactions();
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
-        $totalDeposits = Transaction::where('sender_id', $account->account_num)->sum('amount');
-        $totalWithdrawals = Transaction::where('receiver_id', $account->account_num)->sum('amount');
+        $totalDeposits = Transaction::where('sender_id', $user->id)->sum('amount');
+        $totalWithdrawals = Transaction::where('receiver_id', $user->id)->sum('amount');
 
         return view('client.account', compact('account', 'totalDeposits', 'totalWithdrawals'));
     }
