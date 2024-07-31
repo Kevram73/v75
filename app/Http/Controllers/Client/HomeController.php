@@ -38,9 +38,16 @@ class HomeController extends Controller
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
 
-        $deposit_total = Transaction::where('sender_id', $user->id)->get()->sum();
-        $withdrawal_total = Transaction::where('sender_id', $user->id)->get()->sum();
-
+        $deposits = Transaction::where('sender_id', $user->id)->get();
+        $withdrawals = Transaction::where('sender_id', $user->id)->get();
+        $deposit_total = 0;
+        $withdrawal_total = 0;
+        foreach($deposits as $dep){
+            $deposit_total += $dep->amount;
+        }
+        foreach($withdrawals as $wit){
+            $withdrawal_total += $dep->amount;
+        }
 
         return view('client.dashboard', compact('user', 'deposit_total', 'withdrawal_total', 'account'));
     }
