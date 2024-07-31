@@ -38,7 +38,7 @@ class HomeController extends Controller
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
 
-        $deposit_total = Transaction::where('sender_id', $account->account_num)->get()->sum();
+        $deposit_total = Transaction::where('sender_id', $user->id)->get()->sum();
         $withdrawal_total = Transaction::where('sender_id', $account->account_num)->get()->sum();
 
 
@@ -58,7 +58,7 @@ class HomeController extends Controller
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
         $this->get_done_transactions();
-        $deposits = Transaction::where('sender_id', $account->account_num)->orderByDesc('created_at')->get();
+        $deposits = Transaction::where('sender_id', $user->id)->orderByDesc('created_at')->get();
 
         return view('client.deposits', compact('deposits', 'account'));
     }
@@ -68,7 +68,7 @@ class HomeController extends Controller
         $this->get_done_transactions();
         $account = Account::where('client_id', $user->id)->get()->first();
 
-        $withdrawals = Transaction::where('receiver_id', $account->account_num)->orderByDesc('created_at')->get();
+        $withdrawals = Transaction::where('receiver_id', $user->id)->orderByDesc('created_at')->get();
 
         return view('client.withdrawals', compact('withdrawals', 'account'));
     }
