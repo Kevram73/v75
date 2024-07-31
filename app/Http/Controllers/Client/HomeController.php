@@ -123,8 +123,8 @@ class HomeController extends Controller
         $this->get_done_transactions();
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
-        $totalDeposits = Transaction::where('sender_id', $account->account_num)->sum('amount');
-        $totalWithdrawals = Transaction::where('receiver_id', $account->account_num)->sum('amount');
+        $totalDeposits = Transaction::where('sender_id', $user->id)->sum('amount');
+        $totalWithdrawals = Transaction::where('receiver_id', $user->id)->sum('amount');
 
         return view('client.account', compact('account', 'totalDeposits', 'totalWithdrawals'));
     }
