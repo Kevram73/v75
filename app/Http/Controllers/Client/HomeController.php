@@ -39,7 +39,7 @@ class HomeController extends Controller
         $account = Account::where('client_id', $user->id)->get()->first();
 
         $deposit_total = Transaction::where('sender_id', $user->id)->get()->sum();
-        $withdrawal_total = Transaction::where('sender_id', $account->account_num)->get()->sum();
+        $withdrawal_total = Transaction::where('sender_id', $user->id)->get()->sum();
 
 
         return view('client.dashboard', compact('user', 'deposit_total', 'withdrawal_total', 'account'));
