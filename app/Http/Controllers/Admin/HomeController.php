@@ -24,7 +24,7 @@ class HomeController extends Controller
         $activeClientsCount = Client::where('is_active', true)->count();
 
         // 3 last active clients
-        $activeClients = Client::where('is_active', true)->limit(3)->get();
+        $activeClients = Client::where('is_active', true)->limit(5)->get();
 
         // Total balance of all clients (assuming clients have a 'balance' attribute)
         $totalClientsBalance = Account::sum('balance');
@@ -39,7 +39,7 @@ class HomeController extends Controller
         $totalTransactionsToday = Transaction::whereDate('created_at', today())->sum('amount');
 
         // 7 lasts transactions
-        $lastTransactions = Transaction::orderByDesc('created_at')->limit(7)->get();
+        $lastTransactions = Transaction::orderByDesc('created_at')->limit(5)->get();
 
         // Transactions grouped by month and their total amounts
         $transactionsByMonth = Transaction::select(

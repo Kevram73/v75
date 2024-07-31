@@ -39,7 +39,7 @@
                       </div>
 
                       <div class="box-body">
-                        <p class="text-gray-600"><marquee behavior="" direction="left">Gagnez 3,33% par jour, 100% par mois avec notre bot de trading des indices. Minimum à investir 10$ ; transactions via <span class="text-success">Dollar Perfect money</span> et <span class="text-success">USDT TRC20</span>. Dépôt et retrait instantané. Avec v75 pro, c'est votre argent qui travaille pour vous !</marquee></p>
+                        <p class="text-gray-600"><marquee behavior="" direction="left">Gagnez 3,33% par jour, 100% par mois avec notre bot de trading des indices. Minimum à investir 10$ ; transactions via <span class="text-success">USDT TRC20</span> et <span class="text-success">Bitcoin,</span> Portefeuille supporté : <span class="text-success">Trust Wallet</span>. Dépôt et retrait instantané. Avec v75 pro, c'est votre argent qui travaille pour vous !</marquee></p>
                         {{-- Investissez, aucune condition préalable requise et percevez jusqu'à 3,3% sur votre capital initial --}}
                       </div>
                     </div>
@@ -111,12 +111,8 @@
 
                 <div class="col-xl-12 col-12">
                     <div class="row">
-                        <div class="col-xl-4">
-                            <div class="box">
-                                <img class="card-img-to" src="{{asset('/images/tx.png')}}" alt="Taux de parrainage" style="border-radius: 0% 0% 0% 0%;">
-                            </div>
-                        </div>
-                        <div class="col-xl-8">
+
+                        <div class="col-xl-12">
                             <div class="box bg-img" style="background-image: url({{asset('/images/abstract-2.svg')}});background-position: right top; background-size: 30% auto;">
                               <div class="box-body">
                                   <a href="#" class="box-title fw-600 hover-primary fs-14">Taux de commission v75 pro</a>
@@ -143,6 +139,11 @@
             <div class="col-xl-12 col-lg-12">
                 <div class="row">
                     <div class="col-xl-12">
+                        <div class="box">
+                            <img class="card-img-to" src="{{asset('/images/taux2.png')}}" alt="Taux de parrainage" style="border-radius: 0% 0% 0% 0%; height: 80vh;">
+                        </div>
+                    </div>
+                    {{-- <div class="col-xl-12">
                         <div class="card chart_card">
                             <div class="card-body">
                                 <div class="box-header px-0">
@@ -176,7 +177,7 @@
                                 </div>
                             </div> <!-- end card body-->
                         </div> <!-- end card -->
-                    </div><!-- end col-->
+                    </div><!-- end col--> --}}
 
 
                 </div>

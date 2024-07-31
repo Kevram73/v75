@@ -58,7 +58,7 @@
                             <div class="tab-pane show active" id="bordered-justified-tabs-preview">
 
                                 <br><div class="tab-pane show active" id="profile-b2">
-                                    <p class="text-fade" style="text-align: justify; font-size:15px;">Votre capital initial investit vous reste toujours disponible. Au désir, vous êtes libre de le retirer ou d'augmenter la mise (le montant)</p>
+                                    <p class="text-fade" style="text-align: justify; font-size:15px;">Votre capital initial investit vous reste toujours disponible comme fond de roulement. Au désir, vous êtes libre d'augmenter la mise (le montant) si besoin.</p>
                                     {{-- <p class="mb-0 text-fade">Leggings occaecat dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p> --}}
                                 </div>
 

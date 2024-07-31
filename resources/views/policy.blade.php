@@ -139,111 +139,112 @@
 
                 V75 Pro est la plateforme spécialisée dans le trading des indices synthétiques et particulièrement l'indice V75 index. Elle est  basée à Dubaï, opérant essentiellement dans le Trading, les investissements en ligne, et fait partie d'une holding de 13 sociétés qui exerce également dans le transport terrestre, le e-commerce, les BTP et bien d'autres.
 
-                Cette plateforme existe depuis 3 ans et a déjà enregistré plus de 25.000 clients et gère un total actifs de 8,5 millions $.
+                Cette plateforme existe depuis 3 ans et a déjà enregistré plus de d'un milliers de clients et gère un total actifs de 600K $.<br>
 
 
-                Il s’agit d’un accord entre la plateforme V75 Pro et vous (Souscripteur et utilisateur de v75 Pro). En utilisant la plateforme, vous acceptez d'avoir lu, compris et accepté toutes les conditions générales contenues dans les présentes (le «Contrat d'utilisation»), ainsi que notre politique de confidentialité disponible sur https://www.v75 Pro.com/privacy.
+                Il s’agit d’un accord entre la plateforme V75 Pro et vous (Souscripteur et utilisateur de v75 Pro). En utilisant la plateforme, vous acceptez d'avoir lu, compris et accepté toutes les conditions générales contenues dans les présentes (le «Contrat d'utilisation»), ainsi que notre politique de confidentialité disponible sur https://www.v75Pro.com/privacy. <br>
 
-                ARTICLE 1 : UTILISATION GÉNÉRALE
+                <br>ARTICLE 1 : UTILISATION GÉNÉRALE <br>
 
-                a-     Admissibilité :
+                a-     Admissibilité :<br>
 
                 En utilisant le site v75 Pro et en signant ce contrat d'utilisation via un clic sur ‘’J’accepte’’, vous affirmez être un particulier, âgé d'au moins 18 ans, avoir la capacité de signer ce contrat d'utilisation et accepter d'être légalement lié par les conditions générales du présent contrat d'utilisation, y compris la politique de confidentialité et les principes commerciaux tels qu'ils sont incorporés aux présentes, tels que modifiés de temps à autre. Afin de pouvoir utiliser les services, vous pouvez être amené à fournir certaines informations d'identification conformément à notre programme de conformité.
 
-                     b-  Modification :
+                <br> b-  Modification :
 
-                -  Nous pouvons modifier les termes de cet accord d'utilisateur à tout moment. De telles modifications entreront en vigueur lors de leur publication sur le site v75 Pro ou lors de l'utilisation des services. Si vous nous avez fourni une adresse électronique, nous tenterons également de vous informer par courrier électronique des modifications apportées à cet accord d'utilisation.
+                -  Nous pouvons modifier les termes de cet accord d'utilisateur à tout moment. De telles modifications entreront en vigueur lors de leur publication sur le site v75 Pro ou lors de l'utilisation des services. Si vous nous avez fourni une adresse électronique, nous tenterons également de vous informer par courrier électronique des modifications apportées à cet accord d'utilisation. <br>
 
-                -  Il est de votre responsabilité de mettre à jour votre contact, y compris, sans toutefois s'y limiter, l'adresse électronique que vous nous avez fournie (le cas échéant); Si vous ne le faites pas, vous risquez de ne pas recevoir de notification des modifications apportées au contrat d'utilisation.
+                -  Il est de votre responsabilité de mettre à jour votre contact, y compris, sans toutefois s'y limiter, l'adresse électronique que vous nous avez fournie (le cas échéant); Si vous ne le faites pas, vous risquez de ne pas recevoir de notification des modifications apportées au contrat d'utilisation.<br>
 
-                -  Lisez attentivement le contrat d'utilisation chaque fois que vous utilisez les services. Votre utilisation continue de la plateforme signifiera que vous acceptez d'être lié par le présent contrat d'utilisation. Notre échec ou notre retard à appliquer partiellement ou toute disposition de cet accord d'utilisateur ne doit pas être interprété comme une renonciation à l'un de nos droits.
-
-
-                ARTICLE 2 : DÉFINITIONS
-
-                V75 Pro désigne la plateforme d'investissement
-
-                «Programme de conformité» désigne les exigences définies par V75 Pro pour la collecte, la vérification, l'enregistrement et le rapport des informations vous concernant, dès la première utilisation de certains Services et de manière continue, que ce soit pour nos besoins de gestion des risques de l'entreprise ou pour se conformer aux obligations légales qui nous sont applicables .
-
-                «Services» désigne un ou plusieurs des services suivants offerts ou fournis par V75 Pro via le site ou une application locale (mobile, ordinateur de bureau ou autre).
-
-                «Utilisateur» signifie un compte tenu par V75 Pro.com.  Pour éviter tout doute, le compte d'utilisateur est associé à un portefeuille.
-
-                «Portefeuille» désigne le logiciel de portefeuille émis par V75 Pro, qui consiste en un logiciel vous permettant de conserver la monnaie virtuelle, d’organiser les adresses réseau, de visualiser l’historique des transactions et d’effectuer des transactions en monnaie virtuelle.
-
-                ARTICLE 3 : CONFORMITÉ AVEC LA LOI APPLICABLE
-
-                Votre relation avec V75 Pro et l'utilisation de l'un des Services peuvent être soumises aux lois, réglementations et règles des autorités gouvernementales ou réglementaires de votre juridiction ou de notre juridiction (la «loi applicable»). En signant cet accord d'utilisateur, vous acceptez d'agir en conformité avec et d'être légalement lié à toute loi applicable.
-
-                ARTICLE 4 : ACCÈS AUX SERVICES
-
-                a-  Nous vous accordons un accès limité, non exclusive et non transférable vous permettant d'accéder aux Services et au Site v75 Pro et de les utiliser uniquement conformément aux conditions du présent Contrat.
-
-                b-  Vous devez garder secrètes toutes les informations d'identification associées aux services. Vous êtes seul responsable de la gestion et du maintien de la sécurité de toute information relative à ces identifiants et acceptez que v75 Pro ne soit pas responsable (et vous ne nous tiendrez pas pour responsable) de tout accès non autorisé aux Services ou de tout préjudice en résultant que vous pourriez subir.
-
-                c-  Votre accès à un ou plusieurs services peut dépendre de la satisfaction de nos processus d’intégration ainsi que de notre programme de conformité, ce qui peut inclure la vérification de votre identité et de la source des fonds, ainsi que des informations supplémentaires que nous pouvons demander de temps à autre. Les informations que nous demandons peuvent inclure, sans limitation, des informations personnellement identifiables telles que l'adresse du réseau, le nom, l'adresse électronique, le numéro de téléphone, la date de naissance, le numéro d'identification du contribuable ou le numéro de sécurité sociale et une pièce d'identité officielle avec photo émise par le gouvernement que nous pouvons raisonnablement juger utile pour satisfaire nos obligations en matière de gestion des risques ou nos obligations légales. En nous fournissant ces informations, vous déclarez qu'elles sont exactes et vous acceptez de mettre à jour les informations de votre compte d'utilisateur rapidement, mais au plus tard 15 jours après tout changement de vos informations. Si vous ne fournissez pas les informations ou ne les mettez pas à jour rapidement, des services ou des fonds pourraient vous être inaccessibles.
-
-                d- Toute communication de v75 Pro peut vous être transmise par courrier électronique à l'adresse que vous avez indiquée lors de l'accès aux Services. V75 Pro ne sera pas responsable des dommages que vous pourriez subir du fait de votre non-réception de toute notification qui vous a été fournie en relation avec le présent Contrat d'utilisation ou de votre utilisation des Services, à condition qu'une telle notification soit envoyée à cette adresse e-mail. V75 Pro peut également communiquer avec vous par d'autres moyens, notamment via un appel téléphonique, une messagerie instantanée ou des applications de chat exploités par v75 Pro ou par un tiers.
-
-                ARTICLE 5 : LE PORTEFEUILLE
-
-                a-   Le portefeuille vous est fourni exclusivement par le site v75 Pro.com.
-
-                b- Vous devez conserver, en dehors des services, une sauvegarde de tous les identifiés du portefeuille, y compris vos mots de passe, identifiants, phrases de sauvegarde, clés privées et adresses réseau. Si vous ne conservez pas de sauvegarde de vos données de portefeuille en dehors des services, vous ne pourrez pas accéder aux jetons stockés dans votre portefeuille. Si nous interrompons ou ne proposons plus tout ou partie des services ou risquons de perdre accès à la monnaie virtuelle, nous ne sommes pas responsables du maintien de ces données en votre nom.
-
-                c-  En ce qui concerne le portefeuille, V75 Pro ne reçoit ni ne stocke votre mot de passe de portefeuille, ni aucune clé, adresse réseau ou historique de transaction. Mais à votre demande, nous pouvons vous aider à récupérer votre mot de passe Wallet. Vous êtes seul responsable de la mémorisation, du stockage et de la confidentialité de votre mot de passe Wallet. L'argent virtuel sur votre portefeuille peut devenir inaccessible si vous ne connaissez pas ou ne conservez pas en secret votre mot de passe. Toute tierce partie ayant connaissance d'une ou plusieurs de vos informations d'identification (y compris, sans limitation, une phrase de sauvegarde, un identifiant de portefeuille ou un mot de passe) peut disposer des fonds dans votre portefeuille.
-
-                d-  Lorsque vous créez votre compte V75 Pro , vous devez:
-
-                -        (a) créer un mot de passe fort que vous n'utilisez pas pour un autre site Web ou service en ligne,
-
-                -        (b) fournir des informations précises et véridiques,
-
-                -        (c) protéger et garder secrètes toutes les informations d'identification du portefeuille,
-
-                -        (d) protéger l'accès à votre appareil et à votre portefeuille,
-
-                -        (e) nous avertir rapidement si vous découvrez ou soupçonnez de toute autre manière des violations de la sécurité liée à votre portefeuille,
-
-                -        (f) utilisez la fonctionnalité de sauvegarde fournie via le portefeuille et sauvegardez vos fichiers de sauvegarde. Vous acceptez de prendre la responsabilité de toutes les activités qui se produisent avec votre portefeuille et d'accepter tous les risques de tout accès autorisé ou non à votre portefeuille, dans toute la mesure permise par la loi.
+                -  Lisez attentivement le contrat d'utilisation chaque fois que vous utilisez les services. Votre utilisation continue de la plateforme signifiera que vous acceptez d'être lié par le présent contrat d'utilisation. Notre échec ou notre retard à appliquer partiellement ou toute disposition de cet accord d'utilisateur ne doit pas être interprété comme une renonciation à l'un de nos droits. <br>
 
 
-                ARTICLE 6 : GARANTIES
+                <br>ARTICLE 2 : DÉFINITIONS
+
+                V75 Pro désigne la plateforme d'investissement<br>
+
+                «Programme de conformité» désigne les exigences définies par V75 Pro pour la collecte, la vérification, l'enregistrement et le rapport des informations vous concernant, dès la première utilisation de certains Services et de manière continue, que ce soit pour nos besoins de gestion des risques de l'entreprise ou pour se conformer aux obligations légales qui nous sont applicables . <br>
+
+                «Services» désigne un ou plusieurs des services suivants offerts ou fournis par V75 Pro via le site ou une application locale (mobile, ordinateur de bureau ou autre).<br>
+
+                «Utilisateur» signifie un compte tenu par V75 Pro.com.  Pour éviter tout doute, le compte d'utilisateur est associé à un portefeuille.<br>
+
+                «Portefeuille» désigne le logiciel de portefeuille émis par V75 Pro, qui consiste en un logiciel vous permettant de conserver la monnaie virtuelle, d’organiser les adresses réseau, de visualiser l’historique des transactions et d’effectuer des transactions en monnaie virtuelle.<br>
+
+                <br>ARTICLE 3 : CONFORMITÉ AVEC LA LOI APPLICABLE<br>
+
+                Votre relation avec V75 Pro et l'utilisation de l'un des Services peuvent être soumises aux lois, réglementations et règles des autorités gouvernementales ou réglementaires de votre juridiction ou de notre juridiction (la «loi applicable»). En signant cet accord d'utilisateur, vous acceptez d'agir en conformité avec et d'être légalement lié à toute loi applicable.<br>
+
+                <br>ARTICLE 4 : ACCÈS AUX SERVICES<br>
+
+                a-  Nous vous accordons un accès limité, non exclusive et non transférable vous permettant d'accéder aux Services et au Site v75 Pro et de les utiliser uniquement conformément aux conditions du présent Contrat.<br>
+
+                b-  Vous devez garder secrètes toutes les informations d'identification associées aux services. Vous êtes seul responsable de la gestion et du maintien de la sécurité de toute information relative à ces identifiants et acceptez que v75 Pro ne soit pas responsable (et vous ne nous tiendrez pas pour responsable) de tout accès non autorisé aux Services ou de tout préjudice en résultant que vous pourriez subir.<br>
+
+                c-  Votre accès à un ou plusieurs services peut dépendre de la satisfaction de nos processus d’intégration ainsi que de notre programme de conformité, ce qui peut inclure la vérification de votre identité et de la source des fonds, ainsi que des informations supplémentaires que nous pouvons demander de temps à autre. Les informations que nous demandons peuvent inclure, sans limitation, des informations personnellement identifiables telles que l'adresse du réseau, le nom, l'adresse électronique, le numéro de téléphone, la date de naissance, le numéro d'identification du contribuable ou le numéro de sécurité sociale et une pièce d'identité officielle avec photo émise par le gouvernement que nous pouvons raisonnablement juger utile pour satisfaire nos obligations en matière de gestion des risques ou nos obligations légales. En nous fournissant ces informations, vous déclarez qu'elles sont exactes et vous acceptez de mettre à jour les informations de votre compte d'utilisateur rapidement, mais au plus tard 15 jours après tout changement de vos informations. Si vous ne fournissez pas les informations ou ne les mettez pas à jour rapidement, des services ou des fonds pourraient vous être inaccessibles.<br>
+
+                d- Toute communication de v75 Pro peut vous être transmise par courrier électronique à l'adresse que vous avez indiquée lors de l'accès aux Services. V75 Pro ne sera pas responsable des dommages que vous pourriez subir du fait de votre non-réception de toute notification qui vous a été fournie en relation avec le présent Contrat d'utilisation ou de votre utilisation des Services, à condition qu'une telle notification soit envoyée à cette adresse e-mail. V75 Pro peut également communiquer avec vous par d'autres moyens, notamment via un appel téléphonique, une messagerie instantanée ou des applications de chat exploités par v75 Pro ou par un tiers.<br>
+
+                <br>ARTICLE 5 : LE PORTEFEUILLE<br>
+
+                a-   Le portefeuille vous est fourni exclusivement par le site v75pro.com<br>
+
+                b- Vous devez conserver, en dehors des services, une sauvegarde de tous les identifiés du portefeuille, y compris vos mots de passe, identifiants, phrases de sauvegarde, clés privées et adresses réseau. Si vous ne conservez pas de sauvegarde de vos données de portefeuille en dehors des services, vous ne pourrez pas accéder aux jetons stockés dans votre portefeuille. Si nous interrompons ou ne proposons plus tout ou partie des services ou risquons de perdre accès à la monnaie virtuelle, nous ne sommes pas responsables du maintien de ces données en votre nom.<br>
+
+                c-  En ce qui concerne le portefeuille, V75 Pro ne reçoit ni ne stocke votre mot de passe de portefeuille, ni aucune clé, adresse réseau ou historique de transaction. Mais à votre demande, nous pouvons vous aider à récupérer votre mot de passe Wallet. Vous êtes seul responsable de la mémorisation, du stockage et de la confidentialité de votre mot de passe Wallet. L'argent virtuel sur votre portefeuille peut devenir inaccessible si vous ne connaissez pas ou ne conservez pas en secret votre mot de passe. Toute tierce partie ayant connaissance d'une ou plusieurs de vos informations d'identification (y compris, sans limitation, une phrase de sauvegarde, un identifiant de portefeuille ou un mot de passe) peut disposer des fonds dans votre portefeuille.<br>
+
+                d-  Lorsque vous créez votre compte V75 Pro , vous devez:<br>
+
+                <ul>
+                    <li>     (a) créer un mot de passe fort que vous n'utilisez pas pour un autre site Web ou service en ligne,</li>
+
+                    <li>     (b) fournir des informations précises et véridiques,</li>
+
+                    <li>     (c) protéger et garder secrètes toutes les informations d'identification du portefeuille,</li>
+
+                    <li>     (d) protéger l'accès à votre appareil et à votre portefeuille,</li>
+
+                    <li>     (e) nous avertir rapidement si vous découvrez ou soupçonnez de toute autre manière des violations de la sécurité liée à votre portefeuille,</li>
+
+                    <li>     (f) utilisez la fonctionnalité de sauvegarde fournie via le portefeuille et sauvegardez vos fichiers de sauvegarde. Vous acceptez de prendre la responsabilité de toutes les activités qui se produisent avec votre portefeuille et d'accepter tous les risques de tout accès autorisé ou non à votre portefeuille, dans toute la mesure permise par la loi.</li>
+                </ul>
+
+                <br>ARTICLE 6 : GARANTIES <br>
 
                 a - En accédant ou en utilisant les services, vous acceptez d'être seul responsable de votre conduite lorsque vous accédez et utilisez nos services. Sans limiter la généralité de ce qui précède, vous acceptez de ne pas :
+                <ul>
+                    <li>      Utiliser les Services d'une manière qui pourrait gêner, perturber, affecter négativement ou empêcher les autres utilisateurs de profiter pleinement des Services, ou qui pourrait endommager, désactiver, surcharger ou nuire au fonctionnement de nos Services de quelque manière que ce soit;</li>
 
-                -        Utiliser les Services d'une manière qui pourrait gêner, perturber, affecter négativement ou empêcher les autres utilisateurs de profiter pleinement des Services, ou qui pourrait endommager, désactiver, surcharger ou nuire au fonctionnement de nos Services de quelque manière que ce soit;
+                    <li>      Utiliser les Services pour payer, soutenir ou autrement participer à des activités illégales, y compris, sans toutefois s'y limiter, les jeux de hasard illégaux, la fraude, le blanchiment d'argent ou les activités terroristes,</li>
 
-                -        Utiliser les Services pour payer, soutenir ou autrement participer à des activités illégales, y compris, sans toutefois s'y limiter, les jeux de hasard illégaux, la fraude, le blanchiment d'argent ou les activités terroristes,
+                    <li>      Utiliser ou tenter d'utiliser le compte d'utilisateur d'une autre personne ou des informations d'identification sans autorisation,</li>
 
-                -        Utiliser ou tenter d'utiliser le compte d'utilisateur d'une autre personne ou des informations d'identification sans autorisation,
+                    <li>      Tenter de contourner les techniques de filtrage de contenu que nous employons, ou tenter d'accéder à un service ou à une zone de nos Services auquel vous n'êtes pas autorisé à accéder,</li>
 
-                -        Tenter de contourner les techniques de filtrage de contenu que nous employons, ou tenter d'accéder à un service ou à une zone de nos Services auquel vous n'êtes pas autorisé à accéder,
+                    <li>      Introduire dans les Services tout virus, cheval de Troie, vers, bombes logiques ou autre matériel nuisible,</li>
 
-                -        Introduire dans les Services tout virus, cheval de Troie, vers, bombes logiques ou autre matériel nuisible,
+                    <li>      Développer toute application tierce qui interagit avec nos services sans notre consentement écrit préalable,</li>
 
-                -        Développer toute application tierce qui interagit avec nos services sans notre consentement écrit préalable,
+                    <li>      Fournir des informations fausses, inexactes ou trompeuses ; ou</li>
 
-                -        Fournir des informations fausses, inexactes ou trompeuses ; ou
+                    <li>      Encourager ou inciter une autre personne à se livrer à l'une des activités interdites par le présent article.</li>
+                </ul>
+                b - Nous ​​rejetons toutes promesses, déclarations et garanties expresses, implicites ou statutaires, y compris, mais sans s'y limiter, des garanties de valeur et tous les services fournis par nous ​​sont fournis «tels quels» et «tels que disponibles». Nous ne faisons aucune représentation ou garantie que l'accès aux services sera continu, ininterrompu, rapide ou exempt d'erreur. <br>
 
-                -        Encourager ou inciter une autre personne à se livrer à l'une des activités interdites par le présent article.
-
-                b - Nous ​​rejetons toutes promesses, déclarations et garanties expresses, implicites ou statutaires, y compris, mais sans s'y limiter, des garanties de valeur et tous les services fournis par nous ​​sont fournis «tels quels» et «tels que disponibles». Nous ne faisons aucune représentation ou garantie que l'accès aux services sera continu, ininterrompu, rapide ou exempt d'erreur.
-
-                c -  En accédant ou en utilisant les services, vous acceptez que la plateforme V75 Pro se réserve le droit de modifier à tout moment et de façon unilatérale les présents termes et conditions en fonction de l’évolution du marché financier des indices qui demeure toujours dynamique. Cette modification consiste à garantir l’équilibre des intérêts des utilisateurs de V75 Pro.
+                c -  En accédant ou en utilisant les services, vous acceptez que la plateforme V75 Pro se réserve le droit de modifier à tout moment et de façon unilatérale les présents termes et conditions en fonction de l’évolution du marché financier des indices qui demeure toujours dynamique. Cette modification consiste à garantir l’équilibre des intérêts des utilisateurs de V75 Pro. <br>
 
 
-                ARTICLE 7 : DIVERS
+                <br>ARTICLE 7 : DIVERS <br>
 
-                a - Force Majeure : Si, en raison de tout ou partie d'un événement de force majeure, vous ou nous êtes retardés ou empêchés de respecter le présent contrat d'utilisation, ce retard ou cette non-conformité ne sera pas considéré comme une violation du présent contrat d'utilisation. La perte ou les dommages seront réclamés par vous ou nous pour cette raison. On entend par «cas de force majeure» tout événement échappant au contrôle raisonnable de la partie, y compris, sans toutefois s'y limiter, une inondation, des conditions météorologiques exceptionnelles, un tremblement de terre ou un autre cas de force majeure, un incendie, une guerre, une insurrection, une émeute, un conflit du travail, un accident, une action du gouvernement, communications, panne de courant, défaillance de la performance de la banque, ou dysfonctionnement de l’équipement ou du logiciel, y compris scission du réseau ou «fourchettes» ou modifications inattendues d’un réseau informatique sur lequel reposent les Services.
+                a - Force Majeure : Si, en raison de tout ou partie d'un événement de force majeure, vous ou nous êtes retardés ou empêchés de respecter le présent contrat d'utilisation, ce retard ou cette non-conformité ne sera pas considéré comme une violation du présent contrat d'utilisation. La perte ou les dommages seront réclamés par vous ou nous pour cette raison. On entend par «cas de force majeure» tout événement échappant au contrôle raisonnable de la partie, y compris, sans toutefois s'y limiter, une inondation, des conditions météorologiques exceptionnelles, un tremblement de terre ou un autre cas de force majeure, un incendie, une guerre, une insurrection, une émeute, un conflit du travail, un accident, une action du gouvernement, communications, panne de courant, défaillance de la performance de la banque, ou dysfonctionnement de l’équipement ou du logiciel, y compris scission du réseau ou «fourchettes» ou modifications inattendues d’un réseau informatique sur lequel reposent les Services. <br>
 
-                b – Divisibilité et Réforme : Dans le cas où une disposition de cet accord d'utilisateur est inapplicable en vertu de la loi applicable, la validité ou le caractère exécutoire des dispositions restantes ne sera pas affectée. Dans la mesure où une disposition de la présente convention d'utilisation est jugée inapplicable par un tribunal, un tribunal compétent peut reformer cette disposition afin de la rendre exécutoire. Les dispositions du présent contrat d'utilisation seront, dans la mesure du possible, interprétées de manière à préserver sa légalité et son caractère exécutoire.
+                b – Divisibilité et Réforme : Dans le cas où une disposition de cet accord d'utilisateur est inapplicable en vertu de la loi applicable, la validité ou le caractère exécutoire des dispositions restantes ne sera pas affectée. Dans la mesure où une disposition de la présente convention d'utilisation est jugée inapplicable par un tribunal, un tribunal compétent peut reformer cette disposition afin de la rendre exécutoire. Les dispositions du présent contrat d'utilisation seront, dans la mesure du possible, interprétées de manière à préserver sa légalité et son caractère exécutoire. <br>
 
-                c – Cession : Cet accord d'utilisateur lie vos successeurs, héritiers, représentants personnels et ayants droit. Vous ne pouvez pas céder ni transférer aucun de vos droits ou obligations en vertu du présent Contrat d'utilisation sans notre accord préalable écrit, qui peut être retenu à notre seule discrétion. Nous pouvons céder des droits ou déléguer des tâches en vertu du présent Contrat d'utilisation à notre seule discrétion.
+                c – Cession : Cet accord d'utilisateur lie vos successeurs, héritiers, représentants personnels et ayants droit. Vous ne pouvez pas céder ni transférer aucun de vos droits ou obligations en vertu du présent Contrat d'utilisation sans notre accord préalable écrit, qui peut être retenu à notre seule discrétion. Nous pouvons céder des droits ou déléguer des tâches en vertu du présent Contrat d'utilisation à notre seule discrétion. <br>
 
-                d - Relations entre les parties : Rien dans le présent contrat d'utilisation ne vise à créer, ni ne crée de partenariat, agence, conseil ou tutelle. Nous et vous êtes des contractants indépendants aux fins du présent Contrat d'utilisation.
+                d - Relations entre les parties : Rien dans le présent contrat d'utilisation ne vise à créer, ni ne crée de partenariat, agence, conseil ou tutelle. Nous et vous êtes des contractants indépendants aux fins du présent Contrat d'utilisation. <br>
 
-                e - Intégralité de l'accord : Le présent contrat d'utilisation constitue l'intégralité de l'accord entre les parties en ce qui concerne l'objet qui y est décrit. Les discussions ou négociations ultérieures entre vous et notre personnel devront uniquement modifier ou faire partie du présent Contrat d'utilisation au moyen d'un amendement écrit faisant expressément référence à la date de la dernière mise à jour et au nom du présent Contrat d'utilisation.
+                e - Intégralité de l'accord : Le présent contrat d'utilisation constitue l'intégralité de l'accord entre les parties en ce qui concerne l'objet qui y est décrit. Les discussions ou négociations ultérieures entre vous et notre personnel devront uniquement modifier ou faire partie du présent Contrat d'utilisation au moyen d'un amendement écrit faisant expressément référence à la date de la dernière mise à jour et au nom du présent Contrat d'utilisation. <br>
 
                 f – Coordonnées : Pour toute autre raison que les demandes d'assistance technique, vous pouvez nous contacter  via notre outil d'assistance à l'adresse: info@v75 Pro.net</p>
             </blockquote>
