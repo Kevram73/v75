@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Services\BinancePayService;
 use Illuminate\Support\Facades\Redirect;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
