@@ -218,7 +218,6 @@ class HomeController extends Controller
             case 'USDT':
                 $coin = 195;
                 $address = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3";
-                $contract = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
                 break;
             case 'BTC':
                 $coin = 0;
@@ -240,7 +239,7 @@ class HomeController extends Controller
         $transaction->trx_id = 1; // 1: En attente, 2: Success, 0: Annulée
         $transaction->save();
 
-        $link = "trust://send?address=" . urlencode($contract) . "&coin=" . urlencode($coin) . "&amount=" . urlencode($amount) . "&contract=" . urlencode($contract);
+        $link = "trust://send?address=" . urlencode($address) . "&coin=" . urlencode($coin) . "&amount=" . urlencode($amount) . "&txid=" . urlencode($uid);
 
         return redirect($link);
     }
