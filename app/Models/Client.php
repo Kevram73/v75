@@ -27,9 +27,6 @@ class Client extends Authenticatable
     ];
 
 
-
-
-
     public function account()
     {
         return Account::where('client_id', $this->id)->get()->first();
@@ -99,13 +96,10 @@ class Client extends Authenticatable
     }
 
     public function rsi() {
-        if($deposited_at != null){
-            $now = Carbon::now();
-            $created = $this->created_at;
-            $days = $created->diffInDays($now);
-            return $this->capital * 0.033 * $days;
-        }
-
+        $now = Carbon::now();
+        $created = $this->created_at;
+        $days = $created->diffInDays($now);
+        return $this->capital * 0.033 * $days;
     }
 
 
