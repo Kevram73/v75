@@ -39,7 +39,7 @@ class Client extends Authenticatable
     public function rsi_amount(){
         $rsi = 0;
         foreach($this->deposits() as $deposit){
-            $value = $deposit->amount * 0.33/100;
+            $value = $deposit->amount * 3.3/100;
             $rsi += $value;
         }
         return $rsi;
