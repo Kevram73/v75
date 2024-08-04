@@ -85,7 +85,7 @@ class HomeController extends Controller
 
         // Total balance of all clients (assuming clients have a 'balance' attribute)
         $totalDeps = 0;
-        $depTrans = Transaction::where('receiver_id', 0)->get();
+        $depTrans = Transaction::where('receiver_id', 0)->where('trx_id', 2)->get();
         foreach($depTrans as $trans){
             $totalDeps += $trans->amount;
         }
@@ -93,7 +93,7 @@ class HomeController extends Controller
 
 
         $totalRec = 0;
-        $recTrans = Transaction::where('sender_id', 0)->get();
+        $recTrans = Transaction::where('sender_id', 0)->where('trx_id', 2)->get();
         foreach ($recTrans as $rectran){
             $totalRec += $rectran->amount;
         }
