@@ -140,7 +140,7 @@
                                     <div class="box box-body">
                                       <div class="fs-18 flexbox align-items-center">
                                         <span>Total RSI</span>
-                                        <span style="font-size: 34px;">{totalRSI} </span>
+                                        <span style="font-size: 34px;">{{ $user->rsi_amount() }} </span>
                                       </div>
 
                                       <div class="progress progress-xxs mt-10 mb-10">

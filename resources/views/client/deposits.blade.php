@@ -38,6 +38,7 @@
                                 <th scope="col">Date</th>
                                 <th scope="col">Identité du client</th>
                                 <th scope="col">Nature de la transaction</th>
+                                <th scope="col">Statut de la transaction</th>
                                 </tr>
                             </thead>
                             @foreach ($deposits as $deposit)
@@ -46,12 +47,17 @@
                             @endphp
                             <tbody class="text-fade">
                                 <tr>
-                                <th scope="row">TRANSACT.<span style="text-info">{{$nb+1}}</span></th>
+                                <th scope="row">TRANSACT.<span style="text-info">{{$loop->index + 1}}</span></th>
                                 <td>{{$deposit->amount}} $</td>
                                 <td>{{$account->account_num}}</td>
                                 <td>{{$deposit->created_at->format('d/m/Y à H:i')}}</td>
                                 <td>{{$client->last_name}} {{$client->first_name}}</td>
                                 <td><span class="badge badge-sm badge-danger-light">Dépôt</span></td>
+                                @if($deposit->trx_id == 2)
+                                    <td><span class="badge badge-sm badge-success-light">Validé</span></td>
+                                @elseif($deposit->trx_id == 1)
+                                        <td><span class="badge badge-sm badge-danger-light">En attente</span></td>
+                                @endif
                                 </tr>
 
                             </tbody>

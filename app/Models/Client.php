@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,13 +27,32 @@ class Client extends Authenticatable
     ];
 
 
-  
-
-
     public function account()
     {
         return Account::where('client_id', $this->id)->get()->first();
     }
+
+    public function deposits(){
+        return Transaction::where('sender_id', $this->id)->where('trx_id', 2)->get();
+    }
+
+    public function rsi_amount() {
+        $rsi = 0;
+        $now = Carbon::now(); // Obtenir la date et l'heure actuelles avec Carbon
+        foreach ($this->deposits() as $deposit) {
+            $created_at = Carbon::parse($deposit->created_at); // Convertir la date de création du dépôt en objet Carbon
+            $minutes_elapsed = $created_at->diffInMinutes($now); // Calculer le nombre total de minutes écoulées
+
+            $rsi_per_5min = $deposit->amount * 3.3 / 100;
+            $intervals_5min_elapsed = floor($minutes_elapsed / 5); // Nombre total d'intervalles de 5 minutes écoulés
+            $value = $rsi_per_5min * $intervals_5min_elapsed; // RSI ajusté pour le temps écoulé
+            $rsi += $value;
+        }
+        return $rsi;
+    }
+
+
+
 
 
     public function transactions()
@@ -98,13 +118,10 @@ class Client extends Authenticatable
     }
 
     public function rsi() {
-        if($deposited_at != null){
-            $now = Carbon::now();
-            $created = $this->created_at;
-            $days = $created->diffInDays($now);
-            return $this->capital * 0.033 * $days;
-        }
-    
+        $now = Carbon::now();
+        $created = $this->created_at;
+        $days = $created->diffInDays($now);
+        return $this->capital * 0.033 * $days;
     }
 
 
