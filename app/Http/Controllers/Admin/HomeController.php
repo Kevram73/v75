@@ -45,7 +45,7 @@ class HomeController extends Controller
         $inactiveAccounts = Account::where('is_active', false)->get();
 
         // Total transactions of the day
-        $totalTransactionsToday = Transaction::whereDate('created_at', today())->sum('amount');
+        $totalTransactionsToday = Transaction::whereDate('created_at', today())->where('trx_id', 2)->sum('amount');
 
         // 7 lasts transactions
         $lastTransactions = Transaction::orderByDesc('created_at')->limit(5)->get();
