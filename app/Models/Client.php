@@ -38,12 +38,12 @@ class Client extends Authenticatable
 
     public function rsi_amount() {
         $rsi = 0;
-        $now = new DateTime();
+        $now = Carbon::now(); // Obtenir la date et l'heure actuelles avec Carbon
         foreach ($this->deposits() as $deposit) {
-            $created_at = new DateTime($deposit->created_at);
-            $interval = $now->diff($created_at);
-            $minutes_elapsed = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
+            $created_at = Carbon::parse($deposit->created_at); // Convertir la date de création du dépôt en objet Carbon
+            $minutes_elapsed = $created_at->diffInMinutes($now); // Calculer le nombre total de minutes écoulées
 
+            // Calculer le RSI ajusté en fonction des intervalles de 5 minutes
             $rsi_per_5min = ($deposit->amount * 3.3 / 100) / (24 * 12); // RSI par intervalle de 5 minutes
             $intervals_5min_elapsed = floor($minutes_elapsed / 5); // Nombre total d'intervalles de 5 minutes écoulés
             $value = $rsi_per_5min * $intervals_5min_elapsed; // RSI ajusté pour le temps écoulé
