@@ -216,11 +216,11 @@ class HomeController extends Controller
 
         switch ($request->currency) {
             case 'USDT':
-                $coin = 195;
+                $coin = 825;
                 $address = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3";
                 break;
             case 'BTC':
-                $coin = 0;
+                $coin = 1;
                 $address = "bc1qamgfs4cknh7rqtsndr7hhwzeguns2v6vqht0cw";
                 break;
             default:
