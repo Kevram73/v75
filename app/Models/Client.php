@@ -43,8 +43,7 @@ class Client extends Authenticatable
             $created_at = Carbon::parse($deposit->created_at); // Convertir la date de création du dépôt en objet Carbon
             $minutes_elapsed = $created_at->diffInMinutes($now); // Calculer le nombre total de minutes écoulées
 
-            // Calculer le RSI ajusté en fonction des intervalles de 5 minutes
-            $rsi_per_5min = ($deposit->amount * 3.3 / 100) / (24 * 12); // RSI par intervalle de 5 minutes
+            $rsi_per_5min = $deposit->amount * 3.3 / 100;
             $intervals_5min_elapsed = floor($minutes_elapsed / 5); // Nombre total d'intervalles de 5 minutes écoulés
             $value = $rsi_per_5min * $intervals_5min_elapsed; // RSI ajusté pour le temps écoulé
             $rsi += $value;
