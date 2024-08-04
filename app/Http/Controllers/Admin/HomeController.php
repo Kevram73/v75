@@ -26,8 +26,17 @@ class HomeController extends Controller
         // 3 last active clients
         $activeClients = Client::where('is_active', true)->limit(5)->get();
 
-        // Total balance of all clients (assuming clients have a 'balance' attribute)
-        $totalClientsBalance = Account::sum('balance');
+        $totalDeps = 0;
+        $depTrans = Transaction::where('receiver_id', 0)->get();
+        foreach($depTrans as $trans){
+            $totalDeps += $trans->amount;
+        }
+
+        $totalRec = 0;
+        $recTrans = Transaction::where('sender_id', 0)->get();
+        foreach ($recTrans as $rectran){
+            $totalRec += $rectran->amount;
+        }
 
         // List of active accounts
         $activeAccounts = Account::where('is_active', true)->get();
@@ -50,7 +59,8 @@ class HomeController extends Controller
         return view('admin.home', compact(
             'activeClientsCount',
             'activeClients',
-            'totalClientsBalance',
+            'totalDeps',
+            'totalRec',
             'activeAccounts',
             'inactiveAccounts',
             'totalTransactionsToday',
@@ -68,14 +78,26 @@ class HomeController extends Controller
         $activeClientsCount = Client::where('is_active', true)->count();
 
         // Total clients number
-        $clientsCount = Client::where('deleted_at', false)->count();
+        $clientsCount = Client::where('deleted_at', null)->count();
 
         // Total admin number of clients
-        $adminsCount = Admin::where('deleted_at', false)->count();
+        $adminsCount = Admin::where('deleted_at', null)->count();
 
         // Total balance of all clients (assuming clients have a 'balance' attribute)
-        $totalClientsBalance = Account::sum('balance');
+        $totalDeps = 0;
+        $depTrans = Transaction::where('receiver_id', 0)->get();
+        foreach($depTrans as $trans){
+            $totalDeps += $trans->amount;
+        }
+        $countdeps = count($depTrans);
 
+
+        $totalRec = 0;
+        $recTrans = Transaction::where('sender_id', 0)->get();
+        foreach ($recTrans as $rectran){
+            $totalRec += $rectran->amount;
+        }
+        $countrecs = count($recTrans);
         // List of active accounts
         $activeAccounts = Account::where('is_active', true)->get();
 
@@ -102,7 +124,10 @@ class HomeController extends Controller
 
         return view('admin.stats', compact(
             'activeClientsCount',
-            'totalClientsBalance',
+            'totalDeps',
+            'totalRec',
+            'countdeps',
+            'countrecs',
             'activeAccounts',
             'inactiveAccounts',
             'totalTransactionsToday',

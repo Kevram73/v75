@@ -18,7 +18,7 @@
 								<div class="row">
 									<div class="col-12">
 										<h4 class="hover-primary"><i class="fa fa-fw fa-gg-circle text-primary"></i> Total entrée</h4>
-										<p class="fs-35 fw-600 mb-0">$ {{$totalClientsBalance}}</p>
+										<p class="fs-35 fw-600 mb-0">$ {{ $totalDeps }}</p>
 									</div>
 									{{-- <div class=" col-4 text-end" style="position: relative;">
 										<div id="new-leads-chart" style="min-height: 70px;"></div>
@@ -32,7 +32,7 @@
 									<div class="col-12">
 										<h4 class="hover-success"><i class="fa fa-fw fa-gg-circle text-primary"></i> Total reversé</h4>
 										<div class="d-flex">
-											<p class="fs-35 fw-600 mb-0">$ 0 </p>
+											<p class="fs-35 fw-600 mb-0">$ {{ $totalRec }} </p>
 									  		<div class="text-end mt-20 fs-13"></div>
 										</div>
 									</div>
@@ -123,8 +123,9 @@
                                     <tbody>
                                       @foreach ($activeClients as $activeClient)
                                           <tr>
-                                              <td class="text-dark">{{$activeClient->first_name}}</td>
                                               <td>{{$activeClient->last_name}}</td>
+                                              <td>{{$activeClient->first_name}}</td>
+
                                               <td>{{$activeClient->email}}</td>
                                               <td>{{$activeClient->phone_number}}</td>
                                               <td>
@@ -249,19 +250,30 @@
                                         <div class="box-body ">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="d-flex align-items-center">
+                                                    @if($lastTransaction->receiver_id == 0)
                                                     <div class="bg-primary h-50 w-50 l-h-50 rounded text-center">
                                                         <p class="mb-0 fs-20 fw-600">$</p>
                                                     </div>
+                                                    @else
+                                                        <div class="bg-danger h-50 w-50 l-h-50 rounded text-center">
+                                                            <p class="mb-0 fs-20 fw-600">$</p>
+                                                        </div>
+                                                    @endif
                                                     <div class="d-flex flex-column font-weight-500 mx-10">
-                                                        <a href="#" class="text-dark hover-primary mb-1  fs-17">{{$lastTransaction->type}}</a>
-                                                        {{-- <span class="text-fade">Alpha</span> --}}
+                                                        @if($lastTransaction->receiver_id == 0)
+                                                            <a href="#" class="text-dark hover-primary mb-1  fs-17">{{$lastTransaction->type}}</a>
+                                                            <span class="text-success">{{ $lastTransaction->date_sent }}</span>
+                                                        @else
+                                                            <a href="#" class="text-dark hover-primary mb-1  fs-17">{{$lastTransaction->type}}</a>
+                                                            <span class="text-danger">{{ $lastTransaction->date_sent }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
 
                                                 <div>
                                                     <div class="d-flex flex-column font-weight-500">
-                                                        <a href="#" class="text-dark text-end hover-primary mb-1 fs-16">{{$lastTransaction->amount}}</a>
-                                                        <span class="text-success">{{ $lastTransaction->date_sent->format('d/m/Y à H:i') }}</span>
+                                                        <a href="#" class="text-dark text-end hover-primary mb-1 fs-16">{{$lastTransaction->amount}} $</a>
+
                                                     </div>
                                                 </div>
                                             </div>

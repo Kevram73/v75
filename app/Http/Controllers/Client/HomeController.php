@@ -52,16 +52,15 @@ class HomeController extends Controller
         return view('client.dashboard', compact('user', 'deposit_total', 'withdrawal_total', 'account'));
     }
 
-    public function clientProfile(){
-        // $adminConnected = Auth::admin()->id;
-        // $admin = Admin::find($adminConnected);
-        // return view('admin.profile', compact('admin'));
+    public function clientProfile(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $user = Auth::guard('client')->user();
 
         return view('client.clientProfile', compact('user'));
     }
 
-    public function deposits(Request $request){
+    public function deposits(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $user = Auth::guard('client')->user();
         $account = Account::where('client_id', $user->id)->get()->first();
         $this->get_done_transactions();
@@ -147,7 +146,8 @@ class HomeController extends Controller
         return view('client.send', compact('user'));
     }
 
-    public function receive(){
+    public function receive(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
 
         $user = Auth::guard('client')->user();
         return view('client.receive', compact('user'));

@@ -56,15 +56,7 @@
 										</div>
 									</div>
 									  <div class="row">
-										<div class="col-6">
 
-										</div>
-										<!-- /.col -->
-										<div class="col-6">
-										 <div class="fog-pwd text-end">
-											<a href="javascript:void(0)" class="text-fade fw-350 hover-primary"><i class="ion ion-locked"></i> Mot de passe oublié ?</a><br>
-										  </div>
-										</div>
 										<!-- /.col -->
 										<div class="col-12 text-center">
 										  <button type="submit" class="btn btn-prmary w-p100 mt-10" style="background-color:white; color: rgb(0, 128, 0);">Se connecter</button>

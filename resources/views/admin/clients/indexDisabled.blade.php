@@ -51,8 +51,8 @@
                       <tbody>
                         @foreach ($clients as $client)
                             <tr>
-                                <td class="text-dark">{{$client->lastname}}</td>
-                                <td>{{$client->firstname}}</td>
+                                <td class="text-dark">{{$client->last_name}}</td>
+                                <td>{{$client->first_name}}</td>
                                 <td>{{$client->email}}</td>
                                 <td>{{$client->phone_number}}</td>
 

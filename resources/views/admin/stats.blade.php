@@ -132,7 +132,7 @@
 													</div>
 													<div class="mx-3">
 									  					<h6 class="mt-3">Administrateurs</h6>
-									  					<p class="text-fade">Total</p>
+									  					<p class="text-fade">{{ $adminsCount }}</p>
 													</div>
 								  				</div>
 											</a>
@@ -145,7 +145,7 @@
 													</div>
 													<div class="mx-3">
 									  					<h6 class="mt-3">Clients</h6>
-									  					<p class="text-fade">Total</p>
+									  					<p class="text-fade">{{ $clientsCount }}</p>
 													</div>
 								  				</div>
 											</a>
@@ -256,7 +256,7 @@
 						<div class="box box-body">
 							<h3>Avoir de la plateforme</h3>
 							<div class="text-center">
-								<h1>$1,00,000</h1>
+								<h1>$ {{ $totalDeps }}</h1>
 								<hr style="margin: 2px 77px 3px 77px;">
 								<p class="text-fade">Montant total déversé par les clients</p>
 							</div>

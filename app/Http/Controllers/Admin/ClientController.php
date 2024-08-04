@@ -130,14 +130,14 @@ class ClientController extends Controller
 
     public function clients_disabled()
     {
-        $clients = Client::where('is_active', false)->with(['account', 'transactions'])->get();
+        $clients = Client::where('is_active', 0)->get();
         return view('admin.clients.indexDisabled', compact('clients'));
     }
 
     public function client_disactivate(Request $request, int $id)
     {
         $client_user = Client::find($id);
-        $client_user->is_active = false;
+        $client_user->is_active = 0;
         $client_user->save();
 
         return back()->with('success', "Votre client a bien été désactivé");
@@ -146,7 +146,7 @@ class ClientController extends Controller
     public function client_activate(Request $request, int $id)
     {
         $client_user = Client::find($id);
-        $client_user->is_active = true;
+        $client_user->is_active = 1;
         $client_user->save();
 
         return back()->with('success', "Votre client a bien été activé");
