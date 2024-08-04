@@ -32,6 +32,21 @@ class Client extends Authenticatable
         return Account::where('client_id', $this->id)->get()->first();
     }
 
+    public function deposits(){
+        return Transaction::where('client_id', $this->id)->where('trx_id', 2)->get();
+    }
+
+    public function rsi_amount(){
+        $rsi = 0;
+        foreach($this->deposits() as $deposit){
+            $value = $deposit->amount * 0.33/100;
+            $rsi += $value;
+        }
+        return $rsi;
+    }
+
+
+
 
     public function transactions()
     {

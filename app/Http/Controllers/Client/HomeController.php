@@ -125,7 +125,7 @@ class HomeController extends Controller
         $totalDeposits = Transaction::where('sender_id', $user->id)->sum('amount');
         $totalWithdrawals = Transaction::where('receiver_id', $user->id)->sum('amount');
 
-        return view('client.account', compact('account', 'totalDeposits', 'totalWithdrawals'));
+        return view('client.account', compact('account', 'totalDeposits', 'totalWithdrawals', 'user'));
     }
 
     public function change_account_details(Request $request){
