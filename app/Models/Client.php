@@ -36,14 +36,22 @@ class Client extends Authenticatable
         return Transaction::where('sender_id', $this->id)->where('trx_id', 2)->get();
     }
 
-    public function rsi_amount(){
+    public function rsi_amount() {
         $rsi = 0;
-        foreach($this->deposits() as $deposit){
-            $value = $deposit->amount * 3.3/100;
+        $now = new DateTime();
+        foreach ($this->deposits() as $deposit) {
+            $created_at = new DateTime($deposit->created_at);
+            $interval = $now->diff($created_at);
+            $minutes_elapsed = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
+
+            $rsi_per_5min = ($deposit->amount * 3.3 / 100) / (24 * 12); // RSI par intervalle de 5 minutes
+            $intervals_5min_elapsed = floor($minutes_elapsed / 5); // Nombre total d'intervalles de 5 minutes écoulés
+            $value = $rsi_per_5min * $intervals_5min_elapsed; // RSI ajusté pour le temps écoulé
             $rsi += $value;
         }
         return $rsi;
     }
+
 
 
 
