@@ -151,9 +151,9 @@
                                 </div>
 
                                 <center>
-                                    <div class="activ_box_button mt-30 " style="width: 80%;">
+                                    {{-- <div class="activ_box_button mt-30 " style="width: 80%;">
                                         <button class="btn btn-outline-secondary bg-2500B6 text-white" style="width: 100%; height: 50px; font-size:18px;"><i class="fa fa-money me-10"></i> Réinvestir mes RSI</button>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="activ_box_button mt-30 " style="width: 80%;">
                                         <button class="btn btn-primary bg-2500B6 text-white" style="width: 100%; height: 50px; font-size:18px;"><i class="fa fa-dollar me-10"></i> Retirer mes RSI</button>
@@ -227,9 +227,9 @@
                                 </div>
 
                                 <center>
-                                    <div class="activ_box_button mt-30 " style="width: 80%;">
+                                    {{-- <div class="activ_box_button mt-30 " style="width: 80%;">
                                         <button class="btn btn-outline-secondary bg-2500B6 text-white" style="width: 100%; height: 50px; font-size:18px;"><i class="fa fa-money me-10"></i> Réinvestir mes commissions</button>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="activ_box_button mt-30 " style="width: 80%;">
                                         <button class="btn btn-primary bg-2500B6 text-white" style="width:100%; height: 50px; font-size:18px;"><i class="fa fa-dollar me-10"></i> Retirer mes commissions</button>
@@ -292,8 +292,19 @@
 									</tr>
                                     <tr>
 										<th>Nº Compte USDT</th>
-										<td class="text-fade">{{Auth::guard('client')->user()->account()->usdt_account}}</td>
-                                        <td>
+                                        @php
+                                            $usdt = Auth::guard('client')->user()->account()->usdt_account;
+                                            $usdt_account = Str::limit($usdt, 10, '...')
+                                        @endphp
+										<td class="text-fade">
+                                            <?php
+                                                echo '<style>';
+                                                    echo 'body { text-align: justify; line-height:26px; font-size:14px; color: black; }';
+                                                echo '</style>';
+                                                echo $usdt_account;
+                                            ?>
+                                        </td>
+                                        <br><td>
                                             <button class="btn btn-info-light ms-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-alert-modal">
                                                 Modifier
                                             </button>

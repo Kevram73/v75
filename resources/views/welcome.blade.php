@@ -81,7 +81,7 @@
 
                 <li><a href="#blog-section" class="nav-link">Actualités</a></li>
                 <li><a href="#contact-section" class="nav-link">Contacts</a></li>
-                <li class="social"><a href="{{route('client.login')}}"> Se connecter  <i class="fa fa-spinner fa-spin" style="font-size:16px"></i></a></li>
+                <li class="social"><a href="{{route('client.login')}}"> Se connecter  </a><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></li>
                 </ul>
             </nav>
             </div>
@@ -122,7 +122,7 @@
 
                 <div class="slide">
                 <br><br><h1 class="text-uppercase" data-aos="fade-up">Un investissement Stratégique</h1>
-                <br><p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">v75 Pro encourage à investir de manière stratégique pour devenir un investisseur averti avec notre bot de trading des indices en vous proposant des plans d'investissement financiers ; <br>Minimum à investir 10$</p>
+                <br><p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">v75 Pro encourage à investir de manière stratégique pour devenir un investisseur averti avec notre bot de trading des indices en vous proposant des plans d'investissement financiers ; <br>Minimum à investir 100$</p>
                 <div data-aos="fade-up" data-aos-delay="100">
                     <a href="{{route('client.login')}}" target="_blank" class="btn  btn-success mr-2 mb-2" style="color: white;">Commencer maintenant</a>
                 </div>
@@ -279,7 +279,7 @@
                 </div>
                 <div>
                 <h2 class="section-title mb-3 text-success" style="font-size: 36px;">02. Investir</h2>
-                <p style="text-align: justify; line-height: 34px;">Une fois votre comptre créé, vous pouvez commencer à investir ; le placement minimum est de 10$. <br>Les moyens de transaction supportés par la plateforme sont <span class="text-black"> USDT TRC20 et BITCOIN.</span></p>
+                <p style="text-align: justify; line-height: 34px;">Une fois votre comptre créé, vous pouvez commencer à investir ; le placement minimum est de 100$. <br>Les moyens de transaction supportés par la plateforme sont <span class="text-black"> USDT TRC20 et BITCOIN.</span></p>
                 <p><a href="{{route('client.login')}}" class="btn btn-success mr-2 mb-2" style="color: white;">Commencer</a></p>
                 </div>
                 <div>
@@ -305,7 +305,7 @@
             <div class="col-12 text-center" data-aos="fade">
             <h2 class="section-title mb-3 text-black">Dépôt et retrait instantanné</h2>
             <p class="lead" data-aos="fade-up" data-aos-delay="100">Avec notre bot de trading des indices, gagnez 3.33% par jour, 100% par mois. <br>
-                Minimum à investir 10$, USDT TRC20 ou BITCOIN (Dépôt et retrait instantané, Portefeuille supporté : <span class="text-success">Trust Wallet</span>)</p>
+                Minimum à investir 100$, USDT TRC20 ou BITCOIN (Dépôt et retrait instantané, Portefeuille supporté : <span class="text-success">Trust Wallet</span>)</p>
             </div>
         </div>
         <div class="row align-items-stretch">
@@ -328,7 +328,7 @@
                 </div>
                 <div>
                 <h3 style="line-height: 30px;">Faites vos placements <br>investissz dès 10$</h3>
-                <br><p style="text-align: justify; line-height: 30px;">Faites vos dépôts d'investissement à partir de 10$ minimum via <a href="" class="text-danger">BITCOIN</a> ou <a href="" class="text-danger"> USDT TRC20</a> (Portefeuille supporté : <span class="text-success">Trust Wallet</span>).</p>
+                <br><p style="text-align: justify; line-height: 30px;">Faites vos dépôts d'investissement à partir de 100$ minimum via <a href="" class="text-danger">BITCOIN</a> ou <a href="" class="text-danger"> USDT TRC20</a> (Portefeuille supporté : <span class="text-success">Trust Wallet</span>).</p>
                 <p><a href="#" class="text-success">Investir maintenant</a></p>
                 </div>
             </div>
@@ -436,7 +436,7 @@
 
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-success h4 mb-4">Combien puis-je investir ?</h3>
-            <p style="line-height: 32px; text-align: justify;">Vous êtes tout aussi librement investir le montant que vous désirez partant d'un minimum de 10$. Aucun plafond n'est réellement imposé.</p>
+            <p style="line-height: 32px; text-align: justify;">Vous êtes tout aussi librement investir le montant que vous désirez partant d'un minimum de 100$. Aucun plafond n'est réellement imposé.</p>
             </div>
 
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
