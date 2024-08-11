@@ -244,7 +244,7 @@
 								<p>Minimum requis</p>
 							</div>
 							<div class="flexbox align-items-center">
-								<h3>$100</h3>
+								<h3>$ {{ $retrieve_all }}</h3>
 								<h3>$ | <small class="text-fade"> cette semaine</small></h3>
 							</div>
 							{{-- <div class="mt-10 mt-md-0">
