@@ -105,12 +105,17 @@ class HomeController extends Controller
         $countrecs = count($recTrans);
         // List of active accounts
         $activeAccounts = Account::where('is_active', true)->get();
+        $actives = count($activeAccounts);
 
         // List of inactive accounts and their balance
         $inactiveAccounts = Account::where('is_active', false)->get();
+        $inactives = count($inactiveAccounts);
 
         // Total transactions of the day
-        $totalTransactionsToday = Transaction::whereDate('created_at', today())->sum('amount');
+        $totalTransactionsToday = Transaction::whereDate('created_at', today())->where('trx_id', 2)->sum('amount');
+
+        // Total transactions v75
+        $totalTransactions = Transaction::where('trx_id', 2)->sum('amount');
 
         // all transactions
         $numberOfTransactions = Transaction::count();
@@ -141,6 +146,9 @@ class HomeController extends Controller
             'clientsCount',
             'adminsCount',
             'lastMonthTotalTransactions',
+            'inactives',
+            'actives',
+            'totalTransactions',
             'retrieve_all'
         ));
     }

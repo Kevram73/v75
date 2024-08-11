@@ -151,9 +151,9 @@
                                 </div>
 
                                 <center>
-                                    <div class="activ_box_button mt-30 " style="width: 80%;">
+                                    {{-- <div class="activ_box_button mt-30 " style="width: 80%;">
                                         <button class="btn btn-outline-secondary bg-2500B6 text-white" style="width: 100%; height: 50px; font-size:18px;"><i class="fa fa-money me-10"></i> Réinvestir mes RSI</button>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="activ_box_button mt-30 " style="width: 80%;">
                                         <button class="btn btn-primary bg-2500B6 text-white" style="width: 100%; height: 50px; font-size:18px;"><i class="fa fa-dollar me-10"></i> Retirer mes RSI</button>
@@ -227,12 +227,12 @@
                                 </div>
 
                                 <center>
-                                    <div class="activ_box_button mt-30 " style="width: 80%;">
+                                    {{-- <div class="activ_box_button mt-30 " style="width: 80%;">
                                         <button class="btn btn-outline-secondary bg-2500B6 text-white" style="width: 100%; height: 50px; font-size:18px;"><i class="fa fa-money me-10"></i> Réinvestir mes commissions</button>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="activ_box_button mt-30 " style="width: 80%;">
-                                        <button class="btn btn-primary bg-2500B6 text-white" style="width:100%; height: 50px; font-size:18px;"><i class="fa fa-dollar me-10"></i> Retirer mes commissions</button>
+                                        <button class="btn btn-primary bg-2500B6 text-white" style="width:100%; height: 70px; font-size:18px;"><i class="fa fa-dollar me-10"></i> Retirer mes commissions</button>
                                     </div><br>
                                 </center>
                             </div> <!-- end preview code-->
@@ -287,15 +287,23 @@
 										<td class="text-fade">{{ Auth::guard('client')->user()->phone_number }}</td>
 									</tr>
                                     <tr>
-										<th>Nº Compte</th>
+										<th>Nº de Compte v75</th>
 										<td class="text-fade">{{ Auth::guard('client')->user()->fellow_code }}</td>
 									</tr>
-                                    <tr>
+                                    {{-- <tr>
 										<th>Nº Compte USDT</th>
-										<td class="text-fade">{{Auth::guard('client')->user()->account()->usdt_account}}</td>
-                                        <td>
-                                            <button class="btn btn-info-light ms-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-alert-modal">
-                                                Modifier
+                                        @php
+                                            $usdt = Auth::guard('client')->user()->account()->usdt_account;
+                                            $usdt_account = Str::limit($usdt, 15, '...')
+                                        @endphp
+										<td class="text-fade">
+                                            {{Auth::guard('client')->user()->account()->usdt_account;}}
+                                        </td>
+                                    </tr> --}}
+                                    {{-- <tr>
+                                        <td style="width: 50%; height: 50px;">
+                                            <button class="btn btn-info-light lg-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-alert-modal">
+                                                Modifier N* compte USDT
                                             </button>
                                         </td>
                                         <div id="info-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -317,18 +325,32 @@
 
                                                         </div>
                                                     </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
+                                                </div>
+                                            </div>
                                         </div>
 
-									</tr>
+									</tr> --}}
 
                                     <tr>
-                                        <th>Nº Compte Bitcoin(BTC)</th>
-                                        <td class="text-fade">{{Auth::guard('client')->user()->account()->btc_account}}</td>
-                                        <td>
-                                            <button class="btn btn-info-light ms-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-btc-modal">
-                                                Modifier
+                                        <th>Numéro de Compte Bitcoin (BTC)</th>
+                                        @php
+                                            $btc = Auth::guard('client')->user()->account()->btc_account;
+                                            $btc_account = Str::limit($btc, 15, '...')
+                                        @endphp
+                                        <td class="text-fade">
+                                            <?php
+                                                echo '<style>';
+                                                    echo 'body { text-align: justify; line-height:26px; font-size:14px; color: black; }';
+                                                echo '</style>';
+                                                echo $btc_account;
+                                            ?>
+                                            {{-- {{Auth::guard('client')->user()->account()->btc_account}} --}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 50%; height: 50px;">
+                                            <button class="btn btn-info-light lg-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-btc-modal">
+                                                Modifier Nº de compte BTC
                                             </button>
                                         </td>
                                         <div id="info-btc-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -341,7 +363,7 @@
                                                             <form action="{{ route('client.account_btc') }}" method="POST">
                                                                 @csrf
                                                                 <div class="input-group mb-3">
-                                                                    <input id="code" type="text" id="fellow" name="code" class="form-control ps-15 bg-transparent" placeholder="Compte USDT" value="{{Auth::guard('client')->user()->account()->btc_account}}" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:rgb(41, 69, 41);">
+                                                                    <input id="code" type="text" id="fellow" name="code" class="form-control ps-15 bg-transparent" placeholder="Compte BTC" value="{{Auth::guard('client')->user()->account()->btc_account}}" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:rgb(41, 69, 41);">
                                                                     <span class="btn btn-info bg-transparent" onclick="copierCode(event)" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-files"></i></span>
                                                                 </div>
                                                                 <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">Annuler</button>
