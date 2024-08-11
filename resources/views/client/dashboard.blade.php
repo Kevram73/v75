@@ -39,7 +39,7 @@
                       </div>
 
                       <div class="box-body">
-                        <p class="text-gray-600"><marquee behavior="" direction="left">Gagnez 3,33% par jour, 100% par mois avec notre bot de trading des indices. Minimum à investir 10$ ; transactions via <span class="text-success">USDT TRC20</span> et <span class="text-success">Bitcoin,</span> Portefeuille supporté : <span class="text-success">Trust Wallet</span>. Dépôt et retrait instantané. Avec v75 pro, c'est votre argent qui travaille pour vous !</marquee></p>
+                        <p class="text-gray-600"><marquee behavior="" direction="left">Gagnez 3,33% par jour, 100% par mois avec notre bot de trading des indices. Minimum à investir 100$ ; transactions via <span class="text-success"> (BTC) Bitcoin,</span> Portefeuille supporté : <span class="text-success">Trust Wallet</span>. Dépôt et retrait instantané. Avec v75 pro, c'est votre argent qui travaille pour vous !</marquee></p>
                         {{-- Investissez, aucune condition préalable requise et percevez jusqu'à 3,3% sur votre capital initial --}}
                       </div>
                     </div>
