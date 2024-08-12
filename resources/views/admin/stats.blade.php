@@ -257,9 +257,8 @@
 								<p>Minimum requis</p>
 							</div>
 							<div class="flexbox align-items-center">
-								<h3>$100</h3>
-								<h3>$ | <small class="text-fade"> Tout
-									 inclus</small></h3>
+								<h3>$ {{ $retrieve_all }}</h3>
+								<h3>$ | <small class="text-fade"> Tout inclus</small></h3>
 							</div>
 							{{-- <div class="mt-10 mt-md-0">
 								<a href="#" class="waves-effect waves-light btn btn-outline btn-success"><i class="fa fa-calendar" aria-hidden="true"></i> Start SIP</a>

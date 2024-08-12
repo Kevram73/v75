@@ -74,6 +74,11 @@ class HomeController extends Controller
     }
 
     public function stats(){
+        $total_clients = Client::where('deleted_at', null)->get();
+        $retrieve_all = 0;
+        foreach($total_clients as $avoir){
+            $retrieve_all += $avoir->total_solde();
+        }
         // Number of active clients
         $activeClientsCount = Client::where('is_active', true)->count();
 
@@ -143,7 +148,8 @@ class HomeController extends Controller
             'lastMonthTotalTransactions',
             'inactives',
             'actives',
-            'totalTransactions'
+            'totalTransactions',
+            'retrieve_all'
         ));
     }
 }
