@@ -290,20 +290,26 @@
 										<th>Nº de Compte v75</th>
 										<td class="text-fade">{{ Auth::guard('client')->user()->fellow_code }}</td>
 									</tr>
-                                    {{-- <tr>
+                                    <tr>
 										<th>Nº Compte USDT</th>
                                         @php
                                             $usdt = Auth::guard('client')->user()->account()->usdt_account;
                                             $usdt_account = Str::limit($usdt, 15, '...')
                                         @endphp
 										<td class="text-fade">
-                                            {{Auth::guard('client')->user()->account()->usdt_account;}}
+                                            <?php
+                                                echo '<style>';
+                                                    echo 'body { text-align: justify; line-height:26px; font-size:14px; color: black; }';
+                                                echo '</style>';
+                                                echo $usdt_account;
+                                            ?>
+                                            {{-- {{Auth::guard('client')->user()->account()->usdt_account;}} --}}
                                         </td>
-                                    </tr> --}}
-                                    {{-- <tr>
+                                    </tr>
+                                    <tr>
                                         <td style="width: 50%; height: 50px;">
                                             <button class="btn btn-info-light lg-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-alert-modal">
-                                                Modifier N* compte USDT
+                                                Modifier Nº compte USDT
                                             </button>
                                         </td>
                                         <div id="info-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -312,11 +318,11 @@
                                                     <div class="modal-body p-4">
                                                         <div class="text-center" style="color: white; font-size:15px;">
                                                             <i class="dripicons-wrong h1"></i>
-                                                            <h4 class="mt-2" style="color: black">Compte USDT !</h4>
+                                                            <h4 class="mt-2" style="color: black">Compte USDT TRC20 !</h4>
                                                             <form action="{{ route('client.account_usdt') }}" method="POST">
                                                                 @csrf
                                                                 <div class="input-group mb-3">
-                                                                    <input id="code" type="text" id="fellow" name="code" class="form-control ps-15 bg-transparent" placeholder="Compte USDT" value="{{Auth::guard('client')->user()->account()->usdt_account}}" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:rgb(41, 69, 41);">
+                                                                    <input id="code" type="text" id="fellow" name="code" class="form-control ps-15 bg-transparent" placeholder="Compte USDT TRC20" value="{{Auth::guard('client')->user()->account()->usdt_account}}" required style="border: 1px solid rgba(0, 91, 0, 0.089); color:rgb(41, 69, 41);">
                                                                     <span class="btn btn-info bg-transparent" onclick="copierCode(event)" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-files"></i></span>
                                                                 </div>
                                                                 <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">Annuler</button>
@@ -329,25 +335,20 @@
                                             </div>
                                         </div>
 
-									</tr> --}}
+									</tr>
 
-                                    <tr>
+                                    {{-- <tr>
                                         <th>Numéro de Compte Bitcoin (BTC)</th>
                                         @php
                                             $btc = Auth::guard('client')->user()->account()->btc_account;
                                             $btc_account = Str::limit($btc, 15, '...')
                                         @endphp
                                         <td class="text-fade">
-                                            <?php
-                                                echo '<style>';
-                                                    echo 'body { text-align: justify; line-height:26px; font-size:14px; color: black; }';
-                                                echo '</style>';
-                                                echo $btc_account;
-                                            ?>
-                                            {{-- {{Auth::guard('client')->user()->account()->btc_account}} --}}
+
+                                            {{Auth::guard('client')->user()->account()->btc_account}}
                                         </td>
-                                    </tr>
-                                    <tr>
+                                    </tr> --}}
+                                    {{-- <tr>
                                         <td style="width: 50%; height: 50px;">
                                             <button class="btn btn-info-light lg-1" id="request" title="Editer le client" data-bs-toggle="modal" data-bs-target="#info-btc-modal">
                                                 Modifier Nº de compte BTC
@@ -376,7 +377,7 @@
                                             </div><!-- /.modal-dialog -->
                                         </div>
 
-                                    </tr>
+                                    </tr> --}}
                                     <tr>
 										<th>Capital initial</th>
 										<td class="text-danger">{{ $account->balance }} $</td>

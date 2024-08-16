@@ -77,8 +77,8 @@
                                     <label for="currency" class="col-sm-2 form-label">Devise :</label>
                                     <div class="col-sm-10">
                                         <select name="currency" id="currency" class="form-control">
-                                            {{-- <option value="USDT">USDT</option> --}}
-                                            <option value="BTC">BTC</option>
+                                            <option value="USDT">USDT</option>
+                                            {{-- <option value="BTC">BTC</option> --}}
                                         </select>
                                     </div>
                                 </div>

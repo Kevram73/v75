@@ -122,7 +122,7 @@
 
                 <div class="slide">
                 <br><br><h1 class="text-uppercase" data-aos="fade-up">Un investissement Stratégique</h1>
-                <br><p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">v75 Pro encourage à investir de manière stratégique pour devenir un investisseur averti avec notre bot de trading des indices en vous proposant des plans d'investissement financiers ; <br>Minimum à investir 100$</p>
+                <br><p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">v75 Pro encourage à investir de manière stratégique pour devenir un investisseur averti avec notre bot de trading des indices en vous proposant des plans d'investissement financiers ; <br>Minimum à investir 10$</p>
                 <div data-aos="fade-up" data-aos-delay="100">
                     <a href="{{route('client.login')}}" target="_blank" class="btn  btn-success mr-2 mb-2" style="color: white;">Commencer maintenant</a>
                 </div>
@@ -131,7 +131,7 @@
                 <div class="slide">
                     <br><br><h1 class="text-uppercase text-success" data-aos="fade-up">Dépôt et retrait instantané</h1>
                     <br><p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">Investissez dès maintenant et commencer à percevoir vos gains 24H après votre inscription et la création de votre compte d'investissement ;
-                        Dépôts et retrait instantané ! <br>Transactions possible via <span class="text-success">(BTC) BITCOIN </span><br>Portefeuille supporté : <span class="text-success">Trust Wallet</span></p>
+                        Dépôts et retrait instantané ! <br>Transactions possible via <span class="text-success">USDT TRC20 </span><br>Portefeuille supporté : <span class="text-success">Trust Wallet</span></p>
                     <div data-aos="fade-up" data-aos-delay="100">
                         <a href="{{route('client.login')}}" target="_blank" class="btn  btn-success mr-2 mb-2" style="color: white;">Commencer maintenant</a>
                     </div>
@@ -279,12 +279,12 @@
                 </div>
                 <div>
                 <h2 class="section-title mb-3 text-success" style="font-size: 36px;">02. Investir</h2>
-                <p style="text-align: justify; line-height: 34px;">Une fois votre comptre créé, vous pouvez commencer à investir ; le placement minimum est de 100$. <br>Le moyen de transaction supporté par la plateforme est le <span class="text-black"> (BTC) BITCOIN.</span></p>
+                <p style="text-align: justify; line-height: 34px;">Une fois votre comptre créé, vous pouvez commencer à investir ; le placement minimum est de 10$. <br>Le moyen de transaction supporté par la plateforme est le <span class="text-black"> USDT TRC20.</span></p>
                 <p><a href="{{route('client.login')}}" class="btn btn-success mr-2 mb-2" style="color: white;">Commencer</a></p>
                 </div>
                 <div>
                 <h2 class="section-title mb-3 text-success" style="font-size: 36px;">03. Percevoir ses gains</h2>
-                <p style="text-align: justify; line-height: 34px;">Une fois votre investissement faite, percevez jusqu'à 3,3% de bénéfice journalier sur votre capital ; à retirer à tout moment via (BTC) BITCOIN (Portefeuille supporté : <span class="text-success">Trust Wallet</span>).</p>
+                <p style="text-align: justify; line-height: 34px;">Une fois votre investissement faite, percevez jusqu'à 3,3% de bénéfice journalier sur votre capital ; à retirer à tout moment via USDT TRC20 (Portefeuille supporté : <span class="text-success">Trust Wallet</span>).</p>
 
                 <p><a href="{{route('client.login')}}" class="btn btn-success mr-2 mb-2" style="color: white;">Commencer</a></p>
                 </div>
@@ -305,7 +305,7 @@
             <div class="col-12 text-center" data-aos="fade">
             <h2 class="section-title mb-3 text-black">Dépôt et retrait instantanné</h2>
             <p class="lead" data-aos="fade-up" data-aos-delay="100">Avec notre bot de trading des indices, gagnez 3.33% par jour, 100% par mois. <br>
-                Minimum à investir 100$, (BTC) BITCOIN (Dépôt et retrait instantané, Portefeuille supporté : <span class="text-success">Trust Wallet</span>)</p>
+                Minimum à investir 10$, USDT TRC20 (Dépôt et retrait instantané, Portefeuille supporté : <span class="text-success">Trust Wallet</span>)</p>
             </div>
         </div>
         <div class="row align-items-stretch">
@@ -328,7 +328,7 @@
                 </div>
                 <div>
                 <h3 style="line-height: 30px;">Faites vos placements <br>investissz dès 10$</h3>
-                <br><p style="text-align: justify; line-height: 30px;">Faites vos dépôts d'investissement à partir de 100$ minimum via <a href="www.bitcoin.com" class="text-danger"> (BTC) BITCOIN</a> (Portefeuille supporté : <span class="text-success">Trust Wallet</span>).</p>
+                <br><p style="text-align: justify; line-height: 30px;">Faites vos dépôts d'investissement à partir de 10$ minimum via <a href="www.usdt.com" class="text-danger"> USDT TRC20</a> (Portefeuille supporté : <span class="text-success">Trust Wallet</span>).</p>
                 <p><a href="#" class="text-success">Investir maintenant</a></p>
                 </div>
             </div>
@@ -436,13 +436,13 @@
 
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-success h4 mb-4">Combien puis-je investir ?</h3>
-            <p style="line-height: 32px; text-align: justify;">Vous êtes tout aussi librement investir le montant que vous désirez partant d'un minimum de 100$. Aucun plafond n'est réellement imposé.</p>
+            <p style="line-height: 32px; text-align: justify;">Vous êtes tout aussi librement investir le montant que vous désirez partant d'un minimum de 10$. Aucun plafond n'est réellement imposé.</p>
             </div>
 
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
                 <h3 class="text-success h4 mb-4">Puis-je investir via Paypal ?</h3>
                 <p style="line-height: 32px; text-align: justify;">Par soucis d'accessibilité universelle pour tous nos client, il est impossible d'investir via Paypal ; certaines zones géographiques ne sont pas prises en compte et n'y ont pas accès.
-                Le but premier de la plateforme v75 pro est de permettre à toute personne d'investir indépendemment de sa situation géographique ; pour ce faire le seul moyen de transactions accepté par notre plateforme est : le <a href="" class="text-black"> (BTC) BITCOIN (Portefeuille supporté : <span class="text-success">Trust Wallet</span>).</a></p>
+                Le but premier de la plateforme v75 pro est de permettre à toute personne d'investir indépendemment de sa situation géographique ; pour ce faire le seul moyen de transactions accepté par notre plateforme est : le <a href="" class="text-black"> USDT TRC20 (Portefeuille supporté : <span class="text-success">Trust Wallet</span>).</a></p>
             </div>
             </div>
             <div class="col-lg-6">
