@@ -12,19 +12,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Services\BinancePayService;
 use Illuminate\Support\Facades\Redirect;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Http;
+use App\Services\NowPaymentsService;
+
 
 class HomeController extends Controller
 {
-    protected $binancePayService;
+    protected $nowPayments;
 
-    public function __construct(BinancePayService $binancePayService)
+    public function __construct(NowPaymentsService $nowPayments)
     {
-        $this->binancePayService = $binancePayService;
         $this->middleware('auth.client');
+        $this->nowPayments = $nowPayments;
     }
 
 
@@ -191,7 +192,7 @@ class HomeController extends Controller
         $transaction->save();
 
 
-        $response = $this->binancePayService->createOrder($amount, $currency, $goods);
+        $response = null;
 
         if ($response['status'] === 'SUCCESS') {
             // Redirection avec données pour affichage de QR code
@@ -239,9 +240,12 @@ class HomeController extends Controller
         $transaction->trx_id = 1; // 1: En attente, 2: Success, 0: Annulée
         $transaction->save();
 
-        $link = "trust://send?address=" . urlencode($address) . "&coin=" . urlencode($coin) . "&amount=" . urlencode($amount) . "&txid=" . urlencode($uid);
+        // $link = "trust://send?address=" . urlencode($address) . "&coin=" . urlencode($coin) . "&amount=" . urlencode($amount) . "&txid=" . urlencode($uid);
 
-        return redirect($link);
+        // return redirect($link);
+        $payment = $this->nowPayments->createPayment($amount, 'USD');
+        return response()->json($payment);
+
     }
 
     public function get_done_transactions() {
@@ -306,6 +310,8 @@ class HomeController extends Controller
     private function handle_api_error($response) {
         \Log::error("API request failed: " . $response->body());
     }
+
+
 
 
 }
