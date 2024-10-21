@@ -86,6 +86,7 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::post('btc/account', [ClientHomeController::class, 'change_btc_account'])->name('account_btc');
 
     Route::get('invest/deposit', [ClientHomeController::class, 'send'])->name('invest_deposit');
+    Route::get('invest/order', [ClientHomeController::class, 'order'])->name('invest_order');
     Route::get('invest/withdrawal', [ClientHomeController::class, 'receive'])->name('invest_withdrawal');
     Route::post('/binance/deposit', [ClientHomeController::class, 'createOrder'])->name("create_order_deposit");
 

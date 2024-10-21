@@ -89,6 +89,11 @@ class HomeController extends Controller
         return view('client.message_create');
     }
 
+    public function order()
+    {
+        return view('client.order');
+    }
+
     public function messageStore(Request $request)
     {
         $validator = Validator::make($request->all(), [
