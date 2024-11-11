@@ -30,7 +30,7 @@ Route::get('policy', function () {
 });
 
 Route::post('/binance-pay/create-order', [BinancePayController::class, 'createOrder']);
-Route::post('/send/money', [ClientHomeController::class, 'send_money'])->name('send_money');
+
 
 Route::prefix('admin/')->name('admin.')->group(function () {
 
@@ -99,3 +99,9 @@ Route::prefix('client/')->name('client.')->group(function () {
 
 Route::get('/binancepay/returnURL', [BinancePayController::class, 'returnCallback'])->name("returnCallback");
 Route::get('/binancepay/cancelURL', [BinancePayController::class, 'cancelCallback'])->name("cancelCallback");
+
+Route::post('/send-money', [ClientHomeController::class, 'sendMoney'])->name('send_money');
+
+Route::get('/payment-success', function () {
+    return view('success');
+})->name('payment.success');
