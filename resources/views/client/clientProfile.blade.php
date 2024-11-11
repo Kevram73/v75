@@ -51,7 +51,8 @@
 
                                 <p class="text-muted mb-1 "><strong class="text-dark">Contacts :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->phone_number }}</span></p> <br>
                                 <p class="text-muted mb-1 "><strong class="text-dark">Numero de compte :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->account()->account_num }}</span></p> <br>
-                                <p class="text-muted mb-1 "><strong class="text-dark">Code de parrainage :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->fellow_code }}</span></p>
+                                <!--p class="text-muted mb-1 "><strong class="text-dark">Code de parrainage :</strong> <span class="ms-2">{{ Auth::guard('client')->user()->fellow_code }}</span></p-->
+                                <p class="text-muted mb-1 "><strong class="text-dark">Lien de parrainage :</strong> <span class="ms-2">{{ url('/client/register?ref=' . Auth::guard('client')->user()->fellow_code) }}</span></p>
                             </div>
 
                         </div> <!-- end card-body -->

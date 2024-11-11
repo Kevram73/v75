@@ -79,7 +79,7 @@
                                 <label for="to_account" class="col-sm-2 form-label">Adresse de compte : </label>
 
                                 <div class="col-sm-10">
-                                  <input type="text" placeholder="Adresse de votre portefeuille USDT" class="form-control" id="to_account" name="to_account" required style="color: black;">
+                                  <input type="text" placeholder="Adresse de votre portefeuille USDT TRC20" class="form-control" id="to_account" name="to_account" required style="color: black;">
 
                                 </div>
                               </div>

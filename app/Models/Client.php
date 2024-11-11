@@ -26,7 +26,6 @@ class Client extends Authenticatable
         'password'
     ];
 
-
     public function account()
     {
         return Account::where('client_id', $this->id)->get()->first();
@@ -38,22 +37,18 @@ class Client extends Authenticatable
 
     public function rsi_amount() {
         $rsi = 0;
-        $now = Carbon::now(); // Obtenir la date et l'heure actuelles avec Carbon
+        $now = Carbon::now();
         foreach ($this->deposits() as $deposit) {
-            $created_at = Carbon::parse($deposit->created_at); // Convertir la date de création du dépôt en objet Carbon
-            $minutes_elapsed = $created_at->diffInMinutes($now); // Calculer le nombre total de minutes écoulées
+            $created_at = Carbon::parse($deposit->created_at);
+            $minutes_elapsed = $created_at->diffInMinutes($now);
 
             $rsi_per_5min = $deposit->amount * 3.3 / 100;
-            $intervals_5min_elapsed = floor($minutes_elapsed / 5); // Nombre total d'intervalles de 5 minutes écoulés
-            $value = $rsi_per_5min * $intervals_5min_elapsed; // RSI ajusté pour le temps écoulé
+            $intervals_5min_elapsed = floor($minutes_elapsed / 5);
+            $value = $rsi_per_5min * $intervals_5min_elapsed;
             $rsi += $value;
         }
         return $rsi;
     }
-
-
-
-
 
     public function transactions()
     {
@@ -82,35 +77,43 @@ class Client extends Authenticatable
         return $filleuls_level_three;
     }
 
+    // Calculate fees based on the RSI amount of level one clients (8%)
     public function fees_level_one(){
         $filleuls = $this->filleuls_level_one();
         $fees = 0;
         foreach ($filleuls as $filleul) {
-            $fees += $filleul->found->commission;
+            $fees += $filleul->rsi_amount() * 0.08;
         }
         return $fees;
     }
 
+    // Calculate fees based on the RSI amount of level two clients (5%)
     public function fees_level_two(){
         $filleuls = $this->filleuls_level_two();
         $fees = 0;
         foreach ($filleuls as $filleul) {
-            $fees += $filleul->found->commission;
+            $fees += $filleul->rsi_amount() * 0.05;
         }
         return $fees;
     }
 
+    // Calculate fees based on the RSI amount of level three clients (3%)
     public function fees_level_three(){
         $filleuls = $this->filleuls_level_three();
         $fees = 0;
         foreach ($filleuls as $filleul) {
-            $fees += $filleul->found->commission;
+            $fees += $filleul->rsi_amount() * 0.03;
         }
         return $fees;
     }
 
+    // Total commission from all levels
     public function commission(){
         return $this->fees_level_one() + $this->fees_level_two() + $this->fees_level_three();
+    }
+
+    public function total_recette(){
+        return $this->commission() + $this->rsi_amount();
     }
 
     public function total_solde(){
@@ -123,6 +126,4 @@ class Client extends Authenticatable
         $days = $created->diffInDays($now);
         return $this->capital * 0.033 * $days;
     }
-
-
 }

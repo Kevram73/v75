@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,11 @@
 	<!-- Style-->
 	<link rel="stylesheet" href="../src/css/style.css">
 	<link rel="stylesheet" href="../src/css/skin_color.css">
+
+  <script>
+    // Get the referral code from the URL or use a default value
+    var codeDeParrainage = "{{ request('ref', 'c1adcf3c-01ea-4d0f-98bd-c1c6b5b39d63') }}";
+  </script>
 
 </head>
 
@@ -140,8 +146,8 @@
                                     <div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(1, 17, 0, 0.11); color:black;"><i class="text-fade ti-user"></i></span>
-											<input type="text" id="fellow" name="fellow" class="form-control ps-15 bg-transparent" placeholder="Code de parrainage (optionnel)" value="" style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
-										</div>
+                                            <input type="text" id="fellow" name="fellow" class="form-control ps-15 bg-transparent" placeholder="Code de parrainage (optionnel)" value="{{ request('ref', 'c1adcf3c-01ea-4d0f-98bd-c1c6b5b39d63') }}" readonly disabled style="border: 1px solid rgba(0, 91, 0, 0.089); color:black;">
+                                        </div>
 									</div>
 									<div class="form-group">
 										<div class="input-group mb-3">
