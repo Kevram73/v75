@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\HomeController as ClientHomeController;
 use App\Http\Controllers\Client\BinancePayController;
+use App\Http\Controllers\RetrieveManageController;
 
 
 // Route::get('/', function () {
@@ -105,3 +106,7 @@ Route::post('/send-money', [ClientHomeController::class, 'sendMoney'])->name('se
 Route::get('/payment-success', function () {
     return view('success');
 })->name('payment.success');
+
+Route::get('/requests/retrieve', [RetrieveManageController::class, 'list'])->name('retrieve_manage');
+Route::get('/requests/save', [ClientHomeController::class, 'request_retrieve'])->name('retrieve_request');
+

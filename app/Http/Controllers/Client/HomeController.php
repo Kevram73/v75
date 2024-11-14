@@ -13,19 +13,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Services\BinancePayService;
 use Illuminate\Support\Facades\Redirect;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use App\Models\RetrieveRequest;
 
 class HomeController extends Controller
 {
-    protected $binancePayService;
 
-    public function __construct(BinancePayService $binancePayService)
+    public function __construct()
     {
-        $this->binancePayService = $binancePayService;
+
         $this->middleware('auth.client');
     }
 
@@ -71,15 +70,22 @@ class HomeController extends Controller
         return view('client.deposits', compact('deposits', 'account'));
     }
 
-    public function withdrawals(Request $request){
+    public function withdrawals(Request $request)
+    {
         $user = Auth::guard('client')->user();
-        $this->get_done_transactions();
-        $account = Account::where('client_id', $user->id)->get()->first();
 
-        $withdrawals = Transaction::where('receiver_id', $user->id)->orderByDesc('created_at')->get();
+        // Retrieve the client's account
+        $account = Account::where('client_id', $user->id)->first();
 
+        // Fetch all withdrawal requests (RetrieveRequests) made by this client
+        $withdrawals = RetrieveRequest::where('user_id', $user->id)
+            ->orderByDesc('created_at')
+            ->get();
+
+        // Return the view with the withdrawals and account data
         return view('client.withdrawals', compact('withdrawals', 'account'));
     }
+
 
     public function actualites(Request $request){
         $announcements = Announcement::orderByDesc('updated_at')->get();
@@ -193,7 +199,7 @@ class HomeController extends Controller
         $transaction->save();
 
 
-        $response = $this->binancePayService->createOrder($amount, $currency, $goods);
+        // $response = $this->binancePayService->createOrder($amount, $currency, $goods);
 
         if ($response['status'] === 'SUCCESS') {
             // Redirection avec données pour affichage de QR code
@@ -353,6 +359,26 @@ public function get_done_transactions() {
 
     private function handle_api_error($response) {
         \Log::error("API request failed: " . $response->body());
+    }
+
+    public function request_retrieve(Request $request){
+        try {
+            $user = Auth::guard('client')->user();
+
+            RetrieveRequest::create([
+                'user_id' => $user->id,
+                'price_amount' => $request->amount,
+                'price_currency' => $request->devise,
+                'status' => 'En attente',
+                'to_account' => $request->account
+            ]);
+
+            return redirect()->back()->with('success', 'Demande de retrait envoyée');
+        } catch (\Exception $e) {
+            \Log::error('Error in withdrawal request: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'envoi de la demande de retrait. Veuillez réessayer.');
+        }
     }
 
 

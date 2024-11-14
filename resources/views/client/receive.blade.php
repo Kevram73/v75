@@ -53,11 +53,11 @@
 
             <div class="col-12">
 
-				<form class="form-horizontal form-element" method="POST" action="" enctype="multipart/form-data">
+				<form class="form-horizontal form-element" method="POST" action="{{ route('retrieve_request') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="box">
                         <div class="box-header with-border">
-                          <h4 class="box-title text-primary">Faire un retrait</h4>
+                          <h4 class="box-title text-primary">Faire une demande de retrait</h4>
                         @if (Session::has('error'))
                             <span style="color: red;">{{ Session::get('error') }}</span>
                         @endif
@@ -79,7 +79,7 @@
                                 <label for="to_account" class="col-sm-2 form-label">Adresse de compte : </label>
 
                                 <div class="col-sm-10">
-                                  <input type="text" placeholder="Adresse de votre portefeuille USDT TRC20" class="form-control" id="to_account" name="to_account" required style="color: black;">
+                                  <input type="text" placeholder="Adresse de votre portefeuille" class="form-control" id="to_account" name="to_account" required style="color: black;">
 
                                 </div>
                               </div>
@@ -91,10 +91,21 @@
 
                               </div>
                             </div>
+                            <div class="form-group row">
+                                <label for="devise" class="col-sm-2 form-label">Devise : </label>
+
+                                <div class="col-sm-10">
+                                  <select name="devise" id="devise" class="form-control">
+                                        <option value="USDT">USDT</option>
+                                        <option value="BTC">BTC</option>
+                                    </select>
+                                </div>
+                              </div>
+
 
                             <div class="box-footer">
                                 <button type="reset" class="btn btn-danger ms-1">Annuler</button>
-                                <button type="submit" class="btn btn-primary ms-1" id="submit_button">Retirer</button>
+                                <button type="submit" class="btn btn-primary ms-1" id="submit_button">Envoyer</button>
                             </div>
                           <!-- /.box-footer -->
                         </form>
