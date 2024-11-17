@@ -3,136 +3,64 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Uuid;
+use App\Models\Transaction;
+use App\Models\Account;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
 {
-    public function getAvailableCurrencies()
+    /**
+     * Make a deposit for a client account.
+     */
+    public function make_deposit(Request $request)
     {
-        $url = "https://api.nowpayments.io/v1/currencies";
+        try{
+        $data = $request->all();
+        $user_id = $data->client_id;
+        $amount = $data->amount;
+        $devise = $data->devise;
 
-        $ch = curl_init();
+        $transaction = new Transaction();
+        $transaction->amount = $amount;
+        $transaction->date_sent = now();
+        $transaction->sender_id = $user_id;
+        $transaction->receiver_id = 0;
+        $transaction->type = 'deposit';
+        $transaction->merchant_trade_no = uniqid('MTN_');
+        $transaction->trx_id = '';
+        $transaction->status = 'pending';
+        $transaction->save();
 
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'x-api-key: ' . env('NOWPAYMENTS_API_KEY'),
-        ]);
-
-        $response = curl_exec($ch);
-
-        if(curl_errno($ch)){
-            $error_msg = curl_error($ch);
+        return redirect()->back()->with('success', 'Transaction en cours de traitement.');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'Erreur lors de la transaction.');
         }
-
-        curl_close($ch);
-
-        if(isset($error_msg)){
-            return response()->json(['error' => $error_msg], 500);
-        }
-
-        $currencies = json_decode($response, true);
-
-        return response()->json($currencies);
     }
 
-    public function createInvoice(Request $request)
+
+    /**
+     * List all deposits for a specific client.
+     */
+    public function list_deposit_client(Request $request)
     {
-        $url = 'https://api.nowpayments.io/v1/invoice';
+        $deposits = Transaction::where('sender_id', Auth::guard('client')->user()->id)
+            ->where('type', 'deposit')
+            ->orderBy('date_sent', 'desc')
+            ->get();
 
-        $data = [
-            'price_amount' => $request->input('price_amount'),
-            'price_currency' => $request->input('price_currency'),
-            'order_id' => Uuid::uuid4()->toString(),
-            'order_description' => "For investment",
-            'partially_paid_url' => $request->input('partially_paid_url'),
-
-        ];
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'x-api-key: ' . env('NOWPAYMENTS_API_KEY'),
-            'Content-Type: application/json'
-        ]);
-
-        $response = curl_exec($ch);
-
-        if(curl_errno($ch)) {
-            $error_msg = curl_error($ch);
-        }
-
-        curl_close($ch);
-
-        if(isset($error_msg)) {
-            return response()->json(['error' => $error_msg], 500);
-        }
-
-        $invoice = json_decode($response, true);
-
-        return response()->json($invoice);
+        return view('client.deposits', compact('deposits'));
     }
 
-    public function getPaymentStatus($paymentId)
-{
-    $url = "https://api.nowpayments.io/v1/payment/{$paymentId}";
+    /**
+     * Get all transactions in the system.
+     */
+    public function get_all_transactions(Request $request)
+    {
+        $transactions = Transaction::with(['sender', 'receiver'])
+            ->orderBy('date_sent', 'desc')
+            ->get();
 
-    $ch = curl_init();
-
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'x-api-key: ' . env('NOWPAYMENTS_API_KEY')
-    ]);
-
-    $response = curl_exec($ch);
-
-    if (curl_errno($ch)) {
-        $error_msg = curl_error($ch);
+        return response()->json(['transactions' => $transactions], 200);
     }
-
-    curl_close($ch);
-
-    if (isset($error_msg)) {
-        return response()->json(['error' => $error_msg], 500);
-    }
-
-    $status = json_decode($response, true);
-
-    return response()->json($status);
-}
-
-public function listPayments()
-{
-    $url = "https://api.nowpayments.io/v1/payment";
-
-    $ch = curl_init();
-
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'x-api-key: ' . env('NOWPAYMENTS_API_KEY')
-    ]);
-
-    $response = curl_exec($ch);
-
-    if (curl_errno($ch)) {
-        $error_msg = curl_error($ch);
-    }
-
-    curl_close($ch);
-
-    if (isset($error_msg)) {
-        return response()->json(['error' => $error_msg], 500);
-    }
-
-    $payments = json_decode($response, true);
-
-    return response()->json($payments);
-}
-
 }

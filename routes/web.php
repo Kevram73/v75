@@ -59,6 +59,10 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     Route::get('client/liste/disabled', [ClientController::class, 'clients_disabled'])->name('client_liste_disabled');
     Route::get('clients/disactivate/{id}', [ClientController::class, 'client_disactivate'])->name('client.disactivate');
     Route::get('clients/activate/{id}', [ClientController::class, 'client_activate'])->name('client.activate');
+
+    Route::get('deposit/list', [TransactionController::class, 'send'])->name('deposits');
+    Route::get('withdrawal/list', [TransactionController::class, 'send'])->name('withdrawals');
+    Route::get('transaction/list', [ClientHomeController::class, 'send'])->name('transactions');
 });
 
 Route::prefix('client/')->name('client.')->group(function () {
@@ -96,6 +100,7 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::post('/payment-callback', 'PaymentController@callback')->name('payment.callback');
     // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
 
+
 });
 
 Route::get('/binancepay/returnURL', [BinancePayController::class, 'returnCallback'])->name("returnCallback");
@@ -109,4 +114,5 @@ Route::get('/payment-success', function () {
 
 Route::get('/requests/retrieve', [RetrieveManageController::class, 'list'])->name('retrieve_manage');
 Route::get('/requests/save', [ClientHomeController::class, 'request_retrieve'])->name('retrieve_request');
+
 
