@@ -59,6 +59,8 @@
                                         <td><span class="badge badge-sm badge-warning-light">En attente</span></td>
                                         @elseif($deposit->status == "No confirmed")
                                             <td><span class="badge badge-sm badge-warning-light">Non confirmé</span></td>
+                                @elseif($deposit->status == "confirmed")
+                                            <td><span class="badge badge-sm badge-success-light">Validé</span></td>
                                 @endif
                                 </tr>
 

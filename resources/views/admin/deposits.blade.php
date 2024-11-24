@@ -52,12 +52,14 @@
                                 <td>{{$deposit->trx_id}}</td>
 
                                 <td><span class="badge badge-sm badge-danger-light">Dépôt</span></td>
-                                @if($deposit->status == 'pending')
-                                    <td><span class="badge badge-sm badge-warning-light">En attente</span></td>
-                                @elseif($deposit->status == 'done')
-                                        <td><span class="badge badge-sm badge-success-light">Effectué</span></td>
-                                @elseif($deposit->status == 'cancelled')
-                                        <td><span class="badge badge-sm badge-success-light">Annulé</span></td>
+                                @if($deposit->status == "canceled")
+                                    <td><span class="badge badge-sm badge-danger-light">Annulé</span></td>
+                                @elseif($deposit->status == "En attente")
+                                        <td><span class="badge badge-sm badge-warning-light">En attente</span></td>
+                                        @elseif($deposit->status == "No confirmed")
+                                            <td><span class="badge badge-sm badge-warning-light">Non confirmé</span></td>
+                                @elseif($deposit->status == "confirmed")
+                                            <td><span class="badge badge-sm badge-success-light">Validé</span></td>
                                 @endif
                                 </tr>
 
