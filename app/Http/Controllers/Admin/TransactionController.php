@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Client;  // Changed from User to Client
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
