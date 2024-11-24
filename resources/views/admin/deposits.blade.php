@@ -47,7 +47,7 @@
                                 <th scope="row"><span style="text-info">{{$loop->index + 1}}</span></th>
                                 <td>{{$client->last_name}} {{$client->first_name}}</td>
                                 <td>{{$deposit->amount}} $</td>
-                                <td>{{$deposit->date_sent->format('d/m/Y à H:i')}}</td>
+                                <td>{{$deposit->date_sent}}</td>
                                 <td>{{$deposit->merchant_trade_no}}</td>
                                 <td>{{$deposit->trx_id}}</td>
 
