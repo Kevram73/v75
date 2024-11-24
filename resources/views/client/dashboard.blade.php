@@ -62,7 +62,7 @@
                                             Investissez maintenant
                                         </p>
 
-                                        <a href="{{ route('invest_deposit') }}" class="btn btn-primary-light">Faire un placement</a>
+                                        <a href="{{ route('client.invest_deposit') }}" class="btn btn-primary-light">Faire un placement</a>
                                     </div>
                                 </div>
                             </div>
