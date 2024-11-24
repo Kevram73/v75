@@ -53,7 +53,7 @@
 
             <div class="col-12">
 
-				<form class="form-horizontal form-element" method="POST" action="{{ route('retrieve_request') }}" enctype="multipart/form-data">
+				<form class="form-horizontal form-element" method="POST" action="{{ route('client.retrieve_request') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="box">
                         <div class="box-header with-border">
@@ -67,8 +67,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal form-element" action="" method="POST">
-                            @csrf
+
                             <div class="box-body">
 
                               <input type="text" class="hidden" id="from_account" name="from_account" required style="color: black;" value="">
@@ -108,7 +107,7 @@
                                 <button type="submit" class="btn btn-primary ms-1" id="submit_button">Envoyer</button>
                             </div>
                           <!-- /.box-footer -->
-                        </form>
+
                       </div>
                 </form>
                 <!-- /.box -->
