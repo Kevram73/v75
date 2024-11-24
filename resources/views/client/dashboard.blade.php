@@ -48,13 +48,6 @@
 
             <div class="row bg-transparent">
 
-
-
-
-
-
-
-
                 <div class="col-xl-12 col-12">
                     <div class="row">
 
@@ -69,7 +62,7 @@
                                             Investissez maintenant
                                         </p>
 
-                                        <a href="#" class="btn btn-primary-light">Faire un placement</a>
+                                        <a href="{{ route('invest_deposit') }}" class="btn btn-primary-light">Faire un placement</a>
                                     </div>
                                 </div>
                             </div>
