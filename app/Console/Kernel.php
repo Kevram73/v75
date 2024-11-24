@@ -12,13 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->call(function () {
-            $transactions = Transaction::where('status', 'pending')->get();
-
-            foreach ($transactions as $transaction) {
-                CheckTransactionStatus::dispatch($transaction);
-            }
-        })->everyMinute();
+        $schedule->command('transactions:check-pending')->everyMinute();
     }
 
     /**
