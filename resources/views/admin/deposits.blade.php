@@ -40,7 +40,7 @@
                             </thead>
                             @foreach ($deposits as $deposit)
                             @php
-                                $client = app\Models\Client::find($deposit->sender_id);
+                                $client = App\Models\Client::find($deposit->sender_id);
                             @endphp
                             <tbody class="text-fade">
                                 <tr>
