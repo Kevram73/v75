@@ -104,7 +104,7 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::get('invest/confirm/{transaction_id}', [ClientHomeController::class, 'confirm_trans'])->name('confirm_trans');
     Route::post('invest/confirmation', [ClientHomeController::class, 'confirmation'])->name('confirmation');
     Route::post('invest/cancel/{transaction_id}', [ClientHomeController::class, 'cancel_deposit'])->name('cancel_deposit');
-    Route::get('/requests/save', [ClientHomeController::class, 'request_retrieve'])->name('retrieve_request');
+    Route::post('/requests/save', [ClientHomeController::class, 'request_retrieve'])->name('retrieve_request');
 
 });
 
