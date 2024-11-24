@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\HomeController as ClientHomeController;
 use App\Http\Controllers\Client\BinancePayController;
+use App\Http\Controllers\RetrieveManageController;
 
 
 // Route::get('/', function () {
@@ -30,7 +31,7 @@ Route::get('policy', function () {
 });
 
 Route::post('/binance-pay/create-order', [BinancePayController::class, 'createOrder']);
-Route::post('/send/money', [ClientHomeController::class, 'send_money'])->name('send_money');
+
 
 Route::prefix('admin/')->name('admin.')->group(function () {
 
@@ -58,6 +59,10 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     Route::get('client/liste/disabled', [ClientController::class, 'clients_disabled'])->name('client_liste_disabled');
     Route::get('clients/disactivate/{id}', [ClientController::class, 'client_disactivate'])->name('client.disactivate');
     Route::get('clients/activate/{id}', [ClientController::class, 'client_activate'])->name('client.activate');
+
+    Route::get('deposit/list', [TransactionController::class, 'send'])->name('deposits');
+    Route::get('withdrawal/list', [TransactionController::class, 'send'])->name('withdrawals');
+    Route::get('transaction/list', [ClientHomeController::class, 'send'])->name('transactions');
 });
 
 Route::prefix('client/')->name('client.')->group(function () {
@@ -96,7 +101,24 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::post('/payment-callback', 'PaymentController@callback')->name('payment.callback');
     // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
 
+    Route::post('invest/deposit', [ClientHomeController::class, 'register_deposit'])->name('register_deposit');
+    Route::get('invest/confirm/{transaction_id}', [ClientHomeController::class, 'confirm_trans'])->name('confirm_trans');
+    Route::post('invest/confirmation', [ClientHomeController::class, 'confirmation'])->name('confirmation');
+    Route::post('invest/cancel/{transaction_id}', [ClientHomeController::class, 'cancel_deposit'])->name('cancel_deposit');
+    Route::post('/requests/save', [ClientHomeController::class, 'request_retrieve'])->name('retrieve_request');
+
 });
 
 Route::get('/binancepay/returnURL', [BinancePayController::class, 'returnCallback'])->name("returnCallback");
 Route::get('/binancepay/cancelURL', [BinancePayController::class, 'cancelCallback'])->name("cancelCallback");
+
+// Route::post('/send-money', [ClientHomeController::class, 'sendMoney'])->name('send_money');
+
+Route::get('/payment-success', function () {
+    return view('success');
+})->name('payment.success');
+
+Route::get('/requests/retrieve', [RetrieveManageController::class, 'list'])->name('retrieve_manage');
+
+
+

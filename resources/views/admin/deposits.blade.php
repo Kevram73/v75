@@ -1,6 +1,6 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 pro Dashboard')
+@section('title', '| V75 pro Client deposits')
 
 @section('content')
 
@@ -15,8 +15,7 @@
                 <div class="box">
                     <div class="box-body">
                         <div class="d-md-flex d-block align-items-center justify-content-between">
-                            <h4 class="box-title mb-md-0 mb-20 text-info">Transactions</h4>
-                            <a href="{{route('client.invest_deposit')}}" class="btn btn-info"><i class="fa fa-upload me-10"></i>Faire un dépôt</a>
+                            <h4 class="box-title mb-md-0 mb-20 text-info">Liste des dépôts clients</h4>
 
                         </div>
                     </div>
@@ -28,17 +27,15 @@
                         <div class="table-responsive">
                         <table class="table mb-0">
                             <thead class="thead-light">
-                                @php
-                                    $nb = 0;
-                                @endphp
+
                                 <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Montant</th>
-                                <th scope="col">Numéro de compte</th>
-                                <th scope="col">Date</th>
                                 <th scope="col">Identité du client</th>
-                                <th scope="col">Nature de la transaction</th>
-                                <th scope="col">Statut de la transaction</th>
+                                <th scope="col">Montant</th>
+                                <th scope="col">Date et heure</th>
+                                <th scope="col">Devise</th>
+                                <th scope="col">N° de transaction</th>
+                                <th scope="col">Statut</th>
                                 </tr>
                             </thead>
                             @foreach ($deposits as $deposit)
@@ -47,11 +44,13 @@
                             @endphp
                             <tbody class="text-fade">
                                 <tr>
-                                <th scope="row">TRANSACT.<span style="text-info">{{$loop->index + 1}}</span></th>
-                                <td>{{$deposit->amount}} $</td>
-                                <td>{{$account->account_num}}</td>
-                                <td>{{$deposit->created_at->format('d/m/Y à H:i')}}</td>
+                                <th scope="row"><span style="text-info">{{$loop->index + 1}}</span></th>
                                 <td>{{$client->last_name}} {{$client->first_name}}</td>
+                                <td>{{$deposit->amount}} $</td>
+                                <td>{{$deposit->date_sent->format('d/m/Y à H:i')}}</td>
+                                <td>{{$deposit->merchant_trade_no}}</td>
+                                <td>{{$deposit->trx_id}}</td>
+
                                 <td><span class="badge badge-sm badge-danger-light">Dépôt</span></td>
                                 @if($deposit->status == "canceled")
                                     <td><span class="badge badge-sm badge-danger-light">Annulé</span></td>
@@ -87,3 +86,4 @@
     <script src="{{asset('/src/js/pages/data-table.js')}}"></script>
 
 @endpush
+

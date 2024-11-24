@@ -27,7 +27,6 @@
 <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
 
 <div class="wrapper">
-	<div id="loader"></div>
 
   <header class="main-header">
 	<div class="d-flex align-items-center logo-box justify-content-start">

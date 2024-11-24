@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Models\Payment;
 use Carbon\Carbon;
 use App\Models\Client;
 use App\Models\Account;
@@ -12,18 +13,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Services\BinancePayService;
 use Illuminate\Support\Facades\Redirect;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
+use App\Models\RetrieveRequest;
 
 class HomeController extends Controller
 {
-    protected $binancePayService;
 
-    public function __construct(BinancePayService $binancePayService)
+    public function __construct()
     {
-        $this->binancePayService = $binancePayService;
+
         $this->middleware('auth.client');
     }
 
@@ -69,15 +70,22 @@ class HomeController extends Controller
         return view('client.deposits', compact('deposits', 'account'));
     }
 
-    public function withdrawals(Request $request){
+    public function withdrawals(Request $request)
+    {
         $user = Auth::guard('client')->user();
-        $this->get_done_transactions();
-        $account = Account::where('client_id', $user->id)->get()->first();
 
-        $withdrawals = Transaction::where('receiver_id', $user->id)->orderByDesc('created_at')->get();
+        // Retrieve the client's account
+        $account = Account::where('client_id', $user->id)->first();
 
+        // Fetch all withdrawal requests (RetrieveRequests) made by this client
+        $withdrawals = RetrieveRequest::where('user_id', $user->id)
+            ->orderByDesc('created_at')
+            ->get();
+
+        // Return the view with the withdrawals and account data
         return view('client.withdrawals', compact('withdrawals', 'account'));
     }
+
 
     public function actualites(Request $request){
         $announcements = Announcement::orderByDesc('updated_at')->get();
@@ -151,6 +159,12 @@ class HomeController extends Controller
         return view('client.send', compact('user'));
     }
 
+    public function confirm_trans($transaction_id){
+        $user = Auth::guard('client')->user();
+        $trans = Transaction::where('id', $transaction_id)->get()->first();
+        return view('client.confirm_trans', compact('user', 'trans'));
+    }
+
     public function receive(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
 
@@ -174,82 +188,42 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Compte BTC mis à jour');
     }
 
-    public function createOrder(Request $request)
+
+    /**
+     * Envoie la requête à l'API NowPayments pour créer un paiement.
+     */
+
+
+    public function register_deposit(Request $request)
     {
-        $amount = $request->input('amount');
-        $currency = $request->input('currency', 'USDT');
-
-        $goods = [
-            "goodsType" => "01",
-            "goodsCategory" => "Tron-V75",
-            "referenceGoodsId" => Uuid::uuid4()->toString(),
-            "goodsName" => "Hot Things",
-            "goodsDetail" => "For my website"
-        ];
+        $priceAmount = $request->input('price_amount');
+        $priceCurrency = $request->input('price_currency');
 
         $transaction = new Transaction();
-        $transaction->amount = $amount;
-        $transaction->date_sent = Carbon::now();
-        $transaction->sender_id = Auth::guard('client')->user()->id;
-        $transaction->receiver_id = 0;
-        $transaction->type = 'deposit';
-        $transaction->save();
-
-
-        $response = $this->binancePayService->createOrder($amount, $currency, $goods);
-
-        if ($response['status'] === 'SUCCESS') {
-            // Redirection avec données pour affichage de QR code
-            return view('client.qr', ['qrLink' => $response['data']['qrcodeLink']]);
-        }
-
-        return back()->with('error', 'Payment failed');
-    }
-
-    public function send_money(Request $request) {
-        $amount = $request->amount;
-        $client_id = Auth::guard('client')->user()->id;
-        $account = Account::where('client_id', $client_id)->first();
-
-        if ($request->currency == 'USDT' && empty($account->usdt_account)) {
-            return back()->with('error', "Veuillez renseigner votre compte USDT");
-        }
-
-        if ($request->currency == 'BTC' && empty($account->btc_account)) {
-            return back()->with('error', "Veuillez renseigner votre compte BTC");
-        }
-
-        switch ($request->currency) {
-            case 'USDT':
-                $coin = 195;
-                $address = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3";
-                break;
-            case 'BTC':
-                $coin = 0;
-                $address = "bc1qamgfs4cknh7rqtsndr7hhwzeguns2v6vqht0cw";
-                break;
-            default:
-                return response()->json(['error' => 'Unsupported cryptocurrency type'], 400);
-        }
-
-        $uid = Uuid::uuid4()->toString();
-
-        $transaction = new Transaction();
-        $transaction->sender_id = $client_id;
-        $transaction->receiver_id = 0;
-        $transaction->amount = $amount;
+        $transaction->amount = $priceAmount;
+        $transaction->merchant_trade_no = "";
         $transaction->date_sent = now();
-        $transaction->type = $request->currency;
-        $transaction->merchant_trade_no = $uid;
-        $transaction->trx_id = 1; // 1: En attente, 2: Success, 0: Annulée
+        $transaction->sender_id = Auth::guard('client')->user()->id;
+        $transaction->type = 'deposit';
+        $transaction->status = "No confirmed";
+        $transaction->trx_id = 1;
+        $transaction->receiver_id = 0;
         $transaction->save();
 
-        $link = "trust://send?address=" . urlencode($address) . "&coin=" . urlencode($coin) . "&amount=" . urlencode($amount) . "&txid=" . urlencode($uid);
+        return redirect()->route('client.confirm_trans', ['transaction_id' => $transaction->id])->with('success', 'Transaction non confirmée');
 
-        return redirect($link);
+
     }
 
-    public function get_done_transactions() {
+    public function confirmation(Request $request){
+        $transaction = Transaction::where('id', $request->transaction_id)->get()->first();
+        $transaction->merchant_trade_no = $request->transaction_number;
+        $transaction->status = "En attente";
+        $transaction->save();
+        return redirect()->route('client.deposits')->with('success', 'Transaction en attente de confirmation');
+    }
+
+public function get_done_transactions() {
         $client_id = Auth::guard('client')->user()->id;
         $transactions = Transaction::where('sender_id', $client_id)
                                     ->where('trx_id', 1)
@@ -311,6 +285,41 @@ class HomeController extends Controller
     private function handle_api_error($response) {
         \Log::error("API request failed: " . $response->body());
     }
+
+    public function request_retrieve(Request $request){
+        try {
+            $user = Auth::guard('client')->user();
+
+            RetrieveRequest::create([
+                'user_id' => $user->id,
+                'price_amount' => $request->amount,
+                'price_currency' => $request->devise,
+                'status' => 'En attente',
+                'to_account' => $request->account
+            ]);
+
+            return redirect()->back()->with('success', 'Demande de retrait envoyée');
+        } catch (\Exception $e) {
+            \Log::error('Error in withdrawal request: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'envoi de la demande de retrait. Veuillez réessayer.');
+        }
+    }
+
+    public function cancel_deposit($transaction_id)
+{
+    $transaction = Transaction::find($transaction_id);
+
+    if (!$transaction) {
+        return response()->json(['success' => false, 'message' => 'Transaction introuvable.'], 404);
+    }
+
+    $transaction->status = "canceled";
+    $transaction->save();
+
+    return response()->json(['success' => true, 'message' => 'Transaction annulée avec succès.']);
+}
+
 
 
 }

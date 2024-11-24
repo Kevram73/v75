@@ -120,4 +120,36 @@ class TransactionController extends Controller
         $transaction->delete();
         return redirect()->route('transactions.index')->with('success', 'Transaction successfully deleted!');
     }
+
+    public function list_deposits(Request $request)
+    {
+        $deposits = Transaction::where('sender_id', Auth::guard('client')->user()->id)
+            ->where('type', 'deposit')
+            ->orderBy('date_sent', 'desc')
+            ->get();
+
+        return view('admin.deposits', compact('deposits'));
+    }
+
+    public function list_withdrawals(Request $request)
+    {
+        $withdrawals = Transaction::where('receiver_id', Auth::guard('client')->user()->id)
+            ->where('type', 'withdrawal')
+            ->orderBy('date_sent', 'desc')
+            ->get();
+
+        return view('admin.withdrawals', compact('withdrawals'));
+    }
+
+    /**
+     * Get all transactions in the system.
+     */
+    public function get_all_transactions(Request $request)
+    {
+        $transactions = Transaction::with(['sender', 'receiver'])
+            ->orderBy('date_sent', 'desc')
+            ->get();
+
+        return view('admin.transactions.index', compact('transactions'));
+    }
 }
