@@ -62,49 +62,27 @@
                             </div>
                             <!-- /.box-header -->
                             <!-- form start -->
-                            <form class="form-horizontal form-element" action="{{ route('send_money') }}" method="post">
+                            <form class="form-horizontal form-element" action="{{ route('client.register_deposit') }}" method="post">
                                 @csrf
 
-                                <!-- Génération d'un ID et description relatifs à l'utilisateur -->
-                                @php
-                                    $userId = Auth::guard("client")->user()->id; // Récupérer l'ID de l'utilisateur connecté
-                                    $timestamp = now()->timestamp; // Obtenir un horodatage actuel
-                                    $orderId = 'ORD-' . $userId . '-' . $timestamp; // Générer un ID de commande unique
-                                    $orderDescription = 'Dépôt utilisateur #' . $userId; // Générer une description relative à l'utilisateur
-                                @endphp
-
-                                    <!-- Champs cachés pour order_id et order_description -->
-                                <input type="hidden" name="order_id" value="{{ $orderId }}">
-                                <input type="hidden" name="order_description" value="{{ $orderDescription }}">
 
                                 <div class="box-body">
                                     <div class="form-group row">
                                         <label for="price_amount" class="col-sm-2 form-label">Montant :</label>
                                         <div class="col-sm-10">
-                                            <input type="number" min="10" class="form-control" id="price_amount" name="price_amount" placeholder="25">
+                                            <input type="number" min="10" class="form-control" id="price_amount" name="price_amount" placeholder="Saisissez le montant">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="price_currency" class="col-sm-2 form-label">Devise de prix :</label>
+                                        <label for="price_currency" class="col-sm-2 form-label">Devise de paiement :</label>
                                         <div class="col-sm-10">
                                             <select name="price_currency" id="price_currency" class="form-control">
-                                                <option value="usd">USD</option>
-                                            </select>
-                                        </div>
-                                    </div>
 
-                                    <div class="form-group row">
-                                        <label for="pay_currency" class="col-sm-2 form-label">Devise de paiement :</label>
-                                        <div class="col-sm-10">
-                                            <select name="pay_currency" id="pay_currency" class="form-control">
-                                                <option value="btc">BTC</option>
                                                 <option value="usdt">USDT</option>
                                             </select>
                                         </div>
                                     </div>
-
-                                    <input type="hidden" name="ipn_callback_url" value="https://nowpayments.io">
 
                                     <div class="box-footer">
                                         <button type="reset" class="btn btn-danger ms-1">Annuler</button>

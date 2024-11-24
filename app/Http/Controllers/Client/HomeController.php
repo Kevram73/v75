@@ -154,6 +154,12 @@ class HomeController extends Controller
         return view('client.send', compact('user'));
     }
 
+    public function confirm_trans($transaction_id){
+        $user = Auth::guard('client')->user();
+        $trans = Transaction::where('id', $transaction_id)->get()->first();
+        return view('client.confirm_trans', compact('user', 'trans'));
+    }
+
     public function receive(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
 
@@ -177,125 +183,39 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Compte BTC mis à jour');
     }
 
-    public function createOrder(Request $request)
-    {
-        $amount = $request->input('amount');
-        $currency = $request->input('currency', 'USDT');
-
-        $goods = [
-            "goodsType" => "01",
-            "goodsCategory" => "Tron-V75",
-            "referenceGoodsId" => Uuid::uuid4()->toString(),
-            "goodsName" => "Hot Things",
-            "goodsDetail" => "For my website"
-        ];
-
-        $transaction = new Transaction();
-        $transaction->amount = $amount;
-        $transaction->date_sent = Carbon::now();
-        $transaction->sender_id = Auth::guard('client')->user()->id;
-        $transaction->receiver_id = 0;
-        $transaction->type = 'deposit';
-        $transaction->save();
-
-
-        // $response = $this->binancePayService->createOrder($amount, $currency, $goods);
-
-        if ($response['status'] === 'SUCCESS') {
-            // Redirection avec données pour affichage de QR code
-            return view('client.qr', ['qrLink' => $response['data']['qrcodeLink']]);
-        }
-
-        return back()->with('error', 'Payment failed');
-    }
-
 
     /**
      * Envoie la requête à l'API NowPayments pour créer un paiement.
      */
-    public function sendMoney(Request $request)
+
+
+    public function register_deposit(Request $request)
     {
-        // Récupérer les données du formulaire
         $priceAmount = $request->input('price_amount');
         $priceCurrency = $request->input('price_currency');
-        $payCurrency = $request->input('pay_currency');
-        $orderId = $request->input('order_id');
-        $orderDescription = $request->input('order_description');
-        $ipnCallbackUrl = $request->input('ipn_callback_url');
 
-        // API key NowPayments (à configurer dans .env)
-        $apiKey = env('NOWPAYMENTS_API_KEY');
+        $transaction = new Transaction();
+        $transaction->amount = $priceAmount;
+        $transaction->merchant_trade_no = "";
+        $transaction->date_sent = now();
+        $transaction->sender_id = Auth::guard('client')->user()->id;
+        $transaction->type = 'deposit';
+        $transaction->status = "No confirmed";
+        $transaction->trx_id = 1;
+        $transaction->receiver_id = 0;
+        $transaction->save();
 
-        // Préparation des données à envoyer dans la requête
-        $data = [
-            'price_amount' => $priceAmount,
-            'price_currency' => $priceCurrency,
-            'pay_currency' => $payCurrency,
-            'ipn_callback_url' => $ipnCallbackUrl,
-            'order_id' => $orderId,
-            'order_description' => $orderDescription,
-        ];
-
-        try {
-            // Envoie de la requête POST à l'API NowPayments
-            $response = Http::withHeaders([
-                'x-api-key' => $apiKey,
-                'Content-Type' => 'application/json',
-            ])->post('https://api.nowpayments.io/v1/payment', $data);
-
-            // Vérification du succès de la requête
-            if ($response->successful()) {
-                // Traitement de la réponse
-                $paymentData = $response->json();
-
-                $paymentLink = "https://nowpayments.io/payment/?iid={$paymentData['purchase_id']}&paymentId={$paymentData['payment_id']}";
-
-                Payment::create([
-                    'payment_id' => $paymentData['payment_id'] ?? null,
-                    'payment_status' => $paymentData['payment_status'] ?? 'waiting',
-                    'pay_address' => $paymentData['pay_address'] ?? null,
-                    'price_amount' => $paymentData['price_amount'] ?? 0,
-                    'price_currency' => $paymentData['price_currency'] ?? 'usd',
-                    'pay_amount' => $paymentData['pay_amount'] ?? 0,
-                    'pay_currency' => $paymentData['pay_currency'] ?? 'btc',
-                    'order_id' => $paymentData['order_id'] ?? null,
-                    'order_description' => $paymentData['order_description'] ?? null,
-                    'ipn_callback_url' => $paymentData['ipn_callback_url'] ?? null,
-                    'purchase_id' => $paymentData['purchase_id'] ?? null,
-                    'amount_received' => $paymentData['amount_received'] ?? 0,
-                    'payin_extra_id' => $paymentData['payin_extra_id'] ?? null,
-                    'smart_contract' => $paymentData['smart_contract'] ?? null,
-                    'network' => $paymentData['network'] ?? 'btc',
-                    'network_precision' => $paymentData['network_precision'] ?? 8,
-                    'expiration_estimate_date' => isset($paymentData['expiration_estimate_date'])
-                        ? Carbon::parse($paymentData['expiration_estimate_date'])->format('Y-m-d H:i:s')
-                        : null, // Conversion de la date
-                    'burning_percent' => $paymentData['burning_percent'] ?? null,
-                    'is_fixed_rate' => $paymentData['is_fixed_rate'] ?? false,
-                    'is_fee_paid_by_user' => $paymentData['is_fee_paid_by_user'] ?? false,
-                    'valid_until' => isset($paymentData['valid_until'])
-                        ? Carbon::parse($paymentData['valid_until'])->format('Y-m-d H:i:s')
-                        : null, // Conversion de la date
-                    'type' => $paymentData['type'] ?? 'crypto2crypto',
-                    'product' => $paymentData['product'] ?? 'api',
-                    'origin_ip' => $paymentData['origin_ip'] ?? null,
-                ]);
+        return redirect()->route('client.confirm_trans', ['transaction_id' => $transaction->id])->with('success', 'Transaction non confirmée');
 
 
+    }
 
-                return view('client.success', ['paymentData' => $paymentData, "payment_link" => $paymentLink]);
-
-            } else {
-                // En cas d'échec, afficher le message d'erreur
-                $errorMessage = $response->json()['message'] ?? 'Erreur lors de la création du paiement.';
-                Session::flash('error', $errorMessage);
-                return back();
-            }
-        } catch (\Exception $e) {
-            // Gestion des exceptions
-            Session::flash('error', 'Une erreur est survenue : ' . $e->getMessage());
-            return back();
-        }
+    public function confirmation(Request $request){
+        $transaction = Transaction::where('id', $request->transaction_id)->get()->first();
+        $transaction->merchant_trade_no = $request->transaction_number;
+        $transaction->status = "En attente";
+        $transaction->save();
+        return redirect()->route('client.deposits')->with('success', 'Transaction en attente de confirmation');
     }
 
 public function get_done_transactions() {
@@ -380,6 +300,21 @@ public function get_done_transactions() {
             return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'envoi de la demande de retrait. Veuillez réessayer.');
         }
     }
+
+    public function cancel_deposit($transaction_id)
+{
+    $transaction = Transaction::find($transaction_id);
+
+    if (!$transaction) {
+        return response()->json(['success' => false, 'message' => 'Transaction introuvable.'], 404);
+    }
+
+    $transaction->status = "canceled";
+    $transaction->save();
+
+    return response()->json(['success' => true, 'message' => 'Transaction annulée avec succès.']);
+}
+
 
 
 }

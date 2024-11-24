@@ -100,13 +100,17 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::post('/payment-callback', 'PaymentController@callback')->name('payment.callback');
     // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
 
+    Route::post('invest/deposit', [ClientHomeController::class, 'register_deposit'])->name('register_deposit');
+    Route::get('invest/confirm/{transaction_id}', [ClientHomeController::class, 'confirm_trans'])->name('confirm_trans');
+    Route::get('invest/confirmation', [ClientHomeController::class, 'confirmation'])->name('confirmation');
+    Route::post('invest/cancel/{transaction_id}', [ClientHomeController::class, 'cancel_deposit'])->name('cancel_deposit');
 
 });
 
 Route::get('/binancepay/returnURL', [BinancePayController::class, 'returnCallback'])->name("returnCallback");
 Route::get('/binancepay/cancelURL', [BinancePayController::class, 'cancelCallback'])->name("cancelCallback");
 
-Route::post('/send-money', [ClientHomeController::class, 'sendMoney'])->name('send_money');
+// Route::post('/send-money', [ClientHomeController::class, 'sendMoney'])->name('send_money');
 
 Route::get('/payment-success', function () {
     return view('success');

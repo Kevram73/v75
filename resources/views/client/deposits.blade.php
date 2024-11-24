@@ -53,10 +53,12 @@
                                 <td>{{$deposit->created_at->format('d/m/Y à H:i')}}</td>
                                 <td>{{$client->last_name}} {{$client->first_name}}</td>
                                 <td><span class="badge badge-sm badge-danger-light">Dépôt</span></td>
-                                @if($deposit->trx_id == 2)
-                                    <td><span class="badge badge-sm badge-success-light">Validé</span></td>
-                                @elseif($deposit->trx_id == 1)
-                                        <td><span class="badge badge-sm badge-danger-light">En attente</span></td>
+                                @if($deposit->status == "canceled")
+                                    <td><span class="badge badge-sm badge-danger-light">Annulé</span></td>
+                                @elseif($deposit->status == "En attente")
+                                        <td><span class="badge badge-sm badge-warning-light">En attente</span></td>
+                                        @elseif($deposit->status == "No confirmed")
+                                            <td><span class="badge badge-sm badge-warning-light">Non confirmé</span></td>
                                 @endif
                                 </tr>
 
@@ -83,4 +85,3 @@
     <script src="{{asset('/src/js/pages/data-table.js')}}"></script>
 
 @endpush
-
