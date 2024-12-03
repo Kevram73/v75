@@ -4,72 +4,130 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Transaction;
+use App\Models\Account;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
-class CheckTransactionStatus extends Command
+class CheckReceivedTransactions extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'transactions:check-pending';
+    protected $signature = 'transactions:check-received';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Check the status of all transactions with status "En attente"';
+    protected $description = 'Check the status of received transactions on a specific USDT account and update account balances.';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        // Récupérer toutes les transactions "En attente"
-        $pendingTransactions = Transaction::where('status', 'En attente')->where('type', 'deposit')->get();
+        $this->info("Starting to check received transactions...");
 
-        if ($pendingTransactions->isEmpty()) {
-            $this->info("No pending transactions found.");
+        // Adresse USDT à surveiller
+        $receiverAddress = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3";
+
+        // Appeler l'API Tronscan pour récupérer les transactions
+        $response = Http::get("https://apilist.tronscan.org/api/token_trc20/transfers", [
+            'relatedAddress' => $receiverAddress,
+            'limit' => 100, // Nombre maximum de transactions à récupérer
+        ]);
+
+        if (!$response->successful()) {
+            $this->error("Failed to fetch transactions from Tronscan.");
+            Log::error("Failed to fetch transactions from Tronscan", ['address' => $receiverAddress]);
             return;
         }
 
-        foreach ($pendingTransactions as $transaction) {
+        $data = $response->json();
+        $transactions = $data['token_transfers'] ?? [];
 
-            // Appeler l'API TRONScan pour vérifier l'état de la transaction
-            $response = Http::get("https://apilist.tronscan.org/api/transaction-info", [
-                'hash' => $transaction->merchant_trade_no, // Identifiant de la transaction
-            ]);
-
-            if ($response->successful()) {
-                $data = $response->json();
-
-                // Vérifier l'envoyeur et le receveur
-                $client_id = $transaction->sender_id;
-                $account = Account::where('client_id', $client_id)->first();
-                $transactionSender = $account->usdt_account; // Adresse de l'envoyeur
-                $transactionReceiver = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3";
-
-                $apiSender = $data['from'];
-                $apiReceiver = $data['to'];  // Adresse receveur depuis l'API
-
-                if ($transactionSender === $apiSender && $transactionReceiver === $apiReceiver) {
-                    if (isset($data['confirmed']) && $data['confirmed'] === true) {
-                        // Si la transaction est confirmée, mettre à jour le statut
-                        $transaction->update(['status' => 'Confirmed']);
-                        $this->info("Transaction  has been confirmed.");
-                    } else {
-                        $this->info("Transaction is still pending.");
-                    }
-                } else {
-                    $this->error("Transaction sender or receiver mismatch.");
-                }
-            } else {
-                $this->error("Failed to fetch status for transaction.");
-            }
+        if (empty($transactions)) {
+            $this->info("No transactions found for the specified account.");
+            return;
         }
 
-        $this->info("Transaction status check completed.");
+        foreach ($transactions as $tx) {
+            $this->processTransaction($tx, $receiverAddress);
+        }
+
+        $this->info("Finished checking received transactions.");
+    }
+
+    /**
+     * Process a single transaction and update account balance if conditions are met.
+     *
+     * @param array $tx Transaction data
+     * @param string $receiverAddress The account address being checked
+     */
+    private function processTransaction(array $tx, string $receiverAddress)
+    {
+        $transactionHash = $tx['transaction_id'] ?? null;
+        $fromAddress = $tx['from_address'] ?? null;
+        $toAddress = $tx['to_address'] ?? null;
+        $amount = isset($tx['quant']) ? $tx['quant'] / 1e6 : 0; // Montant en USDT
+        $confirmed = $tx['confirmed'] ?? false;
+        $timestamp = $tx['block_ts'] ?? null;
+
+        // Vérifier si la transaction est reçue par le compte
+        if ($toAddress === $receiverAddress && $confirmed) {
+            $this->info("Received transaction confirmed:");
+            $this->info("  Transaction ID: $transactionHash");
+            $this->info("  From: $fromAddress");
+            $this->info("  Amount: $amount USDT");
+
+            // Rechercher une transaction correspondante dans la base de données
+            $transaction = Transaction::where('merchant_trade_no', $transactionHash)
+                ->where('amount', $amount)
+                ->whereDate('created_at', '=', date('Y-m-d', $timestamp / 1000))
+                ->first();
+
+            if (!$transaction) {
+                $this->error("Transaction not found in the database.");
+                Log::error("Transaction mismatch", [
+                    'transaction_id' => $transactionHash,
+                    'expected_amount' => $amount,
+                    'expected_date' => date('Y-m-d', $timestamp / 1000),
+                ]);
+                return;
+            }
+
+            // Mettre à jour le solde du compte
+            $this->updateAccountBalance($transaction->sender_id, $amount);
+
+            // Marquer la transaction comme confirmée
+            $transaction->update(['status' => 'Confirmed']);
+            $this->info("Transaction {$transactionHash} marked as confirmed.");
+        }
+    }
+
+    /**
+     * Update the balance of the account.
+     *
+     * @param int $clientId Client ID linked to the account
+     * @param float $amount Amount to add to the account balance
+     */
+    private function updateAccountBalance(int $clientId, float $amount)
+    {
+        $account = Account::where('client_id', $clientId)->first();
+
+        if (!$account) {
+            $this->error("Account not found for client ID: {$clientId}");
+            Log::error("Account not found", ['client_id' => $clientId]);
+            return;
+        }
+
+        // Augmenter le solde
+        $account->balance += $amount;
+        $account->save();
+
+        $this->info("Account balance updated for client ID {$clientId}. New balance: {$account->balance} USDT.");
     }
 }

@@ -157,7 +157,8 @@ class HomeController extends Controller
     public function confirm_trans($transaction_id){
         $user = Auth::guard('client')->user();
         $trans = Transaction::where('id', $transaction_id)->get()->first();
-        return view('client.confirm_trans', compact('user', 'trans'));
+        $usdtAccount = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf";
+        return view('client.confirm_trans', compact('user', 'trans', 'usdtAccount'));
     }
 
     public function receive(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
