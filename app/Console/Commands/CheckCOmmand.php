@@ -8,7 +8,7 @@ use App\Models\Account;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class CheckReceivedTransactions extends Command
+class CheckCOmmand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -22,7 +22,7 @@ class CheckReceivedTransactions extends Command
      *
      * @var string
      */
-    protected $description = 'Check the status of received transactions on a specific USDT account and update account balances.';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
