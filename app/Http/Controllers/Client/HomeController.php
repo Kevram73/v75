@@ -157,7 +157,7 @@ class HomeController extends Controller
     public function confirm_trans($transaction_id){
         $user = Auth::guard('client')->user();
         $trans = Transaction::where('id', $transaction_id)->get()->first();
-        $usdtAccount = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf";
+        $usdtAccount = "TSxu5NpBKAsEWipRuxgJwsRLUbG78G9Nf3";
         return view('client.confirm_trans', compact('user', 'trans', 'usdtAccount'));
     }
 
