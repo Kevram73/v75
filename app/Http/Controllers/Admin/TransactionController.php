@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Client;  // Changed from User to Client
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -123,8 +124,7 @@ class TransactionController extends Controller
 
     public function list_deposits(Request $request)
     {
-        $deposits = Transaction::where('sender_id', Auth::guard('client')->user()->id)
-            ->where('type', 'deposit')
+        $deposits = Transaction::where('type', 'deposit')
             ->orderBy('date_sent', 'desc')
             ->get();
 
@@ -133,8 +133,7 @@ class TransactionController extends Controller
 
     public function list_withdrawals(Request $request)
     {
-        $withdrawals = Transaction::where('receiver_id', Auth::guard('client')->user()->id)
-            ->where('type', 'withdrawal')
+        $withdrawals = Transaction::where('type', 'withdrawal')
             ->orderBy('date_sent', 'desc')
             ->get();
 
@@ -146,9 +145,7 @@ class TransactionController extends Controller
      */
     public function get_all_transactions(Request $request)
     {
-        $transactions = Transaction::with(['sender', 'receiver'])
-            ->orderBy('date_sent', 'desc')
-            ->get();
+        $transactions = Transaction::all();
 
         return view('admin.transactions.index', compact('transactions'));
     }

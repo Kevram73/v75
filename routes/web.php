@@ -60,9 +60,9 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     Route::get('clients/disactivate/{id}', [ClientController::class, 'client_disactivate'])->name('client.disactivate');
     Route::get('clients/activate/{id}', [ClientController::class, 'client_activate'])->name('client.activate');
 
-    Route::get('deposit/list', [TransactionController::class, 'send'])->name('deposits');
-    Route::get('withdrawal/list', [TransactionController::class, 'send'])->name('withdrawals');
-    Route::get('transaction/list', [ClientHomeController::class, 'send'])->name('transactions');
+    Route::get('deposit/list', [TransactionController::class, 'list_deposits'])->name('deposits');
+    Route::get('withdrawal/list', [TransactionController::class, 'list_withdrawals'])->name('withdrawals');
+    Route::get('transaction/list', [TransactionController::class, 'get_all_transactions'])->name('transactions');
 });
 
 Route::prefix('client/')->name('client.')->group(function () {

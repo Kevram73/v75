@@ -69,6 +69,12 @@
                                 @csrf
 
                                 <div class="box-body">
+                                    <div class="alert alert-info" style="cursor: pointer;" id="usdtAccount" onclick="copyToClipboard('usdtAccount')">
+                                        <strong>Compte USDT :</strong> <span>{{ $usdtAccount }}</span>
+                                        <small class="text-muted">(Cliquez pour copier)</small>
+                                    </div>
+
+
                                     <div class="form-group row">
                                         <label for="transaction_number" class="col-sm-2 form-label">Numéro de transaction :</label>
                                         <div class="col-sm-10">
@@ -88,6 +94,20 @@
             </section>
         </div>
     </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.textContent || element.innerText;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Compte USDT copié dans le presse-papiers !");
+            }).catch(err => {
+                console.error("Erreur lors de la copie :", err);
+            });
+        }
+    </script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

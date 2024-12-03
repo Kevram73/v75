@@ -40,14 +40,14 @@
                             </thead>
                             @foreach ($deposits as $deposit)
                             @php
-                                $client = app\Models\Client::find($deposit->sender_id);
+                                $client = App\Models\Client::find($deposit->sender_id);
                             @endphp
                             <tbody class="text-fade">
                                 <tr>
                                 <th scope="row"><span style="text-info">{{$loop->index + 1}}</span></th>
                                 <td>{{$client->last_name}} {{$client->first_name}}</td>
                                 <td>{{$deposit->amount}} $</td>
-                                <td>{{$deposit->date_sent->format('d/m/Y à H:i')}}</td>
+                                <td>{{$deposit->date_sent}}</td>
                                 <td>{{$deposit->merchant_trade_no}}</td>
                                 <td>{{$deposit->trx_id}}</td>
 
