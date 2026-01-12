@@ -280,7 +280,12 @@ jobs:
             # 14. Générer la clé d'application si nécessaire
             echo "🔑 Génération de la clé d'application..."
             if ! grep -q "APP_KEY=base64:" .env 2>/dev/null || grep -q "^APP_KEY=$" .env; then
+              # Vider le cache avant de générer la clé
+              $COMPOSE_CMD exec -T app php artisan config:clear || true
+              # Générer la clé
               $COMPOSE_CMD exec -T app php artisan key:generate --force || true
+              # Vider le cache après génération (CRITIQUE!)
+              $COMPOSE_CMD exec -T app php artisan config:clear || true
               echo "✅ Clé d'application générée"
             else
               echo "✅ Clé d'application déjà présente"
@@ -381,7 +386,12 @@ jobs:
               # Réparation 2: Vérifier APP_KEY
               if ! $COMPOSE_CMD exec -T app grep -q "APP_KEY=base64:" .env 2>/dev/null; then
                 echo "Génération de APP_KEY..."
+                # Vider le cache avant
+                $COMPOSE_CMD exec -T app php artisan config:clear || true
+                # Générer la clé
                 $COMPOSE_CMD exec -T app php artisan key:generate --force || true
+                # Vider le cache après (CRITIQUE!)
+                $COMPOSE_CMD exec -T app php artisan config:clear || true
               fi
               
               # Réparation 3: Nettoyer et recréer les caches

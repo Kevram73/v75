@@ -35,8 +35,12 @@ if [ -f "/var/www/vendor/autoload.php" ]; then
         echo "APP_KEY is missing, invalid, or contains duplicates, removing old value and generating new one..."
         # Remove any existing invalid APP_KEY line
         sed -i '/^APP_KEY=/d' /var/www/.env 2>/dev/null || true
+        # Clear config cache before generating (important!)
+        php artisan config:clear 2>/dev/null || true
         # Generate new key
         php artisan key:generate --force 2>&1
+        # Clear config cache again after generating (critical!)
+        php artisan config:clear 2>/dev/null || true
         # Verify it was set correctly
         APP_KEY_VALUE=$(grep "^APP_KEY=" /var/www/.env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]')
         if [ -z "$APP_KEY_VALUE" ] || [[ ! "$APP_KEY_VALUE" =~ ^base64: ]]; then
@@ -50,7 +54,9 @@ if [ -f "/var/www/vendor/autoload.php" ]; then
         if [ "$KEY_LENGTH" -lt 50 ] || [ "$KEY_LENGTH" -gt 200 ]; then
             echo "APP_KEY appears invalid (length: ${KEY_LENGTH} chars, expected 50-100), removing and regenerating..."
             sed -i '/^APP_KEY=/d' /var/www/.env 2>/dev/null || true
+            php artisan config:clear 2>/dev/null || true
             php artisan key:generate --force 2>&1 || true
+            php artisan config:clear 2>/dev/null || true
         else
             echo "APP_KEY is set and appears valid (${KEY_LENGTH} chars)"
         fi

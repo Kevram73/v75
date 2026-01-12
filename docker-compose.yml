@@ -13,7 +13,8 @@ services:
     environment:
       - APP_ENV=${APP_ENV:-local}
       - APP_DEBUG=${APP_DEBUG:-true}
-      - APP_KEY=${APP_KEY:-}
+      # APP_KEY is read from .env file, not from environment variable
+      # If you need to override it, uncomment and set: - APP_KEY=${APP_KEY}
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_DATABASE=v75_db
