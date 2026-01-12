@@ -277,18 +277,45 @@ jobs:
               $COMPOSE_CMD exec -T app composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --ignore-platform-reqs
             }
             
+            # Vérifier que .env est accessible dans le conteneur
+            echo "🔍 Vérification de .env dans le conteneur..."
+            if ! $COMPOSE_CMD exec -T app test -f .env; then
+              echo "❌ ERREUR: .env n'existe pas dans le conteneur!"
+              exit 1
+            fi
+            echo "✅ .env existe dans le conteneur"
+            
             # 14. Générer la clé d'application si nécessaire
             echo "🔑 Génération de la clé d'application..."
-            if ! grep -q "APP_KEY=base64:" .env 2>/dev/null || grep -q "^APP_KEY=$" .env; then
+            # Vérifier APP_KEY dans le conteneur (plus fiable que sur l'hôte)
+            APP_KEY_CHECK=$($COMPOSE_CMD exec -T app grep "^APP_KEY=" .env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]' || echo "")
+            if [ -z "$APP_KEY_CHECK" ] || [ "$APP_KEY_CHECK" = "" ] || [[ ! "$APP_KEY_CHECK" =~ ^base64: ]]; then
+              echo "⚠️  APP_KEY manquante ou invalide, génération..."
               # Vider le cache avant de générer la clé
               $COMPOSE_CMD exec -T app php artisan config:clear || true
+              # Supprimer l'ancienne clé invalide si elle existe
+              $COMPOSE_CMD exec -T app sed -i '/^APP_KEY=/d' .env 2>/dev/null || true
               # Générer la clé
               $COMPOSE_CMD exec -T app php artisan key:generate --force || true
               # Vider le cache après génération (CRITIQUE!)
               $COMPOSE_CMD exec -T app php artisan config:clear || true
-              echo "✅ Clé d'application générée"
+              # Vérifier que la clé a été générée
+              APP_KEY_AFTER=$($COMPOSE_CMD exec -T app grep "^APP_KEY=" .env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]' || echo "")
+              if [[ "$APP_KEY_AFTER" =~ ^base64: ]]; then
+                echo "✅ Clé d'application générée avec succès"
+              else
+                echo "❌ ERREUR: La clé n'a pas été générée correctement!"
+                echo "Tentative de génération manuelle..."
+                # Génération manuelle de secours
+                MANUAL_KEY=$(openssl rand -base64 32 2>/dev/null | tr -d '\n' || echo "")
+                if [ -n "$MANUAL_KEY" ]; then
+                  $COMPOSE_CMD exec -T app sh -c "echo 'APP_KEY=base64:$MANUAL_KEY' >> .env" || true
+                  $COMPOSE_CMD exec -T app php artisan config:clear || true
+                  echo "✅ Clé générée manuellement"
+                fi
+              fi
             else
-              echo "✅ Clé d'application déjà présente"
+              echo "✅ Clé d'application déjà présente et valide"
             fi
             
             # 15. Optimisations Laravel dans le conteneur
@@ -305,6 +332,25 @@ jobs:
             
             # Créer le lien de stockage
             $COMPOSE_CMD exec -T app php artisan storage:link || true
+            
+            # Vérification finale de APP_KEY avant les migrations
+            echo "🔍 Vérification finale de APP_KEY..."
+            FINAL_APP_KEY=$($COMPOSE_CMD exec -T app grep "^APP_KEY=" .env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]' || echo "")
+            if [ -z "$FINAL_APP_KEY" ] || [ "$FINAL_APP_KEY" = "" ] || [[ ! "$FINAL_APP_KEY" =~ ^base64: ]]; then
+              echo "❌ ERREUR CRITIQUE: APP_KEY n'est toujours pas valide après toutes les optimisations!"
+              echo "Tentative de réparation d'urgence..."
+              $COMPOSE_CMD exec -T app php artisan config:clear || true
+              $COMPOSE_CMD exec -T app sed -i '/^APP_KEY=/d' .env 2>/dev/null || true
+              $COMPOSE_CMD exec -T app php artisan key:generate --force || true
+              $COMPOSE_CMD exec -T app php artisan config:clear || true
+              # Vérification après réparation
+              FINAL_APP_KEY_AFTER=$($COMPOSE_CMD exec -T app grep "^APP_KEY=" .env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]' || echo "")
+              if [[ ! "$FINAL_APP_KEY_AFTER" =~ ^base64: ]]; then
+                echo "❌ ERREUR: Impossible de générer APP_KEY. Vérifiez les permissions et la configuration."
+                exit 1
+              fi
+            fi
+            echo "✅ APP_KEY valide: ${FINAL_APP_KEY:0:30}..."
             
             # 16. Exécuter les migrations si nécessaire
             echo "🗄️  Vérification des migrations..."
@@ -384,14 +430,27 @@ jobs:
               fi
               
               # Réparation 2: Vérifier APP_KEY
-              if ! $COMPOSE_CMD exec -T app grep -q "APP_KEY=base64:" .env 2>/dev/null; then
+              APP_KEY_REPAIR=$($COMPOSE_CMD exec -T app grep "^APP_KEY=" .env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]' || echo "")
+              if [ -z "$APP_KEY_REPAIR" ] || [ "$APP_KEY_REPAIR" = "" ] || [[ ! "$APP_KEY_REPAIR" =~ ^base64: ]]; then
                 echo "Génération de APP_KEY..."
                 # Vider le cache avant
                 $COMPOSE_CMD exec -T app php artisan config:clear || true
+                # Supprimer l'ancienne clé invalide
+                $COMPOSE_CMD exec -T app sed -i '/^APP_KEY=/d' .env 2>/dev/null || true
                 # Générer la clé
                 $COMPOSE_CMD exec -T app php artisan key:generate --force || true
                 # Vider le cache après (CRITIQUE!)
                 $COMPOSE_CMD exec -T app php artisan config:clear || true
+                # Vérification
+                APP_KEY_REPAIR_AFTER=$($COMPOSE_CMD exec -T app grep "^APP_KEY=" .env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]' || echo "")
+                if [[ ! "$APP_KEY_REPAIR_AFTER" =~ ^base64: ]]; then
+                  echo "⚠️  Génération artisan échouée, tentative manuelle..."
+                  MANUAL_KEY_REPAIR=$(openssl rand -base64 32 2>/dev/null | tr -d '\n' || echo "")
+                  if [ -n "$MANUAL_KEY_REPAIR" ]; then
+                    $COMPOSE_CMD exec -T app sh -c "echo 'APP_KEY=base64:$MANUAL_KEY_REPAIR' >> .env" || true
+                    $COMPOSE_CMD exec -T app php artisan config:clear || true
+                  fi
+                fi
               fi
               
               # Réparation 3: Nettoyer et recréer les caches
