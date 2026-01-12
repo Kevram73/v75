@@ -1,89 +1,77 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 pro Dashboard')
+@section('title', 'V75 Pro - Mes Dépôts')
+
+@section('page-title', 'MES DÉPÔTS')
+@section('page-subtitle', 'LISTE DE VOS DÉPÔTS')
 
 @section('content')
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-    <div class="container-full">
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="row">
-                <div class="col-12">
-                <div class="box">
-                    <div class="box-body">
-                        <div class="d-md-flex d-block align-items-center justify-content-between">
-                            <h4 class="box-title mb-md-0 mb-20 text-info">Transactions</h4>
-                            <a href="{{route('client.invest_deposit')}}" class="btn btn-info"><i class="fa fa-upload me-10"></i>Faire un dépôt</a>
-
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div class="col-12">
-                <div class="box">
-                    <div class="box-body">
-                        <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead class="thead-light">
-                                @php
-                                    $nb = 0;
-                                @endphp
-                                <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Montant</th>
-                                <th scope="col">Numéro de compte</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Identité du client</th>
-                                <th scope="col">Nature de la transaction</th>
-                                <th scope="col">Statut de la transaction</th>
-                                </tr>
-                            </thead>
-                            @foreach ($deposits as $deposit)
-                            @php
-                                $client = app\Models\Client::find($deposit->sender_id);
-                            @endphp
-                            <tbody class="text-fade">
-                                <tr>
-                                <th scope="row">TRANSACT.<span style="text-info">{{$loop->index + 1}}</span></th>
-                                <td>{{$deposit->amount}} $</td>
-                                <td>{{$account->account_num}}</td>
-                                <td>{{$deposit->created_at->format('d/m/Y à H:i')}}</td>
-                                <td>{{$client->last_name}} {{$client->first_name}}</td>
-                                <td><span class="badge badge-sm badge-danger-light">Dépôt</span></td>
-                                @if($deposit->status == "canceled")
-                                    <td><span class="badge badge-sm badge-danger-light">Annulé</span></td>
-                                @elseif($deposit->status == "En attente")
-                                        <td><span class="badge badge-sm badge-warning-light">En attente</span></td>
-                                        @elseif($deposit->status == "No confirmed")
-                                            <td><span class="badge badge-sm badge-warning-light">Non confirmé</span></td>
-                                @elseif($deposit->status == "confirmed")
-                                            <td><span class="badge badge-sm badge-success-light">Validé</span></td>
-                                @endif
-                                </tr>
-
-                            </tbody>
-                            @endforeach
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                </div>
+<div class="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div class="border-b-2 border-gray-300 p-4 flex items-center justify-between">
+        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-tight">
+            <i class="fas fa-list mr-2"></i>Historique des Dépôts
+        </h3>
+        <a href="{{ route('client.deposit') }}" class="text-xs font-mono bg-green-600 text-white px-4 py-2 hover:bg-green-700">
+            <i class="fas fa-plus mr-2"></i>NOUVEAU DÉPÔT
+        </a>
+    </div>
+    <div class="p-6">
+        @if($deposits->count() > 0)
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Méthode</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($deposits as $deposit)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $loop->index + 1 }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-bold">${{ number_format($deposit->amount, 2) }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $deposit->payment_method ?? 'USDT TRC20' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    @if($deposit->status == 'pending' || $deposit->status == 'PENDING')
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">En attente</span>
+                                    @elseif($deposit->status == 'completed' || $deposit->status == 'COMPLETED')
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Effectué</span>
+                                    @elseif($deposit->status == 'cancelled' || $deposit->status == 'CANCELLED')
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Annulé</span>
+                                    @else
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">{{ $deposit->status }}</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $deposit->created_at->format('d/m/Y H:i') }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="{{ route('client.transactions.show', $deposit->id) }}" class="text-green-600 hover:text-green-900">
+                                        <i class="fas fa-eye"></i> Voir
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-        </section>
-        <!-- /.content -->
-
+            
+            <!-- Pagination -->
+            <div class="mt-6 flex justify-center">
+                {{ $deposits->links() }}
+            </div>
+        @else
+            <div class="text-center py-12">
+                <i class="fas fa-arrow-down text-4xl text-gray-400 mb-4"></i>
+                <h5 class="text-sm font-bold text-gray-900 mb-2">Aucun dépôt</h5>
+                <p class="text-xs text-gray-500 mb-4">Vous n'avez pas encore effectué de dépôt.</p>
+                <a href="{{ route('client.deposit') }}" class="inline-block bg-green-600 text-white px-6 py-2 rounded-md text-xs font-bold hover:bg-green-700">
+                    <i class="fas fa-plus mr-2"></i>Faire un Dépôt
+                </a>
+            </div>
+        @endif
     </div>
-    </div>
-    <!-- /.content-wrapper -->
-
+</div>
 @endsection
-
-@push('datatable')
-    <script src="{{asset('/assets/vendor_components/datatable/datatables.min.js')}}"></script>
-    <script src="{{asset('/src/js/pages/data-table.js')}}"></script>
-
-@endpush

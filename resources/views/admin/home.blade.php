@@ -1,326 +1,134 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
-@section('title', '| V75 pro Admin Dashboard')
+@section('title', 'V75 Pro - Admin Dashboard')
+
+@section('page-title', 'DASHBOARD')
+@section('page-subtitle', 'OVERVIEW')
 
 @section('content')
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" >
-	  <div class="container-full">
-
-		<!-- Main content -->
-		<section class="content">
-			<div class="row">
-				<div class="col-xl-12 col-lg-12">
-					<div class="row">
-						<div class="col-xl-4 col-lg-4 col-12">
-							<div class="box box-body pull-up Sales_Profit">
-								<div class="row">
-									<div class="col-12">
-										<h4 class="hover-primary"><i class="fa fa-fw fa-gg-circle text-primary"></i> Total entrée</h4>
-										<p class="fs-35 fw-600 mb-0">$ {{ $totalDeps }}</p>
-									</div>
-									{{-- <div class=" col-4 text-end" style="position: relative;">
-										<div id="new-leads-chart" style="min-height: 70px;"></div>
-									</div> --}}
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-4 col-lg-4 col-12">
-							<div class="box box-body pull-up Sales_Profit ">
-								<div class="row">
-									<div class="col-12">
-										<h4 class="hover-success"><i class="fa fa-fw fa-gg-circle text-primary"></i> Total reversé</h4>
-										<div class="d-flex">
-											<p class="fs-35 fw-600 mb-0">$ {{ $totalRec }} </p>
-									  		<div class="text-end mt-20 fs-13"></div>
-										</div>
-									</div>
-									{{-- <div class="col-4 text-end" style="position: relative;">
-										<div id="new-leads-chart2" style="min-height: 70px;"></div>
-									</div> --}}
-								</div>
-							</div>
-						</div>
-                        <div class="col-xl-4 col-lg-4 col-12">
-							<div class="box box-body pull-up Sales_Profit ">
-								<div class="row">
-									<div class="col-12 ">
-										<h4 class="hover-success"><i class="fa fa-fw fa-gg-circle text-primary"></i> Total Journaliers</h4>
-										<div class="d-flex">
-											<p class="fs-35 fw-600 mb-0">$ {{$totalTransactionsToday}} </p>
-									  		<div class="text-end mt-20 fs-13"> <i class="fa fa-sort-up text-success me-2"></i> Transactions/24h</div>
-										</div>
-									</div>
-									{{-- <div class="col-4 text-end" style="position: relative;">
-										<div id="new-leads-chart2" style="min-height: 70px;"></div>
-									</div> --}}
-								</div>
-							</div>
-						</div>
-                    </div>
+<div class="space-y-6">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="bg-white border-2 border-gray-300 p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-500 font-mono mb-1">TOTAL ENTRÉES</p>
+                    <p class="text-2xl font-bold text-gray-900">${{ number_format($totalDeps ?? 0, 2) }}</p>
                 </div>
+                <div class="w-12 h-12 bg-gray-800 flex items-center justify-center">
+                    <i class="fas fa-arrow-down text-white text-sm"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white border-2 border-gray-300 p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-500 font-mono mb-1">TOTAL REVERSÉ</p>
+                    <p class="text-2xl font-bold text-gray-900">${{ number_format($totalRec ?? 0, 2) }}</p>
+                </div>
+                <div class="w-12 h-12 bg-gray-800 flex items-center justify-center">
+                    <i class="fas fa-arrow-up text-white text-sm"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white border-2 border-gray-300 p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-500 font-mono mb-1">TOTAL JOURNALIERS</p>
+                    <p class="text-2xl font-bold text-gray-900">${{ number_format($totalTransactionsToday ?? 0, 2) }}</p>
+                </div>
+                <div class="w-12 h-12 bg-gray-800 flex items-center justify-center">
+                    <i class="fas fa-chart-line text-white text-sm"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white border-2 border-gray-300 p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-500 font-mono mb-1">CLIENTS ACTIFS</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ count($activeClients ?? []) }}</p>
+                </div>
+                <div class="w-12 h-12 bg-gray-800 flex items-center justify-center">
+                    <i class="fas fa-users text-white text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Tables -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Derniers clients -->
+        <div class="bg-white border-2 border-gray-300">
+            <div class="border-b-2 border-gray-300 p-3">
+                <h3 class="text-sm font-bold text-gray-900 uppercase">DERNIERS CLIENTS</h3>
+            </div>
+            <div class="p-4">
+                <table class="w-full text-xs">
+                    <thead>
+                        <tr class="border-b border-gray-300">
+                            <th class="text-left py-2 font-mono text-gray-500">NOM</th>
+                            <th class="text-left py-2 font-mono text-gray-500">EMAIL</th>
+                            <th class="text-left py-2 font-mono text-gray-500">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($activeClients ?? [] as $client)
+                            <tr class="border-b border-gray-200">
+                                <td class="py-2 text-gray-900">{{ $client->first_name }} {{ $client->last_name }}</td>
+                                <td class="py-2 text-gray-500 font-mono">{{ $client->email }}</td>
+                                <td class="py-2">
+                                    @if($client->is_active)
+                                        <span class="font-mono text-xs bg-gray-200 px-2 py-1">ACTIF</span>
+                                    @else
+                                        <span class="font-mono text-xs bg-gray-300 px-2 py-1">INACTIF</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="py-4 text-center text-gray-500 font-mono text-xs">AUCUN CLIENT</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-                <div class="col-xl-8 col-lg-12">
-					<div class="row">
-						{{-- <div class="col-xl-12">
-							<div class="card chart_card">
-								<div class="card-body">
-									<div class="box-header px-0">
-										<h4>Courbe v75 en temps réel</h4>
-										<div class="box-controls pull-right">
-											<ul class="nav nav-pills nav-pills-sm" role="tablist">
-												<li class="nav-item">
-													<a class="nav-link py-2 px-4 b-0" data-bs-toggle="tab" href="#">
-														<span class="nav-text base-font">Month</span>
-													</a>
-												</li>
-												<li class="nav-item">
-													<a class="nav-link py-2 px-4 b-0" data-bs-toggle="tab" href="#">
-														<span class="nav-text base-font">Week</span>
-													</a>
-												</li>
-												<li class="nav-item">
-													<a class="nav-link py-2 px-4 b-0 active" data-bs-toggle="tab" href="#">
-														<span class="nav-text base-font">Day</span>
-													</a>
-												</li>
-											</ul>
-										</div>
-									</div>
-
-									<div dir="ltr">
-										<div class="mt-3 chartjs-chart" style="height: 320px;">
-											<div id="apexcharts-line">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div> --}}
-
-                        <div class="col-12">
-                            <div class="box">
-                            <div class="box-header with-border">
-                              <h2 class="box-title text-info" style="font-weight: 500">Derniers clients inscrits</h2>
-                              <p class="mb-0 box-subtitle">Exporter les données de la table vers : CSV, Excel, PDF, Imprimer ou Copier</p>
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body">
-                                <div class="table-responsive">
-                                  <table id="example" class="table text-fade table-bordered table-hover display nowrap margin-top-10 w-p100">
-                                    <thead>
-                                        <tr class="text-dark">
-                                            <th>Nom</th>
-                                            <th>Prénom(s)</th>
-                                            <th>email</th>
-                                            <th>Téléphone</th>
-                                            <th>Etat</th>
-                                            {{-- <th>Action</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                      @foreach ($activeClients as $activeClient)
-                                          <tr>
-                                              <td>{{$activeClient->last_name}}</td>
-                                              <td>{{$activeClient->first_name}}</td>
-
-                                              <td>{{$activeClient->email}}</td>
-                                              <td>{{$activeClient->phone_number}}</td>
-                                              <td>
-                                              @if ($activeClient->is_active == TRUE)
-                                                  <button class="btn btn-primary btn-md mt-5"><i class="fa fa-check"></i> Actif</button>
-                                              @else
-                                                  <button class="btn btn-danger btn-md mt-5"><i class="fa fa-check"></i> Inactif</button>
-                                              @endif
-                                              </td>
-                                              {{-- <td>
-                                                  <a href="">
-                                                      <button class="btn btn-info-light ms-1" id="request" title="Editer le client">Modifier</button>
-                                                  </a>
-                                                  <a href="">
-                                                      <button class="btn btn-danger-light ms-1" id="exit" title="Supprimer le client">Supprimer</button>
-                                                  </a>
-
-                                              </td> --}}
-                                          </tr>
-                                      @endforeach
-                                    </tbody>
-                                </table>
+        <!-- Dernières transactions -->
+        <div class="bg-white border-2 border-gray-300">
+            <div class="border-b-2 border-gray-300 p-3">
+                <h3 class="text-sm font-bold text-gray-900 uppercase">DERNIÈRES TRANSACTIONS</h3>
+            </div>
+            <div class="p-4">
+                <div class="space-y-3">
+                    @forelse ($lastTransactions ?? [] as $transaction)
+                        <div class="border-l-2 border-gray-800 pl-3 py-2">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-xs font-bold text-gray-900">{{ $transaction->type }}</p>
+                                    <p class="text-xs text-gray-500 font-mono">{{ $transaction->created_at->format('d/m/Y H:i') }}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold text-gray-900">${{ number_format($transaction->amount, 2) }}</p>
                                 </div>
                             </div>
-                            <!-- /.box-body -->
-                              </div>
-                          <!-- /.box -->
                         </div>
-
-						{{-- <div class="col-xl-6 col-lg-6 col-sm-6">
-							<div class="box pull-up">
-							  	<div class="box-body media-list">
-							  		<div>
-										<div class="d-flex align-items-center justify-content-between">
-											<div class="d-flex align-items-center">
-												<div class="bg-primary h-40 w-40 product_icon text-center">
-												  	<p class="mb-0 fs-20 w-40 fw-600"><i class="fa fa-home" aria-hidden="true"></i></p>
-												</div>
-												<div class="d-flex flex-column fw-500 mx-10">
-													<a href="#" class="text-dark hover-primary mb-1  fs-17">Dream House</a>
-												</div>
-											</div>
-											<div>
-												<div class="d-flex flex-column font-weight-500">
-													<a href="#" class="text-fade text-end hover-primary mb-1 fs-13">9 Product</a>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="media mt-10 p-0">
-										<div class="media-body m-0">
-											<span class="text-fade">Portfolio</span>
-											<span class="text-fade float-right">Profit</span>
-											<br>
-											<div>
-												<p class="fs-30 mb-0">$545,569
-										  		<span class="float-right fs-13 mt-10"><i class="fa fa-sort-up text-success me-1"></i> 2.5%</span></p>
-											</div>
-										</div>
-									</div>
-							  	</div>
-							</div>
-						</div> --}}
-
-						{{-- <div class="col-xl-6 col-lg-6 col-sm-6">
-							<div class="box pull-up">
-							  	<div class="box-body media-list">
-									<div>
-										<div class="d-flex align-items-center justify-content-between">
-											<div class="d-flex align-items-center">
-												<div class="bg-primary h-40 w-40 product_icon text-center">
-												  	<p class="mb-0 fs-20 w-40 fw-600"><i class="fa fa-fw fa-plane"></i></p>
-												</div>
-												<div class="d-flex flex-column fw-500 mx-10">
-													<a href="#" class="text-dark hover-primary mb-1  fs-17">My Travel</a>
-												</div>
-											</div>
-											<div>
-												<div class="d-flex flex-column font-weight-500">
-													<a href="#" class="text-fade text-end hover-primary mb-1 fs-13">9 Product</a>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="media mt-10 p-0">
-										<div class="media-body m-0">
-											<span class="text-fade">Portfolio</span>
-											<span class="text-fade float-right">Profit</span>
-											<br>
-											<div>
-												<p class="fs-30 mb-0">$345,155
-										  		<span class="float-right fs-13 mt-10"><i class="fa fa-sort-up text-success me-1"></i> 4.5%</span></p>
-											</div>
-										</div>
-									</div>
-							  	</div>
-							</div>
-						</div> --}}
-					</div>
-				</div>
-
-
-				<div class="col-xl-4 col-12 ">
-					<div class="box side_product">
-						<div class="box-body">
-
-
-							<div class="box no-shadow mb-0 px-1">
-								<div class="box-header no-border">
-									<h4 class="box-title fw-500">Dernières transactions</h4>
-									<div class="box-controls pull-right d-md-flex d-none">
-									  <a href="#">Tout</a>
-									</div>
-								</div>
-							</div>
-
-
-							<div class="px-10">
-                                @foreach ($lastTransactions as $lastTransaction)
-
-                                    <div class="box mb-15 pull-up">
-                                        <div class="box-body ">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center">
-                                                    @if($lastTransaction->receiver_id == 0)
-                                                    <div class="bg-primary h-50 w-50 l-h-50 rounded text-center">
-                                                        <p class="mb-0 fs-20 fw-600">$</p>
-                                                    </div>
-                                                    @else
-                                                        <div class="bg-danger h-50 w-50 l-h-50 rounded text-center">
-                                                            <p class="mb-0 fs-20 fw-600">$</p>
-                                                        </div>
-                                                    @endif
-                                                    <div class="d-flex flex-column font-weight-500 mx-10">
-                                                        @if($lastTransaction->receiver_id == 0)
-                                                            <a href="#" class="text-dark hover-primary mb-1  fs-17">{{$lastTransaction->type}}</a>
-                                                            <span class="text-success">{{ $lastTransaction->date_sent }}</span>
-                                                        @else
-                                                            <a href="#" class="text-dark hover-primary mb-1  fs-17">{{$lastTransaction->type}}</a>
-                                                            <span class="text-danger">{{ $lastTransaction->date_sent }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div>
-                                                    <div class="d-flex flex-column font-weight-500">
-                                                        <a href="#" class="text-dark text-end hover-primary mb-1 fs-16">{{$lastTransaction->amount}} $</a>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-
-								{{-- <div class="box mb-15 pull-up">
-									<div class="box-body">
-										<div class="d-flex align-items-center justify-content-between">
-											<div class="d-flex align-items-center">
-												<div class="bg-primary h-50 w-50 l-h-50 rounded text-center">
-												  	<p class="mb-0 fs-20 fw-600">G</p>
-												</div>
-												<div class="d-flex flex-column font-weight-500 mx-10">
-													<a href="#" class="text-dark hover-primary mb-1  fs-16">Alphabet</a>
-													<span class="text-fade">Alpha</span>
-												</div>
-											</div>
-											<div>
-												<div class="d-flex flex-column font-weight-500">
-													<a href="#" class="text-dark text-end hover-primary mb-1 fs-16">$2865</a>
-													<span class="text-success">+80.11(9.10%)</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div> --}}
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</section>
-		<!-- /.content -->
-
-	  </div>
-  </div>
-  <!-- /.content-wrapper -->
+                    @empty
+                        <div class="text-center py-4 text-gray-500 font-mono text-xs">AUCUNE TRANSACTION</div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
 @push('home')
     <script src="{{asset('/assets/vendor_components/datatable/datatables.min.js')}}"></script>
     <script src="{{asset('/src/js/pages/data-table.js')}}"></script>
-
 @endpush

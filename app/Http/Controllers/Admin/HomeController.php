@@ -9,7 +9,6 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,38 +22,44 @@ class HomeController extends Controller
         // Number of active clients
         $activeClientsCount = Client::where('is_active', true)->count();
 
-        // 3 last active clients
+        // Last active clients
         $activeClients = Client::where('is_active', true)->limit(5)->get();
 
-        $totalDeps = 0;
-        $depTrans = Transaction::where('receiver_id', 0)->where('trx_id', 2)->get();
-        foreach($depTrans as $trans){
-            $totalDeps += $trans->amount;
-        }
+        // Total deposits (investments)
+        $totalDeps = Transaction::where('type', 'INVESTMENT')
+            ->where('status', 'COMPLETED')
+            ->sum('amount');
 
-        $totalRec = 0;
-        $recTrans = Transaction::where('sender_id', 0)->where('trx_id', 2)->get();
-        foreach ($recTrans as $rectran){
-            $totalRec += $rectran->amount;
-        }
+        // Total withdrawals
+        $totalRec = Transaction::where('type', 'WITHDRAWAL')
+            ->where('status', 'COMPLETED')
+            ->sum('amount');
 
         // List of active accounts
         $activeAccounts = Account::where('is_active', true)->get();
 
-        // List of inactive accounts and their balance
+        // List of inactive accounts
         $inactiveAccounts = Account::where('is_active', false)->get();
 
         // Total transactions of the day
-        $totalTransactionsToday = Transaction::whereDate('created_at', today())->where('trx_id', 2)->sum('amount');
+        $totalTransactionsToday = Transaction::whereDate('created_at', today())
+            ->where('status', 'COMPLETED')
+            ->sum('amount');
 
-        // 7 lasts transactions
-        $lastTransactions = Transaction::orderByDesc('created_at')->limit(5)->get();
+        // Last transactions
+        $lastTransactions = Transaction::with('client')
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get();
 
-        // Transactions grouped by month and their total amounts
+        // Transactions grouped by month
         $transactionsByMonth = Transaction::select(
-            DB::raw('sum(amount) as total'),
+            DB::raw('SUM(amount) as total'),
             DB::raw('MONTH(created_at) as month')
-        )->groupBy('month')->get();
+        )
+        ->where('status', 'COMPLETED')
+        ->groupBy('month')
+        ->get();
 
         return view('admin.home', compact(
             'activeClientsCount',
@@ -73,81 +78,83 @@ class HomeController extends Controller
         return view('admin.profile');
     }
 
-    public function stats(){
-        $total_clients = Client::where('deleted_at', null)->get();
-        $retrieve_all = 0;
-        foreach($total_clients as $avoir){
-            $retrieve_all += $avoir->total_solde();
-        }
-        // Number of active clients
+    public function stats()
+    {
+        // Get investment service for stats
+        $investmentService = app(\App\Services\InvestmentService::class);
+        $commissionService = app(\App\Services\CommissionService::class);
+
+        // Client statistics
         $activeClientsCount = Client::where('is_active', true)->count();
+        $clientsCount = Client::whereNull('deleted_at')->count();
+        $adminsCount = Admin::whereNull('deleted_at')->count();
 
-        // Total clients number
-        $clientsCount = Client::where('deleted_at', null)->count();
+        // Investment statistics
+        $investmentStats = $investmentService->getAdminInvestmentStats();
+        
+        // Commission statistics
+        $commissionStats = $commissionService->getAdminCommissionStats();
 
-        // Total admin number of clients
-        $adminsCount = Admin::where('deleted_at', null)->count();
+        // Transaction statistics
+        $totalDeps = Transaction::where('type', 'INVESTMENT')
+            ->where('status', 'COMPLETED')
+            ->sum('amount');
+        
+        $totalRec = Transaction::where('type', 'WITHDRAWAL')
+            ->where('status', 'COMPLETED')
+            ->sum('amount');
 
-        // Total balance of all clients (assuming clients have a 'balance' attribute)
-        $totalDeps = 0;
-        $depTrans = Transaction::where('receiver_id', 0)->where('trx_id', 2)->get();
-        foreach($depTrans as $trans){
-            $totalDeps += $trans->amount;
-        }
-        $countdeps = count($depTrans);
+        $countdeps = Transaction::where('type', 'INVESTMENT')
+            ->where('status', 'COMPLETED')
+            ->count();
+        
+        $countrecs = Transaction::where('type', 'WITHDRAWAL')
+            ->where('status', 'COMPLETED')
+            ->count();
 
-
-        $totalRec = 0;
-        $recTrans = Transaction::where('sender_id', 0)->where('trx_id', 2)->get();
-        foreach ($recTrans as $rectran){
-            $totalRec += $rectran->amount;
-        }
-        $countrecs = count($recTrans);
-        // List of active accounts
+        // Account statistics
         $activeAccounts = Account::where('is_active', true)->get();
-        $actives = count($activeAccounts);
-
-        // List of inactive accounts and their balance
         $inactiveAccounts = Account::where('is_active', false)->get();
-        $inactives = count($inactiveAccounts);
+        $actives = $activeAccounts->count();
+        $inactives = $inactiveAccounts->count();
 
-        // Total transactions of the day
-        $totalTransactionsToday = Transaction::whereDate('created_at', today())->where('trx_id', 2)->sum('amount');
+        // Transaction statistics
+        $totalTransactionsToday = Transaction::whereDate('created_at', today())
+            ->where('status', 'COMPLETED')
+            ->sum('amount');
 
-        // Total transactions v75
-        $totalTransactions = Transaction::where('trx_id', 2)->sum('amount');
-
-        // all transactions
+        $totalTransactions = Transaction::where('status', 'COMPLETED')->sum('amount');
         $numberOfTransactions = Transaction::count();
 
-        // Transactions grouped by month and their total amounts
+        // Transactions grouped by month
         $transactionsByMonth = Transaction::select(
-            DB::raw('sum(amount) as total'),
+            DB::raw('SUM(amount) as total'),
             DB::raw('MONTH(created_at) as month')
-        )->groupBy('month')->get();
+        )
+        ->where('status', 'COMPLETED')
+        ->groupBy('month')
+        ->get();
 
-        // Transactions grouped by month and their total amounts
-        $lastMonthTotalTransactions = Transaction::select(
-            DB::raw('sum(amount) as total'),
-            DB::raw('MONTH(created_at) as month')
-        )->groupBy('month')->limit(1)->get();
+        // Total balance of all clients
+        $retrieve_all = Account::sum('balance');
 
         return view('admin.stats', compact(
             'activeClientsCount',
+            'clientsCount',
+            'adminsCount',
+            'investmentStats',
+            'commissionStats',
             'totalDeps',
             'totalRec',
             'countdeps',
             'countrecs',
             'activeAccounts',
             'inactiveAccounts',
+            'actives',
+            'inactives',
             'totalTransactionsToday',
             'transactionsByMonth',
             'numberOfTransactions',
-            'clientsCount',
-            'adminsCount',
-            'lastMonthTotalTransactions',
-            'inactives',
-            'actives',
             'totalTransactions',
             'retrieve_all'
         ));

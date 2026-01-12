@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 use App\Models\Client;
 use App\Models\Account;
+use App\Models\Admin;
 
 class AuthController extends Controller
 {
@@ -63,6 +64,16 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
+        // Vérifier d'abord si c'est un admin
+        $admin = Admin::where('email', $credentials['email'])->first();
+        if ($admin && Hash::check($credentials['password'], $admin->password)) {
+            // Authentifier l'admin et rediriger vers l'interface admin
+            Auth::guard('admin')->login($admin);
+            $request->session()->regenerate();
+            return redirect()->intended('admin/home');
+        }
+
+        // Sinon, essayer l'authentification client normale
         if (Auth::guard('client')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('client/dashboard');
@@ -94,7 +105,13 @@ class AuthController extends Controller
 
     public function auth_logout(Request $request)
     {
-        Auth::guard('client')->logout();
+        // Déconnecter le guard approprié
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();
+        } else {
+            Auth::guard('client')->logout();
+        }
+        
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/client/login');

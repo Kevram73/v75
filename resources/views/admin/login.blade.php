@@ -1,94 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="{{asset('/images/V75.png')}}" style="border-radius: 100%;">
-
-    <title>v75 pro - Log in</title>
-
-	<!-- Vendors Style-->
-	<link rel="stylesheet" href="../src/css/vendors_css.css">
-
-	<!-- Style-->
-	<link rel="stylesheet" href="../src/css/style.css">
-	<link rel="stylesheet" href="../src/css/skin_color.css">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>V75 Pro Admin - Connexion</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', 'JetBrains Mono', monospace;
+        }
+        body {
+            font-size: 13px;
+        }
+        code, .mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+    </style>
 </head>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 p-10 bg-white rounded-lg shadow-lg border border-gray-200">
+            <div>
+                <div class="flex justify-center">
+                    <div class="w-16 h-16 bg-gray-800 border-2 border-gray-900 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-gray-300 text-2xl"></i>
+                    </div>
+                </div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Connexion Admin
+                </h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Veuillez vous connecter pour continuer
+                </p>
+            </div>
+            <form class="mt-8 space-y-6" action="{{ route('admin.auth_login') }}" method="POST">
+                @csrf
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="email-address" class="sr-only">Adresse email</label>
+                        <input id="email-address" name="email" type="email" autocomplete="email" required
+                               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+                               placeholder="Adresse email" value="{{ old('email') }}">
+                    </div>
+                    <div>
+                        <label for="password" class="sr-only">Mot de passe</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required
+                               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+                               placeholder="Mot de passe">
+                    </div>
+                </div>
 
-<body class="hold-transition dark-skin theme-primary bg-img" style="background-image: url(../../../images/box-svg-3.png); background-repeat:repeat; background-size:contain; background-color:rgb(26, 0, 81); padding-top:10%; padding-bottom:90%" data-overlay-light="8">
-    {{-- rgba(38, 95, 0, 0.55) --}}
+                @if ($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        <strong class="font-bold">Erreur!</strong>
+                        <span class="block sm:inline">{{ $errors->first() }}</span>
+                    </div>
+                @endif
 
-	<div class="container h-p100">
-		<div class="row align-items-center justify-content-md-center h-p100">
-
-			<div class="col-12">
-				<div class="row justify-content-center g-0">
-					<div class="col-lg-5 col-md-5 col-12">
-						<div class="bg-gray-800 rounded10 shadow-lg">
-
-                            <div class="content-top-agile p-20 pb-0">
-                                <br><br><a href="#" title="v75 pro">
-                                    <img src="../../../images/V75.png" class="" alt="" style="width: 20%; height: 30%; border-radius:100%; margin-bottom:2%; border:1px solid rgba(0, 59, 0, 0.24);"/>
-                                </a>
-                                <h2 class="text-prmary fw-600" style="color: white;"><br>Connexion | Admin</h2>
-								<p class="mb-0 text-primary">Veuillez vous connecter !</p>
-
-							</div>
-							<div class="p-30">
-								<form method="POST" action="{{ route('admin.auth_login') }}" enctype="multipart/form-data">
-                                    @csrf
-									<div class="form-group">
-										<div class="input-group mb-3">
-											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(255, 255, 255, 0.11); color:rgb(255, 255, 255);"><i class="text-fade ti-user"></i></span>
-											<input type="email" name="email" class="form-control ps-15 bg-transparent {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="email" required style="border: 1px solid rgba(255, 255, 255, 0.089); color:rgb(255, 255, 255);" autofocus>
-
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="input-group mb-3">
-											<span class="input-group-text bg-transparent" style="border: 1px solid rgba(255, 255, 255, 0.11); color:rgb(255, 255, 255);"><i class="text-fade ti-lock"></i></span>
-											<input type="password" name="password" class="form-control ps-15 bg-transparent {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Mot de passe" required style="border: 1px solid rgba(255, 255, 255, 0.089); color:rgb(255, 255, 255);">
-
-										</div>
-									</div>
-									  <div class="row">
-
-										<!-- /.col -->
-										<div class="col-12 text-center">
-										  <button type="submit" class="btn btn-prmary w-p100 mt-10" style="background-color:white; color: rgb(0, 128, 0);">Se connecter</button>
-										</div>
-										<!-- /.col -->
-									  </div>
-								</form><br>
-								{{-- <div class="text-center">
-									<br><p class="mt-15 mb-0 text-fade">Vous n'avez pas encore de compte ? <a href="auth_register.html" class="text-primary ms-5">Créer</a></p>
-								</div> --}}
-
-								{{-- <div class="text-center">
-								  <p class="mt-20 text-fade">- Sign With -</p>
-								  <p class="gap-items-2 mb-0">
-									  <a class="waves-effect waves-circle btn btn-social-icon btn-circle btn-facebook-light" href="#"><i class="fa fa-facebook"></i></a>
-									  <a class="waves-effect waves-circle btn btn-social-icon btn-circle btn-twitter-light" href="#"><i class="fa fa-twitter"></i></a>
-									  <a class="waves-effect waves-circle btn btn-social-icon btn-circle btn-instagram-light" href="#"><i class="fa fa-instagram"></i></a>
-									</p>
-								</div> --}}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<!-- Vendor JS -->
-	<script src="../src/js/vendors.min.js"></script>
-	<script src="../src/js/pages/chat-popup.js"></script>
-    <script src="../../../assets/icons/feather-icons/feather.min.js"></script>
-
+                <div>
+                    <button type="submit"
+                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <i class="fas fa-sign-in-alt h-5 w-5 text-green-500 group-hover:text-green-400"></i>
+                        </span>
+                        Se connecter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

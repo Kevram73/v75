@@ -23,12 +23,85 @@ class Client extends Authenticatable
         'is_active',
         'fellow_code',
         'father_fellow',
-        'password'
+        'password',
+        'referrer_id',
+        'is_commissioned',
+        'is_active_referral'
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+        'is_commissioned' => 'boolean',
+        'is_active_referral' => 'boolean',
     ];
 
     public function account()
     {
         return Account::where('client_id', $this->id)->get()->first();
+    }
+
+    /**
+     * Get the wallet for the client.
+     */
+    public function wallet()
+    {
+        return $this->hasOne(Account::class, 'client_id');
+    }
+
+    /**
+     * Get the referrer that referred this client.
+     */
+    public function referrer()
+    {
+        return $this->belongsTo(Client::class, 'referrer_id');
+    }
+
+    /**
+     * Get all clients referred by this client.
+     */
+    public function referrals()
+    {
+        return $this->hasMany(Client::class, 'referrer_id');
+    }
+
+    /**
+     * Get all investments for the client.
+     */
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
+
+    /**
+     * Get all commissions earned by this client.
+     */
+    public function commissions()
+    {
+        return $this->hasMany(Commission::class, 'referrer_id');
+    }
+
+    /**
+     * Get all multi-level commissions earned by this client.
+     */
+    public function multiLevelCommissions()
+    {
+        return $this->hasMany(MultiLevelCommission::class, 'referrer_id');
+    }
+
+    /**
+     * Get all team rewards for this client.
+     */
+    public function teamRewards()
+    {
+        return $this->hasMany(TeamReward::class);
+    }
+
+    /**
+     * Get the withdrawal password for this client.
+     */
+    public function withdrawalPassword()
+    {
+        return $this->hasOne(WithdrawalPassword::class);
     }
 
     public function deposits(){
@@ -125,5 +198,37 @@ class Client extends Authenticatable
         $created = $this->created_at;
         $days = $created->diffInDays($now);
         return $this->capital * 0.033 * $days;
+    }
+
+    /**
+     * Check if the client is active.
+     */
+    public function isActive(): bool
+    {
+        return $this->is_active ?? false;
+    }
+
+    /**
+     * Get count of active direct referrals (referrals with active investments).
+     */
+    public function getActiveDirectsCount(): int
+    {
+        return $this->referrals()
+            ->where('is_active', true)
+            ->whereHas('investments', function ($query) {
+                $query->where('status', 'ACTIVE');
+            })
+            ->count();
+    }
+
+    /**
+     * Get count of completed transfers (outgoing).
+     */
+    public function getTransfersCount(): int
+    {
+        return $this->transactions()
+            ->where('type', 'TRANSFER_OUT')
+            ->where('status', 'COMPLETED')
+            ->count();
     }
 }

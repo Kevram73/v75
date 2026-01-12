@@ -1,0 +1,495 @@
+/* ============================================
+   V75 Pro - Pages Modernes
+   Design System Complet
+   ============================================ */
+
+:root {
+    --page-primary: #10b981;
+    --page-primary-light: #34d399;
+    --page-primary-dark: #059669;
+    --page-bg: #f9fafb;
+    --page-card: #ffffff;
+    --page-text: #111827;
+    --page-text-light: #6b7280;
+}
+
+/* ============================================
+   DASHBOARD STATS CARDS
+   ============================================ */
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--page-primary) 0%, var(--page-primary-light) 100%);
+}
+
+.stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.2);
+}
+
+.stat-card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--page-primary-light) 0%, var(--page-primary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.stat-card-title {
+    color: var(--page-text-light);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-card-value {
+    color: var(--page-primary-dark);
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+.stat-card-subtitle {
+    color: var(--page-text-light);
+    font-size: 0.85rem;
+    margin-top: 8px;
+}
+
+/* ============================================
+   WELCOME BANNER
+   ============================================ */
+
+.welcome-banner {
+    background: linear-gradient(135deg, var(--page-primary) 0%, var(--page-primary-dark) 100%);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.welcome-banner h3 {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-banner p {
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    font-size: 1rem;
+}
+
+/* ============================================
+   CONTENT CARDS
+   ============================================ */
+
+.content-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.1);
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+}
+
+.content-card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: rgba(16, 185, 129, 0.2);
+}
+
+.content-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0fdf4;
+}
+
+.content-card-title {
+    color: var(--page-primary-dark);
+    font-weight: 700;
+    font-size: 1.35rem;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.content-card-body {
+    color: var(--page-text);
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--page-primary) 0%, var(--page-primary-dark) 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    text-decoration: none;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    color: #ffffff;
+}
+
+.action-btn i {
+    font-size: 0.9rem;
+}
+
+.action-btn-secondary {
+    background: #ffffff;
+    color: var(--page-primary-dark);
+    border: 2px solid var(--page-primary);
+}
+
+.action-btn-secondary:hover {
+    background: var(--page-primary);
+    color: #ffffff;
+}
+
+/* ============================================
+   INFO BOXES
+   ============================================ */
+
+.info-box {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+    border-left: 4px solid var(--page-primary);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.info-box-success {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+    border-left-color: var(--page-primary);
+}
+
+.info-box-warning {
+    background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
+    border-left-color: #f59e0b;
+}
+
+.info-box-danger {
+    background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+    border-left-color: #ef4444;
+}
+
+.info-box-title {
+    color: var(--page-primary-dark);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.info-box-text {
+    color: var(--page-text);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* ============================================
+   EMPTY STATES
+   ============================================ */
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--page-primary-light) 0%, var(--page-primary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 3rem;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
+}
+
+.empty-state-title {
+    color: var(--page-text);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+
+.empty-state-text {
+    color: var(--page-text-light);
+    font-size: 1rem;
+    margin-bottom: 24px;
+}
+
+/* ============================================
+   RESPONSIVE GRID
+   ============================================ */
+
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+@media (max-width: 768px) {
+    .responsive-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   ACTION CARDS
+   ============================================ */
+
+.action-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--page-text);
+    border: 2px solid rgba(16, 185, 129, 0.1);
+    transition: all 0.3s ease;
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+.action-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--page-primary) 0%, var(--page-primary-light) 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.2);
+    border-color: var(--page-primary);
+    text-decoration: none;
+    color: var(--page-text);
+}
+
+.action-card:hover::before {
+    transform: scaleX(1);
+}
+
+.action-card-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--page-primary-light) 0%, var(--page-primary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 2rem;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+    transition: all 0.3s ease;
+}
+
+.action-card:hover .action-card-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+}
+
+.action-card h4 {
+    color: var(--page-primary-dark);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.action-card p {
+    color: var(--page-text-light);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   COMMISSION LEVELS
+   ============================================ */
+
+.commission-level {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.1);
+    transition: all 0.3s ease;
+}
+
+.commission-level:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.15);
+}
+
+.commission-level-header {
+    background: linear-gradient(135deg, var(--page-primary) 0%, var(--page-primary-dark) 100%);
+    color: #ffffff;
+    padding: 25px;
+    text-align: center;
+}
+
+.commission-level-header h3 {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.commission-percentage {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.commission-level-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.commission-level-body p {
+    color: var(--page-text-light);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+
+.mb-24 {
+    margin-bottom: 24px;
+}
+
+.mt-24 {
+    margin-top: 24px;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.stat-card {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+.action-card {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.action-card:nth-child(1) { animation-delay: 0.1s; }
+.action-card:nth-child(2) { animation-delay: 0.15s; }
+.action-card:nth-child(3) { animation-delay: 0.2s; }
+.action-card:nth-child(4) { animation-delay: 0.25s; }
+.action-card:nth-child(5) { animation-delay: 0.3s; }
+.action-card:nth-child(6) { animation-delay: 0.35s; }
+

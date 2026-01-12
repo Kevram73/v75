@@ -21,8 +21,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::all();
-        return view('transactions.index', compact('transactions'));
+        $transactions = Transaction::with('client')->orderByDesc('created_at')->paginate(20);
+        return view('admin.transactions.index', compact('transactions'));
     }
 
     /**
@@ -30,8 +30,8 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        $clients = Client::all();  // Changed from User to Client
-        return view('transactions.create', compact('clients'));  // Changed variable name
+        $clients = Client::all();
+        return view('admin.transactions.create', compact('clients'));
     }
 
     /**
@@ -41,9 +41,7 @@ class TransactionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'amount' => 'required|numeric',
-            'date_sent' => 'required|date',
-            'sender_id' => 'required|exists:clients,id',  // Changed from users to clients
-            'receiver_id' => 'required|exists:clients,id',  // Changed from users to clients
+            'client_id' => 'required|exists:clients,id',
             'type' => 'required|string|max:255'
         ]);
 
@@ -53,100 +51,96 @@ class TransactionController extends Controller
 
         $transaction = new Transaction([
             'amount' => $request->amount,
-            'date_sent' => $request->date_sent,
-            'sender_id' => $request->sender_id,
-            'receiver_id' => $request->receiver_id,
-            'type' => $request->type
+            'client_id' => $request->client_id,
+            'type' => $request->type,
+            'status' => 'PENDING'
         ]);
 
         $transaction->save();
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction created successfully!');
+        return redirect()->route('admin.transactions.index')->with('success', 'Transaction créée avec succès!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(string|int $id)
     {
-        $transaction = Transaction::with(['sender', 'receiver'])->find($id);
-        return view('transactions.show', compact('transaction'));
+        $transaction = Transaction::with('client')->findOrFail((int) $id);
+        return view('admin.transactions.show', compact('transaction'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit(string|int $id)
     {
-        $transaction = Transaction::find($id);
-        $clients = Client::all();  // Changed from User to Client
-        return view('transactions.edit', compact('transaction', 'clients'));  // Changed variable name
+        $transaction = Transaction::findOrFail((int) $id);
+        $clients = Client::all();
+        return view('admin.transactions.edit', compact('transaction', 'clients'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, string|int $id)
     {
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric',
-            'date_sent' => 'required|date',
-            'sender_id' => 'required|exists:clients,id',  // Changed from users to clients
-            'receiver_id' => 'required|exists:clients,id',  // Changed from users to clients
-            'type' => 'required|string|max:255'
+            'status' => 'required|string|in:PENDING,COMPLETED,CANCELLED',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $transaction = Transaction::find($id);
+        $transaction = Transaction::findOrFail((int) $id);
+        
+        // Si on valide un dépôt ou investissement, créditer le compte
+        if (($transaction->type === 'DEPOSIT' || $transaction->type === 'INVESTMENT') && 
+            $request->status === 'COMPLETED' && 
+            $transaction->status !== 'COMPLETED') {
+            
+            $client = $transaction->client;
+            if ($client && $client->wallet) {
+                $client->wallet->addBalance($transaction->amount);
+            }
+        }
+        
         $transaction->update([
-            'amount' => $request->amount,
-            'date_sent' => $request->date_sent,
-            'sender_id' => $request->sender_id,
-            'receiver_id' => $request->receiver_id,
-            'type' => $request->type
+            'status' => $request->status
         ]);
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction successfully updated!');
+        return redirect()->route('admin.transactions.show', $transaction->id)->with('success', 'Statut de la transaction mis à jour avec succès!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string|int $id)
     {
-        $transaction = Transaction::find($id);
+        $transaction = Transaction::find((int) $id);
         $transaction->delete();
-        return redirect()->route('transactions.index')->with('success', 'Transaction successfully deleted!');
+        return redirect()->route('admin.transactions.index')->with('success', 'Transaction supprimée avec succès!');
     }
 
     public function list_deposits(Request $request)
     {
-        $deposits = Transaction::where('type', 'deposit')
-            ->orderBy('date_sent', 'desc')
-            ->get();
+        $deposits = Transaction::with('client')
+            ->whereIn('type', ['DEPOSIT', 'INVESTMENT'])
+            ->orderByDesc('created_at')
+            ->paginate(20);
 
         return view('admin.deposits', compact('deposits'));
     }
 
     public function list_withdrawals(Request $request)
     {
-        $withdrawals = Transaction::where('type', 'withdrawal')
-            ->orderBy('date_sent', 'desc')
-            ->get();
+        $withdrawals = Transaction::with('client')
+            ->where('type', 'WITHDRAWAL')
+            ->orderByDesc('created_at')
+            ->paginate(20);
 
         return view('admin.withdrawals', compact('withdrawals'));
     }
 
-    /**
-     * Get all transactions in the system.
-     */
-    public function get_all_transactions(Request $request)
-    {
-        $transactions = Transaction::all();
-
-        return view('admin.transactions.index', compact('transactions'));
-    }
 }

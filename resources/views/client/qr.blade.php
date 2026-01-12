@@ -1,53 +1,27 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 pro Dashboard')
+@section('title', 'V75 Pro - QR Code')
+
+@section('page-title', 'QR CODE')
+@section('page-subtitle', 'SCANNER LE QR CODE')
 
 @section('content')
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-    <div class="container-full">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-          <div class="d-flex align-items-center">
-              <div class="me-auto">
-                  <h4 class="page-title">Dashboard</h4>
-                  <div class="d-inline-block align-items-center">
-                      <nav>
-                          <ol class="breadcrumb">
-                              <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                              <li class="breadcrumb-item" aria-current="page">Comptes</li>
-                              <li class="breadcrumb-item active" aria-current="page">QR Code pour dépot</li>
-                          </ol>
-                      </nav>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <!-- Main content -->
-      <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="header-title">Informations de compte</h4>
-                        
-                            <div class="text-center">
-                                <img src="{{ $qrLink }}" alt="Payment QR Code" class="img-fluid" width="500px" height="500px">
-                            </div>
-                    </div> <!-- end card-body -->
-                </div> <!-- end card-->
-
+<div class="bg-white border-2 border-gray-300">
+    <div class="border-b-2 border-gray-300 p-3">
+        <h3 class="text-sm font-bold text-gray-900 uppercase">QR CODE</h3>
+    </div>
+    <div class="p-8 text-center">
+        @if(isset($qrCode))
+            <div class="mb-4">
+                {!! $qrCode !!}
             </div>
-
-        </div>
-      </section>
-      <!-- /.content -->
-
+            <p class="text-xs text-gray-500 font-mono">Scannez ce code pour effectuer le paiement</p>
+        @else
+            <p class="text-xs text-gray-500 font-mono">AUCUN QR CODE DISPONIBLE</p>
+        @endif
     </div>
-    </div>
-    <!-- /.content-wrapper -->
+</div>
 
 @endsection
 

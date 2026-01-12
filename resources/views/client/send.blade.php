@@ -1,110 +1,33 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 pro Dashboard')
+@section('title', 'V75 Pro - Envoyer')
+
+@section('page-title', 'ENVOYER')
+@section('page-subtitle', 'ENVOYER DES FONDS')
 
 @section('content')
-    <style>
-        .hidden {
-            visibility: hidden;
-        }
-    </style>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <div class="container-full">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="d-flex align-items-center">
-                    <div class="me-auto">
-                        <h4 class="page-title">Dashboard</h4>
-                        <div class="d-inline-block align-items-center">
-                            <nav>
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                                    <li class="breadcrumb-item" aria-current="page">Compte</li>
-                                    <li class="breadcrumb-item active" aria-current="page">Investment</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Main content -->
-            <section class="content">
-                <div class="row">
-                    <div class="col-xl-12 col-12">
-                        <div class="box">
-                            <div class="box-header">
-                                <h3 class="box-title text-info" style="font-weight: 500;">Transactions</h3>
-                                <div class="box-controls pull-right">
-                                    <button class="btn btn-xs btn-info">Dépôt d'argent</button>
-                                </div>
-                            </div>
-
-                            <div class="box-body">
-                                <p class="text-gray-600">Veuillez renseigner votre numero/adresse de compte et le montant de la transaction !</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title text-info">Faire un dépôt</h4>
-                                <a href="{{ route('client.account') }}" class="btn btn-xs btn-info"><i class="fa fa-edit"></i> Mon compte</a>
-                                @if (Session::has('error'))
-                                    <span style="color: red;">{{ Session::get('error') }}</span>
-                                @endif
-                                @if (Session::has('success'))
-                                    <span style="color: green;">{{ Session::get('success') }}</span>
-                                @endif
-                            </div>
-                            <!-- /.box-header -->
-                            <!-- form start -->
-                            <form class="form-horizontal form-element" action="{{ route('client.register_deposit') }}" method="post">
-                                @csrf
-
-
-                                <div class="box-body">
-                                    <div class="form-group row">
-                                        <label for="price_amount" class="col-sm-2 form-label">Montant :</label>
-                                        <div class="col-sm-10">
-                                            <input type="number" min="10" class="form-control" id="price_amount" name="price_amount" placeholder="Saisissez le montant">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="price_currency" class="col-sm-2 form-label">Devise de paiement :</label>
-                                        <div class="col-sm-10">
-                                            <select name="price_currency" id="price_currency" class="form-control">
-
-                                                <option value="usdt">USDT</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="box-footer">
-                                        <button type="reset" class="btn btn-danger ms-1">Annuler</button>
-                                        <button type="submit" class="btn btn-info ms-1" id="submit_button">Investir</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- /.content -->
-        </div>
+<div class="bg-white border-2 border-gray-300">
+    <div class="border-b-2 border-gray-300 p-3">
+        <h3 class="text-sm font-bold text-gray-900 uppercase">ENVOYER DES FONDS</h3>
     </div>
-    <!-- /.content-wrapper -->
+    <div class="p-4">
+        <form method="POST" action="{{ route('client.transfer.process') }}">
+            @csrf
+            <div class="mb-4">
+                <label class="block text-xs font-mono text-gray-500 mb-2">DESTINATAIRE (EMAIL)</label>
+                <input type="email" name="email" required class="w-full px-3 py-2 border-2 border-gray-300 text-xs font-mono focus:border-gray-800">
+            </div>
+            <div class="mb-4">
+                <label class="block text-xs font-mono text-gray-500 mb-2">MONTANT</label>
+                <input type="number" name="amount" step="0.01" required class="w-full px-3 py-2 border-2 border-gray-300 text-xs font-mono focus:border-gray-800">
+            </div>
+            <button type="submit" class="text-xs font-mono bg-gray-800 text-white px-4 py-2 hover:bg-gray-900">
+                ENVOYER
+            </button>
+        </form>
+    </div>
+</div>
 
 @endsection
 
-@push('editor')
-    <script src="{{asset('/assets/vendor_components/ckeditor/ckeditor.js')}}"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
-    <script src="{{asset('/assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js')}}"></script>
-
-    <script src="{{asset('/src/js/pages/editor.js')}}"></script>
-@endpush

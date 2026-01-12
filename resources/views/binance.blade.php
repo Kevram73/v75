@@ -1,16 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>Binance Pay</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>V75 Pro - Binance</title>
+    <link rel="icon" href="{{asset('/images/V75.png')}}" style="border-radius: 100%;">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', 'JetBrains Mono', monospace;
+        }
+        body {
+            font-size: 13px;
+        }
+    </style>
 </head>
-<body>
-    <form action="/binance-pay/create-order" method="POST">
-        @csrf
-        <label for="amount">Amount:</label>
-        <input type="text" id="amount" name="amount"><br><br>
-        <label for="currency">Currency:</label>
-        <input type="text" id="currency" name="currency" value="USDT"><br><br>
-        <button type="submit">Pay with Binance Pay</button>
-    </form>
+<body class="bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <div class="bg-white border-2 border-gray-300 p-6">
+            <h1 class="text-2xl font-bold text-gray-900 mb-4 uppercase">BINANCE</h1>
+            <div class="text-xs text-gray-700">
+                <p>Informations sur Binance</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+

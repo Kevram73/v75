@@ -1,88 +1,60 @@
 @extends('layouts.app')
 
-@section('title', '| V75 pro Admin Dashboard')
+@section('title', 'V75 Pro - Demandes de Retrait')
+
+@section('page-title', 'DEMANDES RETRAIT')
+@section('page-subtitle', 'GESTION DES DEMANDES')
 
 @section('content')
 
-    <div class="content-wrapper">
-    <div class="container-full">
-      <div class="content-header">
-          <div class="d-flex align-items-center">
-              <div class="me-auto">
-                  <h4 class="page-title">Dashboard</h4>
-                  <div class="d-inline-block align-items-center">
-                      <nav>
-                          <ol class="breadcrumb">
-                              <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                              <li class="breadcrumb-item" aria-current="page">Gestion des demandes</li>
-                              <li class="breadcrumb-item active" aria-current="page">Liste des demandes de retrait</li>
-                          </ol>
-                      </nav>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <section class="content">
-        <div class="row">
-          <div class="col-12">
-              <div class="box">
-              <div class="box-header with-border">
-                <h2 class="box-title text-info" style="font-weight: 500">Liste des demandes de retrait</h2>
-              </div>
-              <div class="box-body">
-                  <div class="table-responsive">
-                    <table id="example" class="table text-fade table-bordered table-hover display nowrap margin-top-10 w-p100">
-                      <thead>
-                          <tr class="text-dark">
-                              <th>ID</th>
-                              <th>Montant</th>
-                              <th>Devise</th>
-                              <th>Compte de destination</th>
-                              <th>Statut</th>
-                              <th>Date de demande</th>
-                              <th>Actions</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($retrieveRequests as $request)
-                            <tr>
-                                <td class="text-dark">{{ $request->id }}</td>
-                                <td>{{ $request->price_amount }}</td>
-                                <td>{{ $request->price_currency }}</td>
-                                <td>{{ $request->to_account }}</td>
-                                <td>{{ $request->status }}</td>
-                                <td>{{ $request->created_at->format('d/m/Y') }}</td>
-                                <td>
-                                    <form action="{{ route('update_request_status', $request->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="text" name="status" value="{{ $request->status }}" class="form-control">
-                                        <button class="btn btn-info-light ms-1" type="submit" title="Mettre à jour le statut">Modifier le statut</button>
-                                    </form>
-
-                                    <form action="{{ route('delete_request', $request->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger-light ms-1" type="submit" title="Supprimer la demande">Supprimer</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                      </tbody>
-                  </table>
-                  </div>
-              </div>
-              </div>
-          </div>
-        </div>
-      </section>
+<div class="bg-white border-2 border-gray-300">
+    <div class="border-b-2 border-gray-300 p-3">
+        <h3 class="text-sm font-bold text-gray-900 uppercase">DEMANDES DE RETRAIT</h3>
     </div>
+    <div class="p-4">
+        <table class="w-full text-xs">
+            <thead>
+                <tr class="border-b-2 border-gray-300">
+                    <th class="text-left py-2 font-mono text-gray-500">#</th>
+                    <th class="text-left py-2 font-mono text-gray-500">CLIENT</th>
+                    <th class="text-left py-2 font-mono text-gray-500">MONTANT</th>
+                    <th class="text-left py-2 font-mono text-gray-500">DATE</th>
+                    <th class="text-left py-2 font-mono text-gray-500">STATUS</th>
+                    <th class="text-left py-2 font-mono text-gray-500">ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($requests ?? [] as $request)
+                    <tr class="border-b border-gray-200">
+                        <td class="py-2 text-gray-900 font-mono">{{ $loop->index + 1 }}</td>
+                        <td class="py-2 text-gray-900">{{ $request->client->first_name ?? 'N/A' }} {{ $request->client->last_name ?? '' }}</td>
+                        <td class="py-2 text-gray-900 font-bold">${{ number_format($request->amount ?? 0, 2) }}</td>
+                        <td class="py-2 text-gray-500 font-mono">{{ $request->created_at->format('d/m/Y H:i') }}</td>
+                        <td class="py-2">
+                            @if($request->status == 'pending')
+                                <span class="font-mono text-xs bg-gray-200 px-2 py-1">EN ATTENTE</span>
+                            @elseif($request->status == 'approved')
+                                <span class="font-mono text-xs bg-gray-200 px-2 py-1">APPROUVÉ</span>
+                            @else
+                                <span class="font-mono text-xs bg-gray-200 px-2 py-1">{{ strtoupper($request->status) }}</span>
+                            @endif
+                        </td>
+                        <td class="py-2">
+                            <div class="flex space-x-2">
+                                <a href="{{ route('admin.retrieve_requests.approve', $request->id) }}" class="text-xs font-mono bg-gray-200 px-2 py-1 hover:bg-gray-300">APPROUVER</a>
+                                <a href="{{ route('admin.retrieve_requests.reject', $request->id) }}" class="text-xs font-mono bg-gray-200 px-2 py-1 hover:bg-gray-300">REJETER</a>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="py-4 text-center text-gray-500 font-mono text-xs">AUCUNE DEMANDE</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
+</div>
 
 @endsection
 
-@push('datatable')
-    <script src="{{asset('/assets/vendor_components/datatable/datatables.min.js')}}"></script>
-    <script src="{{asset('/src/js/pages/data-table.js')}}"></script>
-@endpush

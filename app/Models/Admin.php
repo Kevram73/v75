@@ -12,8 +12,23 @@ class Admin extends Authenticatable
 
     protected $guard = 'admin';
 
-    protected $fillable = ['username', 'email', 'usdt_account'];
+    protected $fillable = [
+        'username',
+        'email',
+        'password',
+        'usdt_account',
+    ];
 
-    protected $hidden = ['password'];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
 }

@@ -24,6 +24,24 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{route('client.investments.index')}}">
+                      <i data-feather="trending-up"></i>
+                      <span>Mes Investissements</span>
+                      <span class="pull-right-container">
+                      </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('client.commissions.index')}}">
+                      <i data-feather="dollar-sign"></i>
+                      <span>Mes Commissions</span>
+                      <span class="pull-right-container">
+                      </span>
+                    </a>
+                </li>
+
 				<li class="treeview">
 				  <a href="#">
 					<i data-feather="minus-circle"></i>

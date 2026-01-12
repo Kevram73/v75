@@ -21,7 +21,26 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::orderByDesc('created_at')->get();
+        // Get all messages from clients
+        // Include messages with client_id OR sender_id (for backward compatibility)
+        $messages = Message::where(function($query) {
+                $query->whereNotNull('client_id')
+                      ->orWhereNotNull('sender_id');
+            })
+            ->whereNull('deleted_at') // Exclude soft deleted messages
+            ->orderByDesc('created_at')
+            ->paginate(20);
+            
+        // Load clients - for messages without client_id, use sender_id
+        $messages->load('client');
+        
+        // For messages without client_id, manually load client using sender_id
+        foreach ($messages as $message) {
+            if (!$message->client && $message->sender_id) {
+                $message->setRelation('client', \App\Models\Client::find($message->sender_id));
+            }
+        }
+        
         return view('admin.messages.index', compact('messages'));
     }
 
@@ -30,7 +49,7 @@ class MessageController extends Controller
      */
     public function create()
     {
-        return view('messages.create');
+        return view('admin.messages.create');
     }
 
     /**
@@ -39,10 +58,8 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'object' => 'required|string|max:255',
-            'content' => 'required|string',
-            // 'date_sent' => 'required|date',
-            // 'sender_id' => 'required|integer'
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -50,69 +67,63 @@ class MessageController extends Controller
         }
 
         $message = new Message([
-            'object' => $request->object,
-            'content' => $request->content,
-            'date_sent' => Carbon::now(),
-            'sender_id' => Auth::guard('admin')->user()->id
+            'subject' => $request->subject,
+            'message' => $request->message,
+            'client_id' => $request->client_id ?? null,
         ]);
 
         $message->save();
 
-        return redirect()->route('messages.index')->with('success', 'Message created successfully!');
+        return redirect()->route('admin.messages.index')->with('success', 'Message créé avec succès!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(string|int $id)
     {
-        $message = Message::find($id);
-        return view('messages.show', compact('message'));
+        $message = Message::with('client')->findOrFail((int) $id);
+        return view('admin.messages.show', compact('message'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit(string|int $id)
     {
-        $message = Message::find($id);
-        return view('messages.edit', compact('message'));
+        $message = Message::findOrFail((int) $id);
+        return view('admin.messages.edit', compact('message'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, string|int $id)
     {
         $validator = Validator::make($request->all(), [
-            'object' => 'required|string|max:255',
-            'content' => 'required|string',
-            // 'date_sent' => 'required|date',
-            // 'sender_id' => 'required|integer'
+            'response' => 'required|string',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $message = Message::find($id);
+        $message = Message::findOrFail((int) $id);
         $message->update([
-            'object' => $request->object,
-            'content' => $request->content,
-            'date_sent' => Carbon::now(),
-            'sender_id' => Auth::guard('admin')->user()->id
+            'response' => $request->response,
+            'response_date' => now(),
         ]);
 
-        return redirect()->route('messages.index')->with('success', 'Message successfully updated!');
+        return redirect()->route('admin.messages.show', $message->id)->with('success', 'Réponse envoyée avec succès!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string|int $id)
     {
-        $message = Message::find($id);
+        $message = Message::findOrFail((int) $id);
         $message->delete();
-        return redirect()->route('messages.index')->with('success', 'Message successfully deleted!');
+        return redirect()->route('admin.messages.index')->with('success', 'Message supprimé avec succès!');
     }
 }

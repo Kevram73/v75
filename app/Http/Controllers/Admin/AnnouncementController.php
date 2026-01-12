@@ -21,7 +21,7 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        $announcements = Announcement::where('deleted_at', null)->orderByDesc('updated_at')->get();
+        $announcements = Announcement::where('deleted_at', null)->orderByDesc('updated_at')->paginate(20);
         return view('admin.announcements.index', compact('announcements'));
     }
 
@@ -40,7 +40,8 @@ class AnnouncementController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'content' => 'required|string'
+            'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -52,12 +53,16 @@ class AnnouncementController extends Controller
             'content' => $request->content
         ]);
 
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('announcements', 'public');
+            $announcement->image = $imagePath;
+        }
+
         $announcement->publish_date = Carbon::now();
-        // $announcement->admin_id = Auth::admin()->id;
         $announcement->admin_id = Auth::guard('admin')->user()->id;
         $announcement->save();
 
-        return redirect()->route('admin.announcements.index')->with('success', 'Announcement created successfully!');
+        return redirect()->route('admin.announcements.index')->with('success', 'Annonce créée avec succès!');
     }
 
     /**
@@ -65,8 +70,8 @@ class AnnouncementController extends Controller
      */
     public function show(int $id)
     {
-        $announcement = Announcement::find($id);
-        return view('announcements.show', compact('announcement'));
+        $announcement = Announcement::findOrFail($id);
+        return view('admin.announcements.show', compact('announcement'));
     }
 
     /**
@@ -74,8 +79,8 @@ class AnnouncementController extends Controller
      */
     public function edit(int $id)
     {
-        $announcement = Announcement::find($id);
-        return view('announcements.edit', compact('announcement'));
+        $announcement = Announcement::findOrFail($id);
+        return view('admin.announcements.edit', compact('announcement'));
     }
 
     /**
@@ -86,21 +91,33 @@ class AnnouncementController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $announcement = Announcement::find($id);
-        $announcement->update([
+        $announcement = Announcement::findOrFail($id);
+        
+        $data = [
             'title' => $request->title,
             'content' => $request->content,
             'publish_date' => Carbon::now(),
             'admin_id' => Auth::guard('admin')->user()->id
-        ]);
+        ];
+        
+        if ($request->hasFile('image')) {
+            if ($announcement->image) {
+                \Storage::disk('public')->delete($announcement->image);
+            }
+            $imagePath = $request->file('image')->store('announcements', 'public');
+            $data['image'] = $imagePath;
+        }
+        
+        $announcement->update($data);
 
-        return redirect()->route('admin.announcements.index')->with('success', 'Announcement successfully updated!');
+        return redirect()->route('admin.announcements.index')->with('success', 'Annonce mise à jour avec succès!');
     }
 
     /**

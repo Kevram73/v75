@@ -1,110 +1,91 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 pro Dashboard')
+@section('title', 'V75 Pro - Contacter le Support')
+
+@section('page-title', 'MESSAGERIE')
+@section('page-subtitle', 'ÉCRIRE AU SUPPORT')
 
 @section('content')
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <div class="container-full">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="d-flex align-items-center">
-                <div class="me-auto">
-                    <h4 class="page-title">Dashboard</h4>
-                    <div class="d-inline-block align-items-center">
-                        <nav>
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                                <li class="breadcrumb-item" aria-current="page">Service client</li>
-                                <li class="breadcrumb-item active" aria-current="page">Envoi</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-
-            </div>
+<div class="max-w-3xl mx-auto">
+    <div class="bg-white border-2 border-gray-300">
+        <div class="border-b-2 border-gray-300 p-4">
+            <h3 class="text-sm font-bold text-gray-900 uppercase">
+                <i class="fas fa-envelope mr-2"></i>ÉCRIRE À V75 PRO
+            </h3>
         </div>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="row">
-
-                <div class="col-xl-12 col-12">
-                    <div class="box">
-                      <div class="box-header">
-                        <h3 class="box-title text-info" style="font-weight: 500;">Messages</h3>
-                        <div class="box-controls pull-right">
-                          <button class="btn btn-xs btn-primary">Redaction</button>
-                        </div>
-                      </div>
-
-                      <div class="box-body">
-                        <p class="text-gray-600">Veuillez remplir les informations ci-dessous (<b><em>Objet</em></b> et <b><em>Contenu</em></b> du message) !</p>
-                      </div>
+        <div class="p-4 md:p-6">
+            @if(session('success'))
+                <div class="mb-4 bg-green-50 border-l-4 border-green-600 p-3 border border-green-200">
+                    <div class="flex items-center">
+                        <span class="text-green-600 mr-2 font-mono">[OK]</span>
+                        <p class="text-xs font-medium text-gray-900">{{ session('success') }}</p>
                     </div>
                 </div>
+            @endif
 
-            <div class="col-12">
-
-				<form class="form-horizontal form-element" method="POST" action="{{ route('client.message_send') }}" enctype="multipart/form-data">
-                    @csrf
-                    <div class="box">
-                        <div class="box-header">
-                            <h5 class="box-title" style="font-weight: 600">Objet :<br></h5>
-                        </div>
-                        <div class="box-body">
-                            <div class="col-12">
-                                <div class="input-group">
-                                <div class="input-group-addon" style="border: 1px solid rgb(225, 225, 225);">
-                                    <i class="fa fa-pencil"></i>
-                                </div>
-                                <input type="text" name="object" placeholder="Objet du message" class="form-control" required style="border: 1px solid rgb(225, 225, 225); color:black;">
-                                </div>
-                                <!-- /.input group -->
-                            </div>
-                        </div>
-
-                        <div class="box-header">
-                            <h5 class="box-title" style="font-weight: 600">Contenu :<br></h5>
-                        </div>
-                        <div class="box-body">
-                            <div class="col-12">
-                                <div class="input-group">
-                                    <textarea placeholder="Rédigez votre contenu ici" name="content" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required rows="10" cols="80"></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <br><div class="box-footer">
-                            <button type="reset" class="btn btn-danger-light ms-1">Annuler</button>
-                            <button type="submit" class="btn btn-info-light ms-1">Envoyer</button>
-                        </div>
+            @if(session('error'))
+                <div class="mb-4 bg-red-50 border-l-4 border-red-600 p-3 border border-red-200">
+                    <div class="flex items-center">
+                        <span class="text-red-600 mr-2 font-mono">[ERR]</span>
+                        <p class="text-xs font-medium text-gray-900">{{ session('error') }}</p>
                     </div>
-                </form>
-                <!-- /.box -->
+                </div>
+            @endif
 
-
-                <!-- /.box -->
-
-            </div>
-            <!-- /.col-->
-            </div>
-            <!-- ./row -->
-        </section>
-        <!-- /.content -->
+            <form method="POST" action="{{ route('client.message_send') }}">
+                @csrf
+                <div class="mb-4">
+                    <label for="subject" class="block text-xs font-medium text-gray-700 mb-2">
+                        <i class="fas fa-tag mr-1"></i>SUJET
+                    </label>
+                    <input type="text" 
+                           id="subject"
+                           name="subject" 
+                           value="{{ old('subject') }}"
+                           required 
+                           class="w-full px-3 py-2 border-2 border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-gray-800 @error('subject') border-red-500 @enderror"
+                           placeholder="Sujet de votre message">
+                    @error('subject')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="block text-xs font-medium text-gray-700 mb-2">
+                        <i class="fas fa-comment-alt mr-1"></i>MESSAGE
+                    </label>
+                    <textarea id="message"
+                              name="message" 
+                              rows="10" 
+                              required 
+                              class="w-full px-3 py-2 border-2 border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-gray-800 @error('message') border-red-500 @enderror"
+                              placeholder="Écrivez votre message ici...">{{ old('message') }}</textarea>
+                    @error('message')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="flex items-center justify-between">
+                    <a href="{{ route('client.response') }}" class="text-xs font-medium text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-arrow-left mr-1"></i>Voir mes messages
+                    </a>
+                    <button type="submit" class="text-xs font-medium bg-gray-800 text-white px-6 py-2 hover:bg-gray-900 transition-colors">
+                        <i class="fas fa-paper-plane mr-2"></i>ENVOYER
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-    <!-- /.content-wrapper -->
+    
+    <div class="mt-6 bg-blue-50 border-l-4 border-blue-400 p-4">
+        <div class="flex items-start">
+            <i class="fas fa-info-circle text-blue-600 mr-2 mt-1"></i>
+            <div class="text-xs text-gray-700">
+                <p class="font-semibold mb-1">Information:</p>
+                <p>Votre message sera traité par notre équipe de support. Vous recevrez une réponse dans la section "RÉPONSES" de votre compte.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
-
-@push('editor')
-    <script src="{{asset('/assets/vendor_components/ckeditor/ckeditor.js')}}"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
-    <script src="{{asset('/assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js')}}"></script>
-
-    <script src="{{asset('/src/js/pages/editor.js')}}"></script>
-
-@endpush
 

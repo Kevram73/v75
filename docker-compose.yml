@@ -1,0 +1,70 @@
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: v75_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./storage:/var/www/storage
+    environment:
+      - APP_ENV=${APP_ENV:-local}
+      - APP_DEBUG=${APP_DEBUG:-true}
+      - APP_KEY=${APP_KEY:-}
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=v75_db
+      - DB_USERNAME=v75_user
+      - DB_PASSWORD=v75_password
+    depends_on:
+      mysql:
+        condition: service_healthy
+    # Healthcheck temporarily disabled to avoid restart issues
+    # healthcheck:
+    #   test: ["CMD", "/usr/local/bin/php-fpm-healthcheck"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 40s
+    ports:
+      - "6700:6700"
+    mem_limit: 2g
+    memswap_limit: 2g
+    cpus: 2.0
+    networks:
+      - v75_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: v75_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-v75_db}
+      MYSQL_USER: ${DB_USERNAME:-v75_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-v75_password}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_password}
+    ports:
+      - "3010:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    mem_limit: 1.5g
+    memswap_limit: 1.5g
+    cpus: 1.0
+    networks:
+      - v75_network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  v75_network:
+    driver: bridge

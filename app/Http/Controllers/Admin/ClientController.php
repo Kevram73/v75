@@ -19,7 +19,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::where('is_active', true)->get();
+        $clients = Client::where('is_active', true)->orderByDesc('created_at')->paginate(20);
         return view('admin.clients.index', compact('clients'));
     }
 
@@ -46,82 +46,84 @@ class ClientController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
-            'is_active' => 'required|boolean'
+            'email' => 'required|email|unique:clients,email',
+            'password' => 'required|string|min:8',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $client = new Client([
+        $client = Client::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'phone_number' => $request->phone_number,
-            'is_active' => $request->is_active
+            'email' => $request->email,
+            'password' => \Hash::make($request->password),
+            'is_active' => true
         ]);
 
-        $client->save();
-
-        return redirect()->route('clients.index')->with('success', 'Client created successfully!');
+        return redirect()->route('admin.clients.index')->with('success', 'Client créé avec succès!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(string|int $id)
     {
-        $client = Client::with(['account', 'transactions'])->find($id);
-        return view('clients.show', compact('client'));
+        $client = Client::with(['wallet', 'transactions'])->findOrFail((int) $id);
+        return view('admin.clients.show', compact('client'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit(string|int $id)
     {
-        $client = Client::find($id);
-        return view('clients.edit', compact('client'));
+        $client = Client::findOrFail((int) $id);
+        return view('admin.clients.edit', compact('client'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, string|int $id)
     {
+        $id = (int) $id;
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
-            'is_active' => 'required|boolean'
+            'email' => 'required|email|unique:clients,email,' . $id,
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $client = Client::find($id);
+        $client = Client::findOrFail($id);
         $client->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'phone_number' => $request->phone_number,
-            'is_active' => $request->is_active
+            'email' => $request->email,
         ]);
 
-        return redirect()->route('clients.index')->with('success', 'Client successfully updated!');
+        return redirect()->route('admin.clients.index')->with('success', 'Client mis à jour avec succès!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string|int $id)
     {
-        $client = Client::find($id);
+        $client = Client::find((int) $id);
         $client->delete();
         return redirect()->route('admin.clients.index')->with('success', 'Client successfully deleted !');
     }
 
-    public function on_off(int $id){
-        $client = Client::find($id);
+    public function on_off(string|int $id){
+        $client = Client::find((int) $id);
         $client->is_active = !$client->is_active;
         $client->save();
         return redirect()->route('admin.clients.index')->with('success', 'Client status changed');
@@ -130,22 +132,22 @@ class ClientController extends Controller
 
     public function clients_disabled()
     {
-        $clients = Client::where('is_active', 0)->get();
+        $clients = Client::where('is_active', 0)->orderByDesc('created_at')->paginate(20);
         return view('admin.clients.indexDisabled', compact('clients'));
     }
 
-    public function client_disactivate(Request $request, int $id)
+    public function client_disactivate(Request $request, string|int $id)
     {
-        $client_user = Client::find($id);
+        $client_user = Client::find((int) $id);
         $client_user->is_active = 0;
         $client_user->save();
 
         return back()->with('success', "Votre client a bien été désactivé");
     }
 
-    public function client_activate(Request $request, int $id)
+    public function client_activate(Request $request, string|int $id)
     {
-        $client_user = Client::find($id);
+        $client_user = Client::find((int) $id);
         $client_user->is_active = 1;
         $client_user->save();
 

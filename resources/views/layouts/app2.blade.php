@@ -1,171 +1,244 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{asset('/images/V75.png')}}" style="border-radius: 100%;">
+    <title>@yield('title', 'V75 Pro Dashboard')</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts - Monospace for engineering style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', 'JetBrains Mono', monospace;
+        }
+        body {
+            font-size: 13px;
+        }
+        code, .mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+        @media (max-width: 768px) {
+            .sidebar-mobile {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            .sidebar-mobile.open {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="md:hidden fixed top-4 left-4 z-50 bg-gray-800 text-white p-2 rounded-md">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Mobile Overlay -->
+        <div id="mobileOverlay" class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+        
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed md:static w-56 bg-gray-800 border-r-2 border-gray-900 flex flex-col h-full z-40 sidebar-mobile md:translate-x-0">
+            <!-- Logo -->
+            <div class="px-4 py-3 border-b-2 border-gray-900">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gray-900 border border-gray-700 flex items-center justify-center rounded-full overflow-hidden">
+                        <img src="{{asset('/images/V75.png')}}" alt="V75" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h1 class="text-sm font-bold text-gray-100 uppercase tracking-tight">V75 Pro</h1>
+                        <p class="text-xs text-gray-400 font-mono">CLIENT</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="flex-1 px-2 py-2 space-y-0.5 overflow-y-auto">
+                <a href="{{ route('client.dashboard') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.dashboard') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-home w-4 mr-2"></i>
+                    <span>DASHBOARD</span>
+                </a>
+                
+                <a href="{{ route('client.account') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.account') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-user w-4 mr-2"></i>
+                    <span>MON COMPTE</span>
+                </a>
+                
+                <a href="{{ route('client.investments.index') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.investments.*') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-chart-line w-4 mr-2"></i>
+                    <span>INVESTISSEMENTS</span>
+                </a>
+                
+                <a href="{{ route('client.commissions.index') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.commissions.*') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-hand-holding-usd w-4 mr-2"></i>
+                    <span>COMMISSIONS</span>
+                </a>
+                
+                <a href="{{ route('client.deposits') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.deposits') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-arrow-down w-4 mr-2"></i>
+                    <span>DÉPÔTS</span>
+                </a>
+                
+                <a href="{{ route('client.withdrawals') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.withdrawals') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-arrow-up w-4 mr-2"></i>
+                    <span>RETRAITS</span>
+                </a>
+                
+                <a href="{{ route('client.transfer') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.transfer*') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-exchange-alt w-4 mr-2"></i>
+                    <span>TRANSFERT</span>
+                </a>
+                
+                <a href="{{ route('client.transactions') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.transactions') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-history w-4 mr-2"></i>
+                    <span>HISTORIQUE</span>
+                </a>
+                
+                <a href="{{ route('client.profile') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.profile') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-user-edit w-4 mr-2"></i>
+                    <span>PROFIL</span>
+                </a>
+                
+                <a href="{{ route('client.message.create') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.message.*') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-envelope w-4 mr-2"></i>
+                    <span>MESSAGERIE</span>
+                </a>
+                
+                <a href="{{ route('client.response') }}" class="flex items-center px-3 py-2 text-xs font-medium {{ request()->routeIs('client.response') ? 'bg-gray-900 text-white border-l-2 border-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                    <i class="fas fa-reply w-4 mr-2"></i>
+                    <span>RÉPONSES</span>
+                </a>
+            </nav>
+            
+            <!-- Footer -->
+            <div class="p-2 border-t-2 border-gray-900">
+                <form action="{{ route('client.auth_logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full flex items-center px-3 py-2 text-xs font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                        <i class="fas fa-sign-out-alt w-4 mr-2"></i>
+                        <span>LOGOUT</span>
+                    </button>
+                </form>
+            </div>
+        </aside>
 
-    <title>{{config('app.name', 'V75 pro')}} | Dashboard </title>
-
-	<!-- Vendors Style-->
-	<link rel="stylesheet" href="{{asset('/src/css/vendors_css.css')}}">
-
-	<!-- Style-->
-	<link rel="stylesheet" href="{{asset('/src/css/style.css')}}">
-	<link rel="stylesheet" href="{{asset('/src/css/skin_color.css')}}">
-
-	<link rel="stylesheet" href="{{asset('/src/css/custom.css')}}">
-    <link rel="stylesheet" href="{{asset('/src/css/responsive.css')}}">
-    <link rel="stylesheet" href="{{asset('/src/css/dashboard5.css')}}">
-
-
-  </head>
-
-<body class="hold-transition light-skin sidebar-mini theme-primary fixed">
-
-<div class="wrapper">
-
-  <header class="main-header">
-	<div class="d-flex align-items-center logo-box justify-content-start">
-		<!-- Logo -->
-		<a href="#" class="logo">
-		  <!-- logo-->
-		  <div class="logo-mini w-60">
-			  <span class="light-logo"><img src="{{asset('/images/V75.png')}}" alt="logo" style="border-radius:100%; border:1px solid rgba(252, 254, 252, 0.24);"></span>
-
-			  {{-- <span class="light-logo"><img src="../../../images/V75.png" alt="logo" style="border-radius:100%; border:1px solid rgba(252, 254, 252, 0.24);"></span> --}}
-		  </div>
-		  <div class="logo-lg">
-              <span class="light-logo" style="font-family:sans-serif; font-size:28px; font-weight:600; color:black; line-height:80px;">Dashboard</span>
-
-              {{-- <span class="light-logo" style="font-family:sans-serif; font-size:30px; font-weight:600; color:white; line-height:80px;">Admin</span> --}}
-          </div>
-		</a>
-	</div>
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-	  <div class="app-menu">
-		<ul class="header-megamenu nav">
-			<li class="btn-group nav-item">
-				<a href="#" class="waves-effect waves-light nav-link push-btn btn-primary-light" data-toggle="push-menu" role="button">
-					<i data-feather="menu"></i>
-			    </a>
-			</li>
-			<li class="btn-group d-lg-inline-flex d-none">
-				<div class="app-menu">
-					<div class="search-bx mx-9">
-                        <div class="input-group">
-                            <h4 style="line-height: 45px;">  <span style="color: green;"> </span></h4>
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden bg-white md:ml-0">
+            <!-- Header -->
+            <header class="bg-white border-b-2 border-gray-300">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between px-4 md:px-6 py-3">
+                    <div class="mb-2 md:mb-0">
+                        <h2 class="text-sm md:text-base font-bold text-gray-900 uppercase tracking-tight">@yield('page-title', 'DASHBOARD')</h2>
+                        <p class="text-xs text-gray-500 font-mono mt-0.5">@yield('page-subtitle', 'OVERVIEW')</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right hidden sm:block">
+                            <p class="text-xs font-semibold text-gray-900">{{ Auth::guard('client')->user()->first_name ?? 'CLIENT' }} {{ Auth::guard('client')->user()->last_name ?? '' }}</p>
+                            <p class="text-xs text-gray-500 font-mono">{{ Auth::guard('client')->user()->email ?? '' }}</p>
                         </div>
-					</div>
-				</div>
-			</li>
-		</ul>
-	  </div>
+                        <div class="w-8 h-8 bg-gray-800 border-2 border-gray-900 flex items-center justify-center text-white text-xs font-bold">
+                            {{ strtoupper(substr(Auth::guard('client')->user()->first_name ?? 'C', 0, 1)) }}
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-      <div class="navbar-custom-menu r-side">
-        <ul class="nav navbar-nav">
-            <li class="btn-group d-md-inline-flex d-none">
-                <label class="switch">
-                    <span class="waves-effect skin-toggle waves-light">
-                        <input type="checkbox" data-mainsidebarskin="toggle" id="toggle_left_sidebar_skin">
-                        <span class="switch-on"><i data-feather="moon"></i></span>
-                        <span class="switch-off"><i data-feather="sun"></i></span>
-                    </span>
-                </label>
-            </li>
-			{{-- <li class="btn-group d-xl-inline-flex d-none">
-			    <a href="#" class="waves-effect waves-light nav-link btn-primary-light svg-bt-icon dropdown-toggle" data-bs-toggle="dropdown">
-					<img class="rounded" src="../../../images/svg-icon/usa.svg" alt="">
-				</a>
-			    <div class="dropdown-menu">
-					<a class="dropdown-item my-5" href="#"><img class="w-20 rounded me-10" src="../../../images/svg-icon/usa.svg" alt=""> English</a>
-					<a class="dropdown-item my-5" href="#"><img class="w-20 rounded me-10" src="../../../images/svg-icon/spain.svg" alt=""> Spanish</a>
-					<a class="dropdown-item my-5" href="#"><img class="w-20 rounded me-10" src="../../../images/svg-icon/ger.svg" alt=""> German</a>
-					<a class="dropdown-item my-5" href="#"><img class="w-20 rounded me-10" src="../../../images/svg-icon/jap.svg" alt=""> Japanese</a>
-					<a class="dropdown-item my-5" href="#"><img class="w-20 rounded me-10" src="../../../images/svg-icon/fra.svg" alt=""> French</a>
-			    </div>
-			</li> --}}
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-50">
+                <!-- Alerts -->
+                @if(session('success'))
+                    <div class="mb-4 bg-gray-100 border-l-4 border-gray-600 p-3 border border-gray-300">
+                        <div class="flex items-center">
+                            <span class="text-gray-600 mr-2 font-mono">[OK]</span>
+                            <p class="text-xs font-medium text-gray-900">{{ session('success') }}</p>
+                        </div>
+                    </div>
+                @endif
 
-			<li class="btn-group nav-item d-xl-inline-flex d-none">
-				<a href="#" data-provide="fullscreen" class="waves-effect waves-light nav-link btn-primary-light svg-bt-icon" title="Plein écran">
-					<i data-feather="maximize"></i>
-			    </a>
-			</li>
-          <!-- Control Sidebar Toggle Button -->
-          {{-- <li class="btn-group nav-item d-xl-inline-flex d-none">
-              <a href="#" data-toggle="control-sidebar" title="Paramètre" class="waves-effect waves-light nav-link btn-primary-light svg-bt-icon">
-			  	<i data-feather="sliders"></i>
-			  </a>
-          </li> --}}
+                @if(session('error'))
+                    <div class="mb-4 bg-gray-100 border-l-4 border-gray-800 p-3 border border-gray-300">
+                        <div class="flex items-center">
+                            <span class="text-gray-800 mr-2 font-mono">[ERR]</span>
+                            <p class="text-xs font-medium text-gray-900">{{ session('error') }}</p>
+                        </div>
+                    </div>
+                @endif
 
-			<!-- User Account-->
-			<li class="dropdown user user-menu">
-				<a href="#" class="waves-effect waves-light dropdown-toggle w-auto l-h-12 bg-transparent p-0 no-shadow" title="User" data-bs-toggle="modal" data-bs-target="#quick_user_toggle">
-					<img src="{{asset('/images/ui.jpg')}}" class="avatar rounded bg-primary-light" alt="" title="profil"/>
-				</a>
-			</li>
-        </ul>
-      </div>
-    </nav>
-  </header>
+                @if($errors->any())
+                    <div class="mb-4 bg-gray-100 border-l-4 border-gray-800 p-3 border border-gray-300">
+                        <div class="flex items-start">
+                            <span class="text-gray-800 mr-2 font-mono">[ERR]</span>
+                            <div>
+                                <p class="text-xs font-medium text-gray-900 mb-1">Erreurs de validation:</p>
+                                <ul class="list-disc list-inside text-xs text-gray-700">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
-
-  @include('inc.clientMenu')
-
-
-  @yield('content')
-
-
-  <footer class="main-footer">
-    <div class="pull-right d-none d-sm-inline-block">
-        <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-		  <li class="nav-item">
-			<a class="nav-link text-info" href="/" target="_blank">Retour à l'accueil</a>
-		  </li>
-		</ul>
+                @yield('content')
+            </main>
+        </div>
     </div>
-	  &copy; <script>document.write(new Date().getFullYear())</script> <a href="#">v75 pro</a>. All Rights Reserved.
-  </footer>
-  <!-- Side panel -->
-
-  @include('modal.clientModal')
-  <!-- quick_user_toggle -->
-
-  <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
-
-</div>
-<!-- ./wrapper -->
-
-	<!-- Page Content overlay -->
-
-	<!-- Vendor JS -->
-
-	<script src="{{asset('/src/js/vendors.min.js')}}"></script>
-	<script src="{{asset('/src/js/pages/chat-popup.js')}}"></script>
+    
+    <!-- Scripts -->
+    <script src="{{asset('/src/js/vendors.min.js')}}"></script>
     <script src="{{asset('/assets/icons/feather-icons/feather.min.js')}}"></script>
-
-	<script src="{{asset('/assets/vendor_components/raphael/raphael.min.js')}}"></script>
-	<script src="{{asset('/assets/vendor_components/morris.js/morris.min.js')}}"></script>
-	<script src="{{asset('/assets/vendor_components/apexcharts-bundle/dist/apexcharts.js')}}"></script>
-
-	<!-- InvestX App -->
-	<script src="{{asset('/src/js/demo.js')}}"></script>
-	<script src="{{asset('/src/js/template.js')}}"></script>
-
-	<script src="{{asset('/src/js/pages/custom.js')}}"></script>
-	<script src="{{asset('/src/js/pages/apex_charts.js')}}"></script>
-	<script src="{{asset('/src/js/pages/chart-widgets.js')}}"></script>
-
+    <script src="{{asset('/src/js/template.js')}}"></script>
+    
     @stack('datatable')
     @stack('editor')
     @stack('profile')
     @stack('home')
-    @stack('account')
+    
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                mobileOverlay.classList.toggle('hidden');
+            });
+        }
+        
+        if (mobileOverlay) {
+            mobileOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                mobileOverlay.classList.add('hidden');
+            });
+        }
+        
+        // Close menu when clicking on a link (mobile)
+        const navLinks = document.querySelectorAll('#sidebar nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth < 768) {
+                    sidebar.classList.remove('open');
+                    mobileOverlay.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+

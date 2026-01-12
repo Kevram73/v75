@@ -13,7 +13,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('check:status')->everyMinute();
+        // Process daily profits every 10 minutes
+        $schedule->command('investments:process-daily-profits')
+            ->everyTenMinutes()
+            ->withoutOverlapping()
+            ->appendOutputTo(storage_path('logs/daily-profits.log'));
     }
 
     /**

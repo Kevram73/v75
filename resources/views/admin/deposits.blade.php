@@ -1,89 +1,74 @@
-@extends('layouts.app2')
+@extends('layouts.app')
 
-@section('title', '| V75 pro Client deposits')
+@section('title', 'V75 Pro - Dépôts')
+
+@section('page-title', 'DÉPÔTS')
+@section('page-subtitle', 'LISTE DES DÉPÔTS')
 
 @section('content')
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-    <div class="container-full">
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="row">
-                <div class="col-12">
-                <div class="box">
-                    <div class="box-body">
-                        <div class="d-md-flex d-block align-items-center justify-content-between">
-                            <h4 class="box-title mb-md-0 mb-20 text-info">Liste des dépôts clients</h4>
-
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div class="col-12">
-                <div class="box">
-                    <div class="box-body">
-                        <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead class="thead-light">
-
-                                <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Identité du client</th>
-                                <th scope="col">Montant</th>
-                                <th scope="col">Date et heure</th>
-                                <th scope="col">Devise</th>
-                                <th scope="col">N° de transaction</th>
-                                <th scope="col">Statut</th>
-                                </tr>
-                            </thead>
-                            @foreach ($deposits as $deposit)
-                            @php
-                                $client = App\Models\Client::find($deposit->sender_id);
-                            @endphp
-                            <tbody class="text-fade">
-                                <tr>
-                                <th scope="row"><span style="text-info">{{$loop->index + 1}}</span></th>
-                                <td>{{$client->last_name}} {{$client->first_name}}</td>
-                                <td>{{$deposit->amount}} $</td>
-                                <td>{{$deposit->date_sent}}</td>
-                                <td>{{$deposit->merchant_trade_no}}</td>
-                                <td>{{$deposit->trx_id}}</td>
-
-                                <td><span class="badge badge-sm badge-danger-light">Dépôt</span></td>
-                                @if($deposit->status == "canceled")
-                                    <td><span class="badge badge-sm badge-danger-light">Annulé</span></td>
-                                @elseif($deposit->status == "En attente")
-                                        <td><span class="badge badge-sm badge-warning-light">En attente</span></td>
-                                        @elseif($deposit->status == "No confirmed")
-                                            <td><span class="badge badge-sm badge-warning-light">Non confirmé</span></td>
-                                @elseif($deposit->status == "confirmed")
-                                            <td><span class="badge badge-sm badge-success-light">Validé</span></td>
-                                @endif
-                                </tr>
-
-                            </tbody>
-                            @endforeach
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                </div>
+<div class="bg-white border-2 border-gray-300">
+    <div class="border-b-2 border-gray-300 p-3">
+        <h3 class="text-sm font-bold text-gray-900 uppercase">LISTE DES DÉPÔTS</h3>
+    </div>
+    <div class="p-4">
+        <table class="w-full text-xs">
+            <thead>
+                <tr class="border-b-2 border-gray-300">
+                    <th class="text-left py-2 font-mono text-gray-500">#</th>
+                    <th class="text-left py-2 font-mono text-gray-500">CLIENT</th>
+                    <th class="text-left py-2 font-mono text-gray-500">MONTANT</th>
+                    <th class="text-left py-2 font-mono text-gray-500">DATE</th>
+                    <th class="text-left py-2 font-mono text-gray-500">STATUS</th>
+                    <th class="text-left py-2 font-mono text-gray-500">ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($deposits ?? [] as $deposit)
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="py-2 text-gray-900 font-mono">{{ $loop->index + 1 }}</td>
+                        <td class="py-2 text-gray-900">
+                            @if($deposit->client)
+                                {{ $deposit->client->first_name ?? '' }} {{ $deposit->client->last_name ?? '' }}
+                                <br>
+                                <span class="text-xs text-gray-500 font-mono">{{ $deposit->client->email ?? '' }}</span>
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        <td class="py-2 text-gray-900 font-bold">${{ number_format($deposit->amount, 2) }}</td>
+                        <td class="py-2 text-gray-500 font-mono">{{ $deposit->created_at->format('d/m/Y H:i') }}</td>
+                        <td class="py-2">
+                            @if($deposit->status == 'PENDING' || $deposit->status == 'pending')
+                                <span class="font-mono text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">EN ATTENTE</span>
+                            @elseif($deposit->status == 'COMPLETED' || $deposit->status == 'done')
+                                <span class="font-mono text-xs bg-green-100 text-green-800 px-2 py-1 rounded">EFFECTUÉ</span>
+                            @elseif($deposit->status == 'CANCELLED')
+                                <span class="font-mono text-xs bg-red-100 text-red-800 px-2 py-1 rounded">ANNULÉ</span>
+                            @else
+                                <span class="font-mono text-xs bg-gray-200 px-2 py-1 rounded">{{ strtoupper($deposit->status) }}</span>
+                            @endif
+                        </td>
+                        <td class="py-2">
+                            <a href="{{ route('admin.transactions.show', $deposit->id) }}" class="text-xs font-mono bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">
+                                VOIR
+                            </a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="py-4 text-center text-gray-500 font-mono text-xs">AUCUN DÉPÔT</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+        
+        @if(isset($deposits) && method_exists($deposits, 'links'))
+            <div class="mt-4">
+                {{ $deposits->links() }}
             </div>
-        </section>
-        <!-- /.content -->
-
+        @endif
     </div>
-    </div>
-    <!-- /.content-wrapper -->
+</div>
 
 @endsection
-
-@push('datatable')
-    <script src="{{asset('/assets/vendor_components/datatable/datatables.min.js')}}"></script>
-    <script src="{{asset('/src/js/pages/data-table.js')}}"></script>
-
-@endpush
-

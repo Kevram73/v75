@@ -1,91 +1,56 @@
 @extends('layouts.app2')
 
-@section('title', '| V75 pro Dashboard')
+@section('title', 'V75 Pro - Service Client')
+
+@section('page-title', 'SERVICE CLIENT')
+@section('page-subtitle', 'MES MESSAGES')
 
 @section('content')
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-    <div class="container-full">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-          <div class="d-flex align-items-center">
-              <div class="me-auto">
-                  <h4 class="page-title">Dashboard</h4>
-                  <div class="d-inline-block align-items-center">
-                      <nav>
-                          <ol class="breadcrumb">
-                              <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                              <li class="breadcrumb-item" aria-current="page">Service client</li>
-                              <li class="breadcrumb-item active" aria-current="page">Mes messages</li>
-                          </ol>
-                      </nav>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <!-- Main content -->
-      <section class="content">
-        <div class="row">
-            <div class="col-xl-12 col-12">
-                <div class="box">
-                  <div class="box-header">
-                    <h3 class="box-title text-info" style="font-weight: 500;">{{ Auth::guard('client')->user()->first_name }} {{ Auth::guard('client')->user()->last_name }}</h3>
-                    <div class="box-controls pull-right">
-                      <button class="btn btn-xs btn-info">Messages envoyés</button>
-                    </div>
-                  </div>
-
-                  {{-- <div class="box-body">
-                    <p class="text-gray-600">Veuillez remplir les informations ci-dessous (<b><em>Titre</em></b> et <b><em>Contenu</em></b> de l'annonce) pour publier votre annonce !</p>
-                  </div> --}}
-                </div>
-            </div>
-
-            @foreach ($messages as $message)
-                <div class="col-md-12 col-lg-6">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between">
-
-                            <span><i class="fa fa-user me-2"></i> <a href="#">Par vous</a></span>
-                            <span class="text-muted">{{$message->created_at->format('d/m/Y à H:i')}}</span>
-                        </div>
-                    <div class="card-body">
-                        <h4 class="card-title fw-600">{{$message->object}}</h4>
-                        <p class="card-text text-gray-600" style="text-align: justify; line-height:24px;">{{$message->content}}</p>
-                    </div>
-                    <div class="card-footer justify-content-between d-flex">
-                        <ul class="list-inline mb-0 me-2">
-                            <li class="list-inline-item">
-                                <i class="fa fa-comment-o"></i>
-                            </li>
-                            <li class="list-inline-item">
-                                <button class="btn btn-xs btn-primary">envoyé</button>
-                            </li>
-                        </ul>
-
-
-                    </div>
-                    </div>
-                </div>
-            @endforeach
-
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </section>
-      <!-- /.content -->
-
+<div class="bg-white border-2 border-gray-300">
+    <div class="border-b-2 border-gray-300 p-3 flex justify-between items-center">
+        <h3 class="text-sm font-bold text-gray-900 uppercase">MES MESSAGES</h3>
+        <a href="{{ route('client.message') }}" class="text-xs font-mono bg-gray-800 text-white px-3 py-1 hover:bg-gray-900">
+            NOUVEAU MESSAGE
+        </a>
     </div>
+    <div class="p-4">
+        <table class="w-full text-xs">
+            <thead>
+                <tr class="border-b-2 border-gray-300">
+                    <th class="text-left py-2 font-mono text-gray-500">#</th>
+                    <th class="text-left py-2 font-mono text-gray-500">SUJET</th>
+                    <th class="text-left py-2 font-mono text-gray-500">DATE</th>
+                    <th class="text-left py-2 font-mono text-gray-500">STATUS</th>
+                    <th class="text-left py-2 font-mono text-gray-500">ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($messages ?? [] as $message)
+                    <tr class="border-b border-gray-200">
+                        <td class="py-2 text-gray-900 font-mono">{{ $loop->index + 1 }}</td>
+                        <td class="py-2 text-gray-900">{{ $message->subject ?? 'N/A' }}</td>
+                        <td class="py-2 text-gray-500 font-mono">{{ $message->created_at->format('d/m/Y H:i') }}</td>
+                        <td class="py-2">
+                            @if($message->status == 'read')
+                                <span class="font-mono text-xs bg-gray-200 px-2 py-1">LU</span>
+                            @else
+                                <span class="font-mono text-xs bg-gray-200 px-2 py-1">NON LU</span>
+                            @endif
+                        </td>
+                        <td class="py-2">
+                            <a href="{{ route('client.messages.show', $message->id) }}" class="text-xs font-mono bg-gray-200 px-2 py-1 hover:bg-gray-300">VOIR</a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="py-8 text-center text-gray-500 font-mono text-xs">AUCUN MESSAGE</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
-    <!-- /.content-wrapper -->
+</div>
 
 @endsection
-
-@push('datatable')
-    <script src="{{asset('/assets/vendor_components/datatable/datatables.min.js')}}"></script>
-    <script src="{{asset('/src/js/pages/data-table.js')}}"></script>
-
-@endpush
 

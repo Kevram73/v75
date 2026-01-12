@@ -6,31 +6,22 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\AccountController;
-use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\AnnouncementController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\HomeController as ClientHomeController;
-use App\Http\Controllers\Client\BinancePayController;
-use App\Http\Controllers\RetrieveManageController;
+use App\Http\Controllers\Client\InvestmentController;
+use App\Http\Controllers\Client\CommissionController;
+use App\Http\Controllers\Client\TransactionController as ClientTransactionController;
 
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/', [WelcomeController::class, 'welcome']);
-Route::get('/binance-pay/form', function () {
-    return view('binance');
-});
-
-
+// Public routes
+Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
 Route::get('policy', function () {
     return view('policy');
-});
-
-Route::post('/binance-pay/create-order', [BinancePayController::class, 'createOrder']);
+})->name('policy');
 
 
 Route::prefix('admin/')->name('admin.')->group(function () {
@@ -41,28 +32,37 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     Route::post('logout', [AdminAuthController::class, 'auth_logout'])->name('auth_logout');
     Route::post('change/password', [AdminAuthController::class, 'change_password'])->name('change_password');
 
-    // Accounts CRUD
+    // Resources
     Route::resource('accounts', AccountController::class);
     Route::resource('admins', AdminController::class);
-    Route::resource('announcements', AnnouncementController::class);
-    Route::resource('clients', ClientController::class);
     Route::resource('transactions', TransactionController::class);
-    Route::resource('messages', MessageController::class);
 
+    // Dashboard and stats
     Route::get('home', [HomeController::class, 'index'])->name('home');
-    Route::get('admin/profile', [HomeController::class, 'profile'])->name('profile');
-    Route::get('admin/stats', [HomeController::class, 'stats'])->name('stats');
+    Route::get('profile', [HomeController::class, 'profile'])->name('profile');
+    Route::get('stats', [HomeController::class, 'stats'])->name('stats');
 
-
+    // Account management
     Route::get('accounts/activated/{id}', [AccountController::class, 'on_off'])->name('account_activated');
 
-    Route::get('client/liste/disabled', [ClientController::class, 'clients_disabled'])->name('client_liste_disabled');
-    Route::get('clients/disactivate/{id}', [ClientController::class, 'client_disactivate'])->name('client.disactivate');
-    Route::get('clients/activate/{id}', [ClientController::class, 'client_activate'])->name('client.activate');
+    // Client management - MUST be before resource route to avoid route conflicts
+    Route::get('clients/disabled', [ClientController::class, 'clients_disabled'])->name('clients.disabled');
+    Route::get('clients/{id}/deactivate', [ClientController::class, 'client_disactivate'])->name('clients.deactivate');
+    Route::get('clients/{id}/activate', [ClientController::class, 'client_activate'])->name('clients.activate');
+    
+    // Client resource route (must be after specific routes)
+    Route::resource('clients', ClientController::class);
 
-    Route::get('deposit/list', [TransactionController::class, 'list_deposits'])->name('deposits');
-    Route::get('withdrawal/list', [TransactionController::class, 'list_withdrawals'])->name('withdrawals');
-    Route::get('transaction/list', [TransactionController::class, 'get_all_transactions'])->name('transactions');
+    // Transaction management
+    Route::get('deposits', [TransactionController::class, 'list_deposits'])->name('deposits');
+    Route::get('withdrawals', [TransactionController::class, 'list_withdrawals'])->name('withdrawals');
+    // Note: transactions.index is created by the resource route above
+    
+    // Announcements
+    Route::resource('announcements', \App\Http\Controllers\Admin\AnnouncementController::class);
+    
+    // Messages
+    Route::resource('messages', \App\Http\Controllers\Admin\MessageController::class);
 });
 
 Route::prefix('client/')->name('client.')->group(function () {
@@ -77,48 +77,64 @@ Route::prefix('client/')->name('client.')->group(function () {
     Route::post('forgot-password', [ClientAuthController::class, 'reset_password'])->name('password.email');
     Route::post('logout', [ClientAuthController::class, 'auth_logout'])->name('auth_logout');
 
+    // Dashboard
     Route::get('dashboard', [ClientHomeController::class, 'index'])->name('dashboard');
-    Route::get('profile', [ClientHomeController::class, 'clientProfile'])->name('clientProfile');
-    Route::get('deposits', [ClientHomeController::class, 'deposits'])->name('deposits');
-    Route::get('withdrawals', [ClientHomeController::class, 'withdrawals'])->name('withdrawals');
-    Route::get('actualites', [ClientHomeController::class, 'actualites'])->name('actualites');
-    Route::get('message', [ClientHomeController::class, 'messageCreate'])->name('message');
-    Route::get('service/client', [ClientHomeController::class, 'service_client'])->name('service_client');
+    Route::post('profile', [ClientHomeController::class, 'change_account_details'])->name('profile.update');
     Route::get('account', [ClientHomeController::class, 'account'])->name('account');
-    Route::post('account/details', [ClientHomeController::class, 'change_account_details'])->name('change_account_details');
-    Route::post('message/send', [ClientHomeController::class, 'messageStore'])->name('message_send');
     Route::post('usdt/account', [ClientHomeController::class, 'change_usdt_account'])->name('account_usdt');
     Route::post('btc/account', [ClientHomeController::class, 'change_btc_account'])->name('account_btc');
 
-    Route::get('invest/deposit', [ClientHomeController::class, 'send'])->name('invest_deposit');
-    Route::get('invest/order', [ClientHomeController::class, 'order'])->name('invest_order');
-    Route::get('invest/withdrawal', [ClientHomeController::class, 'receive'])->name('invest_withdrawal');
-    Route::post('/binance/deposit', [ClientHomeController::class, 'createOrder'])->name("create_order_deposit");
+    // Investments
+    Route::get('investments', [InvestmentController::class, 'index'])->name('investments.index');
+    Route::get('investments/create', [InvestmentController::class, 'create'])->name('investments.create');
+    Route::post('investments', [InvestmentController::class, 'store'])->name('investments.store');
+    Route::get('investments/{id}', [InvestmentController::class, 'show'])->name('investments.show');
 
+    // Commissions
+    Route::get('commissions', [CommissionController::class, 'index'])->name('commissions.index');
 
-
-    Route::post('/create-payment', 'PaymentController@create')->name('payment.create');
-    Route::post('/payment-callback', 'PaymentController@callback')->name('payment.callback');
-    // Route::get('dashboard', [ClientAuthController::class, 'auth_register'])->name('dashboard');
-
-    Route::post('invest/deposit', [ClientHomeController::class, 'register_deposit'])->name('register_deposit');
-    Route::get('invest/confirm/{transaction_id}', [ClientHomeController::class, 'confirm_trans'])->name('confirm_trans');
-    Route::post('invest/confirmation', [ClientHomeController::class, 'confirmation'])->name('confirmation');
-    Route::post('invest/cancel/{transaction_id}', [ClientHomeController::class, 'cancel_deposit'])->name('cancel_deposit');
-    Route::post('/requests/save', [ClientHomeController::class, 'request_retrieve'])->name('retrieve_request');
+    // Transactions
+    Route::get('transactions', [ClientHomeController::class, 'transactions'])->name('transactions');
+    Route::get('transactions/{id}', [ClientTransactionController::class, 'show'])->name('transactions.show');
+    
+    // Profile
+    Route::get('profile', [ClientHomeController::class, 'clientProfile'])->name('profile');
+    
+    // Deposits
+    Route::get('deposit', [ClientTransactionController::class, 'createDeposit'])->name('deposit');
+    Route::post('deposit', [ClientTransactionController::class, 'storeDeposit'])->name('deposit.store');
+    Route::get('deposits', [ClientHomeController::class, 'deposits'])->name('deposits');
+    
+    // Withdrawals
+    Route::get('withdrawal', [ClientTransactionController::class, 'createWithdrawal'])->name('withdrawal');
+    Route::post('withdrawal', [ClientTransactionController::class, 'storeWithdrawal'])->name('withdrawal.store');
+    Route::get('withdrawals', [ClientHomeController::class, 'withdrawals'])->name('withdrawals');
+    
+    // Withdrawal password
+    Route::get('withdrawal-password/setup', [ClientTransactionController::class, 'showWithdrawalPasswordSetup'])->name('withdrawal.password.setup');
+    Route::post('withdrawal-password/setup', [ClientTransactionController::class, 'storeWithdrawalPassword'])->name('withdrawal.password.store');
+    Route::get('withdrawal-password/change', [ClientTransactionController::class, 'showWithdrawalPasswordChange'])->name('withdrawal.password.change');
+    Route::post('withdrawal-password/change', [ClientTransactionController::class, 'updateWithdrawalPassword'])->name('withdrawal.password.update');
+    
+    // Transfer
+    Route::get('transfer', [ClientTransactionController::class, 'showTransfer'])->name('transfer');
+    Route::post('transfer', [ClientTransactionController::class, 'processTransfer'])->name('transfer.process');
+    Route::get('api/search-user', [ClientTransactionController::class, 'searchUser'])->name('api.search-user');
+    
+    // Announcements
+    Route::get('announces', [ClientHomeController::class, 'announces'])->name('announces');
+    
+    // Messages
+    Route::get('response', [ClientHomeController::class, 'response'])->name('response');
+    Route::get('message/create', [ClientHomeController::class, 'messageCreate'])->name('message.create');
+    Route::post('message/send', [ClientHomeController::class, 'messageStore'])->name('message_send');
 
 });
 
-Route::get('/binancepay/returnURL', [BinancePayController::class, 'returnCallback'])->name("returnCallback");
-Route::get('/binancepay/cancelURL', [BinancePayController::class, 'cancelCallback'])->name("cancelCallback");
-
-// Route::post('/send-money', [ClientHomeController::class, 'sendMoney'])->name('send_money');
-
+// Payment success page
 Route::get('/payment-success', function () {
     return view('success');
 })->name('payment.success');
-
-Route::get('/requests/retrieve', [RetrieveManageController::class, 'list'])->name('retrieve_manage');
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -19,7 +20,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = Admin::all();
+        $admins = Admin::orderBy('created_at', 'desc')->paginate(20);
         return view('admin.admins.index', compact('admins'));
     }
 
@@ -37,31 +38,25 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required',
-            'email' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:admins,email',
+            'password' => 'required|string|min:8',
         ]);
 
-        $existant_username = Admin::where('username', $request->username)->get();
-        $existant_email = Admin::where('email', $request->email)->get();
-
-
-        if (count($existant_email) > 0) {
-            return redirect()->back()->with('error', "Cet nom d'utilisateur est déjà pris");
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        if (count($existant_email) > 0) {
-            return redirect()->back()->with('error', "Un compte avec cet email existe déjà");
-        }
-
-        $admin = new Admin([
-            'username' => $request->username,
+        Admin::create([
+            'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
         ]);
 
-        $admin->save();
-
-        return redirect()->route('admins.index')->with('success', 'Compte admin créé avec succès');
+        return redirect()->route('admin.admins.index')
+            ->with('success', 'Compte admin créé avec succès !');
     }
 
     /**
@@ -78,8 +73,8 @@ class AdminController extends Controller
      */
     public function edit(int $id)
     {
-        $admin = Admin::find($id);
-        return view('admins.edit', compact('admin'));
+        $admin = Admin::findOrFail($id);
+        return view('admin.admins.edit', compact('admin'));
     }
 
     /**
@@ -87,24 +82,33 @@ class AdminController extends Controller
      */
     public function update(Request $request, int $id)
     {
+        $admin = Admin::findOrFail($id);
+
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255|unique:admins,username,' . $id,
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:admins,email,' . $id,
-            'user_id' => 'required|exists:users,id'
+            'password' => 'nullable|string|min:6',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        $admin = Admin::find($id);
-        $admin->update([
-            'username' => $request->username,
+        $data = [
+            'name' => $request->name,
             'email' => $request->email,
-            'user_id' => $request->user_id
-        ]);
+        ];
 
-        return redirect()->route('admins.index')->with('success', 'Admin successfully updated!');
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $admin->update($data);
+
+        return redirect()->route('admin.admins.index')
+            ->with('success', 'Admin mis à jour avec succès !');
     }
 
     /**
@@ -112,8 +116,17 @@ class AdminController extends Controller
      */
     public function destroy(int $id)
     {
-        $admin = Admin::find($id);
+        $admin = Admin::findOrFail($id);
+        
+        // Empêcher la suppression du super admin
+        if ($admin->email === 'admin@v75pro.com') {
+            return redirect()->route('admin.admins.index')
+                ->with('error', 'Impossible de supprimer le super administrateur !');
+        }
+
         $admin->delete();
-        return redirect()->route('admins.index')->with('success', 'Admin successfully deleted!');
+
+        return redirect()->route('admin.admins.index')
+            ->with('success', 'Admin supprimé avec succès !');
     }
 }

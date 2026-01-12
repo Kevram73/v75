@@ -1,0 +1,444 @@
+name: Deploy V75 Pro Laravel to Production (Port 7000)
+
+on:
+  push:
+    branches:
+      - deploy
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: 🚀 Deploy to VPS
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Create deployment archive
+        run: |
+          tar --exclude='.git' \
+              --exclude='.github' \
+              --exclude='node_modules' \
+              --exclude='vendor' \
+              --exclude='.env' \
+              --exclude='.env.*' \
+              --exclude='storage/logs/*' \
+              --exclude='storage/framework/cache/*' \
+              --exclude='storage/framework/sessions/*' \
+              --exclude='storage/framework/views/*' \
+              --exclude='bootstrap/cache/*' \
+              --exclude='tests' \
+              --exclude='.phpunit.cache' \
+              --exclude='*.log' \
+              --exclude='deploy.tar.gz' \
+              --exclude='DOCKER_SETUP.md' \
+              --exclude='UPDATE_LAYOUTS.md' \
+              --exclude='docker.env.example' \
+              -czf /tmp/deploy.tar.gz .
+          mv /tmp/deploy.tar.gz ./deploy.tar.gz
+          ls -lh deploy.tar.gz
+
+      - name: 📤 Upload code to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT || 22 }}
+          source: "deploy.tar.gz"
+          target: ${{ secrets.SFTP_DEPLOY_PATH || '/var/www/v75-pro' }}
+          timeout: "300s"
+          strip_components: 0
+
+      - name: 🚀 Deploy on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT || 22 }}
+          timeout: "600s"
+          command_timeout: "30m"
+          script: |
+            set -e
+            
+            DEPLOY_PATH="${{ secrets.SFTP_DEPLOY_PATH || '/var/www/v75-pro' }}"
+            
+            # Créer le répertoire s'il n'existe pas
+            if [ ! -d "$DEPLOY_PATH" ]; then
+              echo "📁 Création du répertoire de déploiement..."
+              sudo mkdir -p $DEPLOY_PATH
+              sudo chown -R $USER:$USER $DEPLOY_PATH || true
+            fi
+            
+            cd $DEPLOY_PATH
+            
+            echo "=========================================="
+            echo "🚀 Déploiement V75 Pro Laravel (Port 7000)"
+            echo "=========================================="
+            
+            # 1. Sauvegarder .env s'il existe
+            if [ -f .env ]; then
+              echo "💾 Sauvegarde de .env..."
+              cp .env .env.backup
+            fi
+            
+            # 2. Extraction du code
+            echo "📦 Extraction des fichiers..."
+            if [ ! -f deploy.tar.gz ]; then
+              echo "❌ Fichier deploy.tar.gz introuvable!"
+              exit 1
+            fi
+            tar -xzf deploy.tar.gz
+            rm -f deploy.tar.gz
+            echo "✅ Fichiers extraits"
+            
+            # 3. Gérer .env - Préserver l'existant ou créer depuis .env.example
+            if [ -f .env.backup ]; then
+              echo "💾 Restauration de .env depuis la sauvegarde..."
+              mv .env.backup .env
+              echo "✅ .env restauré depuis la sauvegarde"
+            elif [ -f .env ]; then
+              echo "✅ .env existe déjà - préservation des valeurs existantes"
+              # Vérifier et mettre à jour APP_URL pour la production
+              if grep -q "^APP_URL=" .env; then
+                CURRENT_URL=$(grep "^APP_URL=" .env | cut -d'=' -f2)
+                PROD_URL="${{ secrets.APP_URL || 'http://72.60.188.146:7000' }}"
+                if [ "$CURRENT_URL" != "$PROD_URL" ]; then
+                  echo "🔧 Mise à jour de APP_URL vers $PROD_URL..."
+                  sed -i "s|^APP_URL=.*|APP_URL=$PROD_URL|" .env || \
+                  sed -i.bak "s|^APP_URL=.*|APP_URL=$PROD_URL|" .env || true
+                  rm -f .env.bak
+                fi
+              fi
+              # Vérifier que APP_KEY existe, sinon on la générera plus tard
+              if ! grep -q "APP_KEY=base64:" .env 2>/dev/null; then
+                echo "⚠️  APP_KEY manquante dans .env existant (sera générée plus tard)"
+              fi
+            elif [ -f .env.example ]; then
+              echo "⚠️  .env n'existe pas. Création depuis .env.example..."
+              cp .env.example .env
+              
+              # Adapter les valeurs pour Docker
+              echo "🔧 Adaptation des valeurs pour Docker..."
+              # APP_URL pour la production
+              PROD_URL="${{ secrets.APP_URL || 'http://72.60.188.146:7000' }}"
+              if grep -q "^APP_URL=" .env; then
+                sed -i "s|^APP_URL=.*|APP_URL=$PROD_URL|" .env || \
+                sed -i.bak "s|^APP_URL=.*|APP_URL=$PROD_URL|" .env || true
+              fi
+              
+              # DB_HOST pour Docker
+              if grep -q "^DB_HOST=" .env; then
+                sed -i 's/^DB_HOST=.*/DB_HOST=mysql/' .env || \
+                sed -i.bak 's/^DB_HOST=.*/DB_HOST=mysql/' .env || true
+              fi
+              
+              # DB_DATABASE pour V75
+              if grep -q "^DB_DATABASE=" .env; then
+                sed -i 's/^DB_DATABASE=.*/DB_DATABASE=v75_db/' .env || \
+                sed -i.bak 's/^DB_DATABASE=.*/DB_DATABASE=v75_db/' .env || true
+              fi
+              
+              # DB_USERNAME pour V75
+              if grep -q "^DB_USERNAME=" .env; then
+                sed -i 's/^DB_USERNAME=.*/DB_USERNAME=v75_user/' .env || \
+                sed -i.bak 's/^DB_USERNAME=.*/DB_USERNAME=v75_user/' .env || true
+              fi
+              
+              # CACHE_DRIVER pour file en production (ou redis si disponible)
+              if grep -q "^CACHE_DRIVER=" .env; then
+                sed -i 's/^CACHE_DRIVER=.*/CACHE_DRIVER=file/' .env || \
+                sed -i.bak 's/^CACHE_DRIVER=.*/CACHE_DRIVER=file/' .env || true
+              fi
+              
+              # SESSION_DRIVER pour file
+              if grep -q "^SESSION_DRIVER=" .env; then
+                sed -i 's/^SESSION_DRIVER=.*/SESSION_DRIVER=file/' .env || \
+                sed -i.bak 's/^SESSION_DRIVER=.*/SESSION_DRIVER=file/' .env || true
+              fi
+              
+              # APP_ENV pour production
+              if grep -q "^APP_ENV=" .env; then
+                sed -i 's/^APP_ENV=.*/APP_ENV=production/' .env || \
+                sed -i.bak 's/^APP_ENV=.*/APP_ENV=production/' .env || true
+              fi
+              
+              # APP_DEBUG pour false en production
+              if grep -q "^APP_DEBUG=" .env; then
+                sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env || \
+                sed -i.bak 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env || true
+              fi
+              
+              # Nettoyer les fichiers de backup sed si créés
+              rm -f .env.bak
+              
+              echo "✅ .env créé depuis .env.example avec adaptations Docker"
+              echo "⚠️  IMPORTANT: Vérifiez que .env contient les bonnes valeurs (DB_PASSWORD, etc.)!"
+            else
+              echo "❌ ERREUR: .env.example n'existe pas et .env n'existe pas non plus!"
+              echo "Création d'un .env minimal d'urgence..."
+              PROD_URL="${{ secrets.APP_URL || 'http://72.60.188.146:7000' }}"
+              printf "APP_NAME=\"V75 Pro\"\nAPP_ENV=production\nAPP_KEY=\nAPP_DEBUG=false\nAPP_URL=$PROD_URL\n\nLOG_CHANNEL=stack\nLOG_LEVEL=error\n\nDB_CONNECTION=mysql\nDB_HOST=mysql\nDB_PORT=3306\nDB_DATABASE=v75_db\nDB_USERNAME=v75_user\nDB_PASSWORD=\n\nBROADCAST_DRIVER=log\nCACHE_DRIVER=file\nFILESYSTEM_DISK=local\nQUEUE_CONNECTION=sync\nSESSION_DRIVER=file\nSESSION_LIFETIME=120\n" > .env
+              echo "✅ .env minimal créé"
+              echo "⚠️  URGENT: Configurez .env avec toutes les valeurs nécessaires!"
+            fi
+            
+            # Vérifier que .env existe maintenant
+            if [ ! -f .env ]; then
+              echo "❌ ERREUR: Impossible de créer .env!"
+              exit 1
+            fi
+            
+            echo "✅ .env présent: $(ls -lh .env | awk '{print $5, $9}')"
+            echo "📋 Variables importantes dans .env:"
+            grep -E "^(APP_KEY|DB_|APP_URL|APP_ENV|APP_DEBUG)" .env | head -10 || echo "Variables non trouvées"
+            
+            # 4. Vérifier que Docker est installé
+            if ! command -v docker &> /dev/null; then
+              echo "❌ Docker n'est pas installé sur le serveur"
+              exit 1
+            fi
+            
+            echo "✅ Docker installé: $(docker --version)"
+            
+            # 5. Vérifier que Docker Compose est disponible
+            if docker compose version &> /dev/null; then
+              COMPOSE_CMD="docker compose"
+              echo "✅ Docker Compose v2 disponible"
+            elif docker-compose version &> /dev/null; then
+              COMPOSE_CMD="docker-compose"
+              echo "✅ Docker Compose v1 disponible"
+            else
+              echo "❌ Docker Compose n'est pas installé"
+              exit 1
+            fi
+            
+            # 6. Mettre à jour le port dans docker-compose.yml si nécessaire
+            echo "🔧 Vérification du port dans docker-compose.yml..."
+            if [ -f docker-compose.yml ]; then
+              # Mettre à jour le port de 6700 à 7000 si nécessaire
+              if grep -q "6700:6700" docker-compose.yml; then
+                echo "🔧 Mise à jour du port de 6700 à 7000..."
+                sed -i 's/6700:6700/7000:6700/g' docker-compose.yml || true
+                echo "✅ Port mis à jour dans docker-compose.yml"
+              fi
+            fi
+            
+            # 7. Arrêter les conteneurs existants
+            echo "🛑 Arrêt des conteneurs existants..."
+            $COMPOSE_CMD down || true
+            
+            # 8. Nettoyer le cache Laravel
+            echo "🧹 Nettoyage du cache..."
+            rm -f bootstrap/cache/config.php
+            rm -f bootstrap/cache/services.php
+            rm -f bootstrap/cache/packages.php
+            rm -f bootstrap/cache/routes-v7.php
+            rm -f bootstrap/cache/routes.php
+            
+            # 9. Configurer les permissions
+            echo "🔐 Configuration des permissions..."
+            mkdir -p storage/app/public
+            mkdir -p storage/framework/cache/data
+            mkdir -p storage/framework/sessions
+            mkdir -p storage/framework/views
+            mkdir -p storage/logs
+            mkdir -p bootstrap/cache
+            
+            # 10. Construire les images Docker
+            echo "🔨 Construction des images Docker..."
+            $COMPOSE_CMD build --no-cache
+            
+            # 11. Démarrer les conteneurs
+            echo "🚀 Démarrage des conteneurs..."
+            $COMPOSE_CMD up -d
+            
+            # Vérifier que les conteneurs sont démarrés
+            echo "⏳ Vérification du démarrage des conteneurs..."
+            sleep 5
+            if ! $COMPOSE_CMD ps | grep -q "Up"; then
+              echo "⚠️  Certains conteneurs ne sont pas démarrés"
+              $COMPOSE_CMD ps
+              echo "Logs:"
+              $COMPOSE_CMD logs --tail=20
+            fi
+            
+            # 12. Attendre que les conteneurs soient prêts
+            echo "⏳ Attente que les conteneurs soient prêts..."
+            sleep 10
+            
+            # 13. Installer les dépendances Composer dans le conteneur
+            echo "📦 Installation des dépendances Composer..."
+            $COMPOSE_CMD exec -T app composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist || {
+              echo "⚠️  Tentative avec --ignore-platform-reqs..."
+              $COMPOSE_CMD exec -T app composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --ignore-platform-reqs
+            }
+            
+            # 14. Générer la clé d'application si nécessaire
+            echo "🔑 Génération de la clé d'application..."
+            if ! grep -q "APP_KEY=base64:" .env 2>/dev/null || grep -q "^APP_KEY=$" .env; then
+              $COMPOSE_CMD exec -T app php artisan key:generate --force || true
+              echo "✅ Clé d'application générée"
+            else
+              echo "✅ Clé d'application déjà présente"
+            fi
+            
+            # 15. Optimisations Laravel dans le conteneur
+            echo "✨ Optimisation Laravel..."
+            $COMPOSE_CMD exec -T app php artisan config:clear || true
+            $COMPOSE_CMD exec -T app php artisan view:clear || true
+            $COMPOSE_CMD exec -T app php artisan route:clear || true
+            $COMPOSE_CMD exec -T app php artisan cache:clear || true
+            
+            # Cache pour la production
+            $COMPOSE_CMD exec -T app php artisan config:cache || true
+            $COMPOSE_CMD exec -T app php artisan route:cache || true
+            $COMPOSE_CMD exec -T app php artisan view:cache || true
+            
+            # Créer le lien de stockage
+            $COMPOSE_CMD exec -T app php artisan storage:link || true
+            
+            # 16. Exécuter les migrations si nécessaire
+            echo "🗄️  Vérification des migrations..."
+            $COMPOSE_CMD exec -T app php artisan migrate --force || echo "⚠️  Erreur lors des migrations (peut être normal si déjà à jour)"
+            
+            # 17. Configurer les permissions dans le conteneur
+            echo "🔐 Configuration des permissions dans le conteneur..."
+            $COMPOSE_CMD exec -T app chown -R www-data:www-data storage bootstrap/cache || true
+            $COMPOSE_CMD exec -T app chmod -R 775 storage bootstrap/cache || true
+            
+            # 18. Test de santé de l'application
+            echo "🏥 Test de santé de l'application..."
+            sleep 15
+            
+            # Attendre que les conteneurs soient vraiment prêts
+            echo "⏳ Attente que les services soient prêts..."
+            for i in {1..10}; do
+              if $COMPOSE_CMD exec -T app php artisan --version &>/dev/null; then
+                echo "✅ Services prêts"
+                break
+              fi
+              echo "Tentative $i/10..."
+              sleep 2
+            done
+            
+            PROD_PORT="7000"
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:$PROD_PORT || echo "000")
+            if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "302" ] || [ "$HTTP_STATUS" = "301" ]; then
+              echo "✅ Application répond correctement (HTTP $HTTP_STATUS)"
+            else
+              echo "⚠️  Application répond avec HTTP $HTTP_STATUS"
+              echo "🔍 Diagnostic approfondi..."
+              
+              # Diagnostic détaillé
+              echo ""
+              echo "=== Statut des conteneurs ==="
+              $COMPOSE_CMD ps
+              
+              echo ""
+              echo "=== Logs App (dernières 50 lignes) ==="
+              $COMPOSE_CMD logs --tail=50 app || true
+              
+              echo ""
+              echo "=== Logs MySQL (dernières 50 lignes) ==="
+              $COMPOSE_CMD logs --tail=50 mysql || true
+              
+              echo ""
+              echo "=== Vérification .env ==="
+              if $COMPOSE_CMD exec -T app test -f .env; then
+                echo "✅ .env existe"
+                $COMPOSE_CMD exec -T app grep "^APP_KEY=" .env || echo "❌ APP_KEY manquante"
+                $COMPOSE_CMD exec -T app grep "^DB_" .env | head -5 || echo "Variables DB non trouvées"
+              else
+                echo "❌ .env n'existe pas dans le conteneur"
+              fi
+              
+              echo ""
+              echo "=== Vérification vendor ==="
+              if $COMPOSE_CMD exec -T app test -d vendor; then
+                echo "✅ vendor/ existe"
+                $COMPOSE_CMD exec -T app test -f vendor/autoload.php && echo "✅ autoload.php existe" || echo "❌ autoload.php manquant"
+              else
+                echo "❌ vendor/ n'existe pas"
+              fi
+              
+              echo ""
+              echo "=== Logs Laravel (erreurs) ==="
+              $COMPOSE_CMD exec -T app tail -100 storage/logs/laravel.log 2>/dev/null | grep -i "error\|exception\|fatal" | tail -20 || echo "Aucune erreur récente"
+              
+              echo ""
+              echo "=== Tentative de réparation automatique ==="
+              
+              # Réparation 1: Vérifier et réinstaller vendor si nécessaire
+              if [ ! -d vendor ] || ! $COMPOSE_CMD exec -T app test -f vendor/autoload.php; then
+                echo "Réinstallation des dépendances..."
+                $COMPOSE_CMD exec -T app composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --ignore-platform-reqs || true
+              fi
+              
+              # Réparation 2: Vérifier APP_KEY
+              if ! $COMPOSE_CMD exec -T app grep -q "APP_KEY=base64:" .env 2>/dev/null; then
+                echo "Génération de APP_KEY..."
+                $COMPOSE_CMD exec -T app php artisan key:generate --force || true
+              fi
+              
+              # Réparation 3: Nettoyer et recréer les caches
+              echo "Nettoyage des caches..."
+              $COMPOSE_CMD exec -T app php artisan config:clear || true
+              $COMPOSE_CMD exec -T app php artisan cache:clear || true
+              $COMPOSE_CMD exec -T app php artisan route:clear || true
+              $COMPOSE_CMD exec -T app php artisan view:clear || true
+              
+              # Réparation 4: Recréer les caches
+              echo "Recréation des caches..."
+              $COMPOSE_CMD exec -T app php artisan config:cache || true
+              $COMPOSE_CMD exec -T app php artisan route:cache || true
+              $COMPOSE_CMD exec -T app php artisan view:cache || true
+              
+              # Réparation 5: Permissions
+              echo "Correction des permissions..."
+              $COMPOSE_CMD exec -T app chown -R www-data:www-data storage bootstrap/cache || true
+              $COMPOSE_CMD exec -T app chmod -R 775 storage bootstrap/cache || true
+              
+              # Réparation 6: Redémarrer les conteneurs
+              echo "Redémarrage des conteneurs..."
+              $COMPOSE_CMD restart app mysql || true
+              
+              sleep 10
+              
+              # Test après réparation
+              HTTP_STATUS_AFTER=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:$PROD_PORT || echo "000")
+              if [ "$HTTP_STATUS_AFTER" = "200" ] || [ "$HTTP_STATUS_AFTER" = "302" ] || [ "$HTTP_STATUS_AFTER" = "301" ]; then
+                echo "✅ Application réparée! (HTTP $HTTP_STATUS_AFTER)"
+              else
+                echo "❌ Application toujours en erreur (HTTP $HTTP_STATUS_AFTER)"
+                echo ""
+                echo "=== Dernières erreurs Laravel ==="
+                $COMPOSE_CMD exec -T app tail -100 storage/logs/laravel.log 2>/dev/null | grep -A 5 -B 5 -i "error\|exception\|fatal" | tail -30 || echo "Aucune erreur trouvée"
+              fi
+            fi
+            
+            # 19. Vérifier le statut
+            echo ""
+            echo "=========================================="
+            echo "✅ Déploiement terminé avec succès!"
+            echo "=========================================="
+            echo "Application accessible sur le port $PROD_PORT"
+            echo ""
+            echo "Statut des conteneurs:"
+            $COMPOSE_CMD ps
+            echo ""
+            echo "Vérifications:"
+            echo "- Docker version: $(docker --version)"
+            echo "- Conteneurs actifs:"
+            docker ps --filter "name=v75" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+            echo ""
+            echo "Dernières lignes des logs:"
+            $COMPOSE_CMD exec -T app tail -20 storage/logs/laravel.log 2>/dev/null || echo "Aucun log disponible"
+
+      - name: ✅ Deployment Status
+        run: |
+          echo "✅ Déploiement terminé!"
+          echo "🌐 Application accessible sur: http://${{ secrets.SFTP_HOST }}:7000"
+

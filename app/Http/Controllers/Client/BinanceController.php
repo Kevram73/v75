@@ -3,34 +3,42 @@
 namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Transaction;
+use App\Models\Account;
 use CryptoPay\Binancepay\BinancePay;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Exception;
-
 
 class BinancePayController extends Controller
 {
-    public function returnCallback(Request $request)
+    /**
+     * Handle return callback from Binance Pay.
+     */
+    public function returnCallback(Request $request): RedirectResponse
     {
         return $this->checkOrderStatus($request);
     }
 
-    // GET /binancepay/cancelURL
-    public function cancelCallback(Request $request)
+    /**
+     * Handle cancel callback from Binance Pay.
+     */
+    public function cancelCallback(Request $request): RedirectResponse
     {
         return $this->checkOrderStatus($request);
     }
 
+    /**
+     * Check order status and update transaction.
+     */
     private function checkOrderStatus(Request $request): RedirectResponse
     {
         $transactionId = $request->get('trx-id');
         $transaction = Transaction::find($transactionId);
 
         if (!$transaction) {
-            return redirect()->route('error.route') // Define this route in your web.php
-                             ->with('error', 'Transaction not found.');
+            return redirect()->route('client.dashboard')
+                ->with('error', 'Transaction introuvable.');
         }
 
         try {
@@ -38,18 +46,31 @@ class BinancePayController extends Controller
             $order_status = $binancePay->query(['merchantTradeNo' => $transaction->merchant_trade_no]);
 
             if ($order_status['status'] === 'SUCCESS' && $order_status['data']['status'] === 'PAID') {
-                $transaction->update(['status' => 'completed']);
-                return redirect()->route('success.route') // Define this route in your web.php
-                                 ->with('success', 'Payment completed successfully.');
+                $transaction->status = 'COMPLETED';
+                $transaction->save();
+
+                // Update account balance if it's a deposit
+                if ($transaction->type === 'DEPOSIT' && $transaction->client_id) {
+                    $account = Account::where('client_id', $transaction->client_id)->first();
+                    if ($account) {
+                        $account->addBalance($transaction->amount);
+                        $account->addDeposit($transaction->amount);
+                    }
+                }
+
+                return redirect()->route('payment.success')
+                    ->with('success', 'Paiement effectué avec succès.');
             } else {
-                $transaction->update(['status' => 'failed']);
-                return redirect()->route('error.route') // Define this route in your web.php
-                                 ->with('error', 'Payment failed or was cancelled.');
+                $transaction->status = 'FAILED';
+                $transaction->save();
+
+                return redirect()->route('client.dashboard')
+                    ->with('error', 'Le paiement a échoué ou a été annulé.');
             }
         } catch (\Exception $e) {
             Log::error('Binance Pay error: ' . $e->getMessage());
-            return redirect()->route('error.route') // Define this route in your web.php
-                             ->with('error', 'An error occurred while processing your payment.');
+            return redirect()->route('client.dashboard')
+                ->with('error', 'Une erreur est survenue lors du traitement du paiement.');
         }
     }
 }
