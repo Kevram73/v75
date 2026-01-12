@@ -27,20 +27,29 @@ if [ -f "/var/www/vendor/autoload.php" ]; then
     # Check if APP_KEY exists and is valid (starts with base64: and has proper length)
     APP_KEY_VALUE=$(grep "^APP_KEY=" /var/www/.env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]')
     
-    # If APP_KEY is missing, empty, or doesn't start with base64:, generate it
-    if [ -z "$APP_KEY_VALUE" ] || [[ ! "$APP_KEY_VALUE" =~ ^base64: ]]; then
-        echo "Generating APP_KEY..."
+    # Check for duplicate base64: prefixes (multiple keys concatenated)
+    BASE64_COUNT=$(echo "$APP_KEY_VALUE" 2>/dev/null | grep -o "base64:" | wc -l)
+    
+    # If APP_KEY is missing, empty, doesn't start with base64:, or has duplicates, remove it and generate new one
+    if [ -z "$APP_KEY_VALUE" ] || [[ ! "$APP_KEY_VALUE" =~ ^base64: ]] || [ "$BASE64_COUNT" -gt 1 ] || [[ "$APP_KEY_VALUE" =~ base64:.*base64: ]]; then
+        echo "APP_KEY is missing, invalid, or contains duplicates, removing old value and generating new one..."
+        # Remove any existing invalid APP_KEY line
+        sed -i '/^APP_KEY=/d' /var/www/.env 2>/dev/null || true
+        # Generate new key
         php artisan key:generate --force 2>&1
         # Verify it was set correctly
         APP_KEY_VALUE=$(grep "^APP_KEY=" /var/www/.env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]')
         if [ -z "$APP_KEY_VALUE" ] || [[ ! "$APP_KEY_VALUE" =~ ^base64: ]]; then
             echo "Warning: APP_KEY generation may have failed. Please run 'php artisan key:generate' manually."
+        else
+            echo "APP_KEY generated successfully"
         fi
     else
-        # Validate key length (base64: prefix + 44 chars for 32 bytes = 50 chars minimum)
+        # Validate key length (base64: prefix + 44 chars for 32 bytes = 50 chars minimum, max ~100 for safety)
         KEY_LENGTH=${#APP_KEY_VALUE}
-        if [ "$KEY_LENGTH" -lt 50 ]; then
-            echo "APP_KEY appears invalid (too short: ${KEY_LENGTH} chars), regenerating..."
+        if [ "$KEY_LENGTH" -lt 50 ] || [ "$KEY_LENGTH" -gt 200 ]; then
+            echo "APP_KEY appears invalid (length: ${KEY_LENGTH} chars, expected 50-100), removing and regenerating..."
+            sed -i '/^APP_KEY=/d' /var/www/.env 2>/dev/null || true
             php artisan key:generate --force 2>&1 || true
         else
             echo "APP_KEY is set and appears valid (${KEY_LENGTH} chars)"
