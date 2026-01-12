@@ -22,9 +22,31 @@ fi
     [ -f "/var/www/.env.example" ] && cp /var/www/.env.example /var/www/.env 2>/dev/null || touch /var/www/.env 2>/dev/null
 }
 
-# Generate APP_KEY if missing (quick)
-[ -f "/var/www/vendor/autoload.php" ] && ! grep -q "^APP_KEY=base64:" /var/www/.env 2>/dev/null && \
-    php artisan key:generate --force 2>/dev/null || true
+# Generate APP_KEY if missing or invalid
+if [ -f "/var/www/vendor/autoload.php" ]; then
+    # Check if APP_KEY exists and is valid (starts with base64: and has proper length)
+    APP_KEY_VALUE=$(grep "^APP_KEY=" /var/www/.env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]')
+    
+    # If APP_KEY is missing, empty, or doesn't start with base64:, generate it
+    if [ -z "$APP_KEY_VALUE" ] || [[ ! "$APP_KEY_VALUE" =~ ^base64: ]]; then
+        echo "Generating APP_KEY..."
+        php artisan key:generate --force 2>&1
+        # Verify it was set correctly
+        APP_KEY_VALUE=$(grep "^APP_KEY=" /var/www/.env 2>/dev/null | cut -d '=' -f2- | tr -d '[:space:]')
+        if [ -z "$APP_KEY_VALUE" ] || [[ ! "$APP_KEY_VALUE" =~ ^base64: ]]; then
+            echo "Warning: APP_KEY generation may have failed. Please run 'php artisan key:generate' manually."
+        fi
+    else
+        # Validate key length (base64: prefix + 44 chars for 32 bytes = 50 chars minimum)
+        KEY_LENGTH=${#APP_KEY_VALUE}
+        if [ "$KEY_LENGTH" -lt 50 ]; then
+            echo "APP_KEY appears invalid (too short: ${KEY_LENGTH} chars), regenerating..."
+            php artisan key:generate --force 2>&1 || true
+        else
+            echo "APP_KEY is set and appears valid (${KEY_LENGTH} chars)"
+        fi
+    fi
+fi
 
 # Start Laravel development server on port 6700
 echo "Starting Laravel development server on port 6700..."
