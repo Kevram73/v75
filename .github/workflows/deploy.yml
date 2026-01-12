@@ -38,6 +38,7 @@ jobs:
               -czf /tmp/deploy.tar.gz .
           mv /tmp/deploy.tar.gz ./deploy.tar.gz
           ls -lh deploy.tar.gz
+          
 
       - name: 📤 Upload code to VPS
         uses: appleboy/scp-action@v0.1.7
